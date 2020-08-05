@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
+import 'package:verb_crm_flutter/screens/crm_app_home.dart';
 
 class CrmPickerScreen extends StatelessWidget {
   static const String id = 'crm_picker_screen';
@@ -59,7 +60,12 @@ class NewWidget extends StatelessWidget {
           child: Center(
             child: RaisedButton(
               child: Text("Complete Setup!"),
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.pushReplacementNamed(
+                  context,
+                  CrmAppHome.id,
+                ),
+              },
             ),
           ),
         )
@@ -107,7 +113,7 @@ class _CrmTileState extends State<CrmTile> {
               RaisedButton(
                 child: Icon(
                   Icons.done,
-                  color: Colors.green,
+                  color: Colors.deepPurpleAccent[100],
                 ),
                 disabledColor: Colors.grey[300],
                 onPressed: null,
