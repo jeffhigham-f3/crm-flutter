@@ -1,24 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const String id = 'login_screen';
-  final String logo_url =
-      "https://uploads-ssl.webflow.com/5d6eefb700df075bfe44a1b5/5d6ef3922fd62f3a7520970a_verb-logo.png";
+class CrmLoginScreen extends StatefulWidget {
+  static const String id = 'crm_login_screen';
+
   @override
-  Widget build(BuildContext context) {
-    return LoginWidget(logo_url: logo_url);
-  }
+  _CrmLoginScreenState createState() => _CrmLoginScreenState();
 }
 
-class LoginWidget extends StatelessWidget {
-  const LoginWidget({
-    Key key,
-    @required this.logo_url,
-  }) : super(key: key);
-
-  final String logo_url;
-
+class _CrmLoginScreenState extends State<CrmLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,24 +19,15 @@ class LoginWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                child: Container(
-                  width: 150.0,
-                  margin: EdgeInsets.only(bottom: 30.0),
-                  child: Image.network(
-                    this.logo_url,
-                  ),
+                width: MediaQuery.of(context).size.width * .65,
+                child: TextFormField(
+                  decoration: const InputDecoration(hintText: "CRM Username"),
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * .65,
                 child: TextFormField(
-                  decoration: const InputDecoration(hintText: "Username"),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * .65,
-                child: TextFormField(
-                  decoration: const InputDecoration(hintText: "Password"),
+                  decoration: const InputDecoration(hintText: "CRM Password"),
                 ),
               ),
               Container(
@@ -60,12 +41,11 @@ class LoginWidget extends StatelessWidget {
                   color: Colors.grey[100],
                   elevation: 0,
                   onPressed: () => {
-                    Navigator.pushReplacementNamed(
+                    Navigator.pop(
                       context,
-                      CrmPickerScreen.id,
                     ),
                   },
-                  child: Text('Login'),
+                  child: Text('Authenticate'),
                 ),
               ),
             ],

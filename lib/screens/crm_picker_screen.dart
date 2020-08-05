@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
 
 class CrmPickerScreen extends StatelessWidget {
   static const String id = 'crm_picker_screen';
@@ -20,31 +21,48 @@ class NewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      primary: false,
-      slivers: <Widget>[
-        SliverPadding(
-          padding: const EdgeInsets.all(20),
-          sliver: SliverGrid.count(
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            crossAxisCount: UniversalPlatform.isWeb ? 4 : 2,
-            children: <Widget>[
-              CrmTile(
-                title: "Salesforce",
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          flex: 5,
+          child: CustomScrollView(
+            primary: false,
+            slivers: <Widget>[
+              SliverPadding(
+                padding: const EdgeInsets.all(20),
+                sliver: SliverGrid.count(
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: UniversalPlatform.isWeb ? 4 : 2,
+                  children: <Widget>[
+                    CrmTile(
+                      title: "Salesforce",
+                    ),
+                    CrmTile(
+                      title: "Hubspot",
+                    ),
+                    CrmTile(
+                      title: "Netsuite",
+                    ),
+                    CrmTile(
+                      title: "Verb CRM",
+                    )
+                  ],
+                ),
               ),
-              CrmTile(
-                title: "Hubspot",
-              ),
-              CrmTile(
-                title: "Netsuite",
-              ),
-              CrmTile(
-                title: "Verb CRM",
-              )
             ],
           ),
         ),
+        Expanded(
+          child: Center(
+            child: RaisedButton(
+              child: Text("Complete Setup!"),
+              onPressed: () => {},
+            ),
+          ),
+        )
       ],
     );
   }
@@ -117,6 +135,10 @@ class _CrmTileState extends State<CrmTile> {
               RaisedButton(
                 child: Text("Configure"),
                 onPressed: () => {
+                  Navigator.pushNamed(
+                    context,
+                    CrmLoginScreen.id,
+                  ),
                   configure(),
                 },
               )
