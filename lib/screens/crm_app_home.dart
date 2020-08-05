@@ -13,6 +13,10 @@ class _CrmAppHomeState extends State<CrmAppHome> {
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
+      'Goals',
+      style: optionStyle,
+    ),
+    Text(
       'Media',
       style: optionStyle,
     ),
@@ -37,13 +41,36 @@ class _CrmAppHomeState extends State<CrmAppHome> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Verb'),
+        leading: IconButton(
+          tooltip: "Profile",
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: () => {},
+        ),
+        actions: [
+          IconButton(
+            tooltip: "Settings",
+            icon: const Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+            onPressed: () => {},
+          )
+        ],
         backgroundColor: Colors.deepPurpleAccent[100],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.grid_on),
+            title: Text('Goals'),
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.movie),
             title: Text('Media'),
