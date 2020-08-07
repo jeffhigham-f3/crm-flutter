@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/screens/crm_app_home.dart';
+import 'package:provider/provider.dart';
+import 'package:verb_crm_flutter/models/goal_manager.dart';
+import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 
 class GoalPickerScreen extends StatefulWidget {
   static const String id = 'goal_picker_screen';
@@ -8,8 +10,6 @@ class GoalPickerScreen extends StatefulWidget {
 }
 
 class _GoalPickerScreenState extends State<GoalPickerScreen> {
-  final List<String> entries = <String>['Goal 1', 'Goal 2', 'Goal N'];
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,12 +22,11 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
               flex: 1,
               child: Center(
                 child: Text(
-                  "Which Sales Goals are important to you?",
+                  "Which Goals are important to you?",
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
                   ),
-                  softWrap: true,
                 ),
               ),
             ),
@@ -35,18 +34,38 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
               flex: 8,
               child: ListView.builder(
                 padding: const EdgeInsets.all(8),
-                itemCount: entries.length,
+                itemCount: Provider.of<GoalManager>(context, listen: true).entities.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.only(top: 8.0),
-                    height: 150,
-                    color: Colors.deepPurpleAccent[100],
-                    child: Center(
-                      child: Text(
-                        entries[index],
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
+                  return GestureDetector(
+                    onTap: (() {
+                      final goal = Provider.of<GoalManager>(context, listen: false).entities[index];
+                      Provider.of<GoalManager>(context, listen: false).toggle(goal: goal);
+                    }),
+                    child: Container(
+                      margin: EdgeInsets.only(top: 8.0),
+                      height: 150,
+                      color: (Provider.of<GoalManager>(context, listen: false).entities[index].enabled)
+                          ? Colors.deepPurpleAccent[100]
+                          : Colors.grey[200],
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: (Provider.of<GoalManager>(context, listen: false).entities[index].enabled)
+                                  ? Icon(Icons.done)
+                                  : null,
+                            ),
+                            Text(
+                              Provider.of<GoalManager>(context, listen: false).entities[index].name,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -57,11 +76,11 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
             Expanded(
               child: Center(
                 child: RaisedButton(
-                  child: Text("Complete Setup!"),
+                  child: Text("Next Step >"),
                   onPressed: () => {
                     Navigator.pushReplacementNamed(
                       context,
-                      CrmAppHome.id,
+                      CrmPickerScreen.id,
                     ),
                   },
                 ),

@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:verb_crm_flutter/models/goal_manager.dart';
+import 'package:verb_crm_flutter/models/crm_manager.dart';
 import 'package:verb_crm_flutter/screens/main_app.dart';
 
 void main() {
   runApp(
-    MainApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => GoalManager(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CrmManager(),
+        )
+      ],
+      child: MainApp(),
+    ),
   );
 }

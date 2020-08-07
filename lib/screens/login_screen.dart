@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
+import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String id = 'login_screen';
@@ -62,7 +62,7 @@ class LoginWidget extends StatelessWidget {
                   onPressed: () => {
                     Navigator.pushReplacementNamed(
                       context,
-                      CrmPickerScreen.id,
+                      GoalPickerScreen.id,
                     ),
                   },
                   child: Text('Login'),

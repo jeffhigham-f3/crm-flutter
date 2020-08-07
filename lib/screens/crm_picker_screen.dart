@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_app_home.dart';
@@ -26,6 +27,18 @@ class NewWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        Expanded(
+          flex: 1,
+          child: Center(
+            child: Text(
+              "Which CRM should we connect to?",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
         Expanded(
           flex: 5,
           child: CustomScrollView(
@@ -59,7 +72,7 @@ class NewWidget extends StatelessWidget {
         Expanded(
           child: Center(
             child: RaisedButton(
-              child: Text("Complete Setup!"),
+              child: Text("Let's Get Selling!"),
               onPressed: () => {
                 Navigator.pushReplacementNamed(
                   context,
@@ -115,7 +128,7 @@ class _CrmTileState extends State<CrmTile> {
                   Icons.done,
                   color: Colors.deepPurpleAccent[100],
                 ),
-                disabledColor: Colors.grey[300],
+                disabledColor: Colors.grey[200],
                 onPressed: null,
               )
             ],

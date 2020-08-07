@@ -9,7 +9,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: GoalPickerScreen(),
+      home: LoginScreen(),
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         CrmPickerScreen.id: (context) => CrmPickerScreen(),
