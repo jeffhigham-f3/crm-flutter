@@ -104,6 +104,20 @@ class _CrmAppHomeState extends State<CrmAppHome> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey[100],
+        foregroundColor: Colors.deepPurpleAccent[100],
+        elevation: 0.5,
+        highlightElevation: 0.4,
+        mini: true,
+        child: Icon(
+          Icons.video_call,
+        ),
+        onPressed: (() {
+          print("launch camera");
+        }),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
