@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/glance/glance_today.dart';
 import 'package:verb_crm_flutter/screens/glance/glance_tomorrow.dart';
 import 'package:verb_crm_flutter/screens/glance/glance_later.dart';
-import 'dart:math';
 
 class GlanceHomeScreen extends StatefulWidget {
   static const String id = 'glance_home_screen';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
+import 'package:verb_crm_flutter/screens/live_video_screen.dart';
 
 class CrmAppHome extends StatefulWidget {
   static const String id = 'crm_app_home';
@@ -114,7 +115,13 @@ class _CrmAppHomeState extends State<CrmAppHome> {
           Icons.video_call,
         ),
         onPressed: (() {
-          print("launch camera");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LiveVideoScreen(),
+              fullscreenDialog: true,
+            ),
+          );
         }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
