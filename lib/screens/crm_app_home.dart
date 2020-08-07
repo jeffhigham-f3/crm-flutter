@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
 
 class CrmAppHome extends StatefulWidget {
   static const String id = 'crm_app_home';
@@ -12,24 +13,7 @@ class _CrmAppHomeState extends State<CrmAppHome> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Glance AI ™️',
-          style: optionStyle,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
-            'A customized list of everything you need to do to meet your goals! Let our Glance AI ™️ help you build your business!',
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ),
-        ),
-      ],
-    ),
+    GlanceHomeScreen(),
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -4,6 +4,7 @@ import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_app_home.dart';
 import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
+import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
 
 class MainApp extends StatelessWidget {
   @override
@@ -16,7 +17,9 @@ class MainApp extends StatelessWidget {
         CrmLoginScreen.id: (context) => CrmLoginScreen(),
         CrmAppHome.id: (context) => CrmAppHome(),
         GoalPickerScreen.id: (context) => GoalPickerScreen(),
+        GlanceHomeScreen.id: (context) => GlanceHomeScreen(),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
