@@ -16,10 +16,16 @@ class MainApp extends StatelessWidget {
         primaryColor: Colors.deepPurpleAccent[100],
         accentColor: Colors.deepPurpleAccent[100],
         inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(color: Colors.grey),
-          hintStyle: TextStyle(color: Colors.grey),
+          labelStyle: TextStyle(
+            color: Color(0xFFF3F6FA),
+          ),
+          hintStyle: TextStyle(
+            color: Color(0xFFF3F6FA),
+          ),
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: BorderSide(
+              color: Color(0xFFF3F6FA),
+            ),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
