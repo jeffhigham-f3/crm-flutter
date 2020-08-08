@@ -100,14 +100,13 @@ class _CrmAppHomeState extends State<CrmAppHome> {
             onPressed: () => {},
           )
         ],
-        backgroundColor: Colors.deepPurpleAccent[100],
+//        backgroundColor: Colors.deepPurpleAccent[100],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey[100],
-        foregroundColor: Colors.deepPurpleAccent[100],
+        foregroundColor: Colors.white,
         elevation: 0.5,
         highlightElevation: 0.4,
         mini: true,
@@ -146,7 +145,6 @@ class _CrmAppHomeState extends State<CrmAppHome> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurpleAccent[100],
         onTap: _onItemTapped,
       ),
     );

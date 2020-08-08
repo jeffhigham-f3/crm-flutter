@@ -11,6 +11,23 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //https://api.flutter.dev/flutter/material/ThemeData-class.html
+      theme: ThemeData(
+        primaryColor: Colors.deepPurpleAccent[100],
+        accentColor: Colors.deepPurpleAccent[100],
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(color: Colors.grey),
+          hintStyle: TextStyle(color: Colors.grey),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      ),
       home: LoginScreen(),
       routes: {
         LoginScreen.id: (context) => LoginScreen(),

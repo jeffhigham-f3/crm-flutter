@@ -21,9 +21,17 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Form(
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment(1.0, 1.0),
+            colors: [const Color(0xFF6B3EFF), const Color(0xFF5058FF), const Color(0xFF00A2FF)],
+            tileMode: TileMode.clamp,
+          ),
+        ),
+        child: Form(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -40,13 +48,28 @@ class LoginWidget extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width * .65,
                 child: TextFormField(
-                  decoration: const InputDecoration(hintText: "Username"),
+                  cursorColor: Colors.white,
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: const InputDecoration(
+                    hintText: "Username",
+                  ),
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * .65,
                 child: TextFormField(
-                  decoration: const InputDecoration(hintText: "Password"),
+                  obscureText: true,
+                  cursorColor: Colors.white,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: const InputDecoration(
+                    hintText: "Password",
+                  ),
                 ),
               ),
               Container(
@@ -54,18 +77,27 @@ class LoginWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: MaterialButton(
-                  minWidth: 200.0,
-                  height: 40.0,
-                  color: Colors.grey[100],
-                  elevation: 0,
-                  onPressed: () => {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      GoalPickerScreen.id,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * .65,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
                     ),
-                  },
-                  child: Text('Login'),
+                    textColor: Colors.white,
+                    color: Colors.white.withOpacity(0.2),
+                    onPressed: () => {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        GoalPickerScreen.id,
+                      ),
+                    },
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
