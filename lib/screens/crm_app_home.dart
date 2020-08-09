@@ -12,7 +12,6 @@ class CrmAppHome extends StatefulWidget {
 
 class _CrmAppHomeState extends State<CrmAppHome> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     GlanceHomeScreen(),
     Column(
@@ -21,7 +20,7 @@ class _CrmAppHomeState extends State<CrmAppHome> {
       children: [
         Text(
           'People',
-          style: optionStyle,
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
@@ -39,7 +38,7 @@ class _CrmAppHomeState extends State<CrmAppHome> {
       children: [
         Text(
           'Media',
-          style: optionStyle,
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
@@ -57,7 +56,7 @@ class _CrmAppHomeState extends State<CrmAppHome> {
       children: [
         Text(
           'Activity',
-          style: optionStyle,
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
@@ -86,7 +85,6 @@ class _CrmAppHomeState extends State<CrmAppHome> {
           tooltip: "Profile",
           icon: const Icon(
             Icons.menu,
-            color: Colors.white,
           ),
           onPressed: () => {},
         ),
@@ -95,18 +93,15 @@ class _CrmAppHomeState extends State<CrmAppHome> {
             tooltip: "Settings",
             icon: const Icon(
               Icons.person,
-              color: Colors.white,
             ),
             onPressed: () => {},
           )
         ],
-//        backgroundColor: Colors.deepPurpleAccent[100],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
-        foregroundColor: Colors.white,
         elevation: 0.5,
         highlightElevation: 0.4,
         mini: true,

@@ -13,25 +13,42 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       //https://api.flutter.dev/flutter/material/ThemeData-class.html
       theme: ThemeData(
-        primaryColor: Colors.deepPurpleAccent[100],
-        accentColor: Colors.deepPurpleAccent[100],
+//        primaryColor: Color(0xFF6B3EFF),
+//        accentColor: Color(0xFF6B3EFF),
+//        canvasColor: Colors.white,
+        // https://api.flutter.dev/flutter/widgets/Text-class.html
+        textTheme: TextTheme(
+          bodyText1: TextStyle(),
+          bodyText2: TextStyle(),
+          button: TextStyle(),
+          caption: TextStyle(),
+          headline1: TextStyle(),
+          headline2: TextStyle(),
+          headline3: TextStyle(),
+          headline4: TextStyle(),
+          headline5: TextStyle(),
+          headline6: TextStyle(),
+          subtitle1: TextStyle(),
+          subtitle2: TextStyle(),
+        ),
+//        buttonColor: Colors.green,
         inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(
-            color: Color(0xFFF3F6FA),
-          ),
+//            color: Color(0xFFF3F6FA),
+              ),
           hintStyle: TextStyle(
-            color: Color(0xFFF3F6FA),
-          ),
+//            color: Color(0xFFF3F6FA),
+              ),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Color(0xFFF3F6FA),
-            ),
+//              color: Color(0xFFF3F6FA),
+                ),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.blue,
-            ),
-          ),
+//            borderSide: BorderSide(
+//              color: Colors.blue,
+//            ),
+              ),
         ),
       ),
       home: LoginScreen(),

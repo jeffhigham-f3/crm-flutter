@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
+import 'package:verb_crm_flutter/widgets/import.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String id = 'login_screen';
@@ -22,15 +23,7 @@ class LoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment(1.0, 1.0),
-            colors: [const Color(0xFF6B3EFF), const Color(0xFF5058FF), const Color(0xFF00A2FF)],
-            tileMode: TileMode.clamp,
-          ),
-        ),
+      body: GradientContainer(
         child: Form(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

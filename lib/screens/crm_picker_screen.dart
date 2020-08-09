@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_app_home.dart';
+import 'package:verb_crm_flutter/models/crm.dart';
+import 'package:verb_crm_flutter/models/crm_manager.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CrmPickerScreen extends StatelessWidget {
   static const String id = 'crm_picker_screen';
@@ -32,41 +35,25 @@ class NewWidget extends StatelessWidget {
           child: Center(
             child: Text(
               "Which CRM should we connect to?",
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headline6,
             ),
           ),
         ),
         Expanded(
           flex: 5,
-          child: CustomScrollView(
-            primary: false,
-            slivers: <Widget>[
-              SliverPadding(
-                padding: const EdgeInsets.all(20),
-                sliver: SliverGrid.count(
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: UniversalPlatform.isWeb ? 4 : 2,
-                  children: <Widget>[
-                    CrmTile(
-                      title: "Salesforce",
-                    ),
-                    CrmTile(
-                      title: "Hubspot",
-                    ),
-                    CrmTile(
-                      title: "Netsuite",
-                    ),
-                    CrmTile(
-                      title: "Verb CRM",
-                    )
-                  ],
-                ),
-              ),
-            ],
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 2,
+            ),
+            padding: const EdgeInsets.all(20),
+            itemCount: Provider.of<CrmManager>(context, listen: true).entities.length,
+            itemBuilder: (BuildContext context, int index) {
+              return CrmCard(
+                crm: Provider.of<CrmManager>(context, listen: false).entities[index],
+              );
+            },
           ),
         ),
         Expanded(
@@ -87,85 +74,63 @@ class NewWidget extends StatelessWidget {
   }
 }
 
-class CrmTile extends StatefulWidget {
-  final String title;
-  bool configured = false;
+class CrmCard extends StatefulWidget {
+  final Crm crm;
 
-  CrmTile({Key key, @required this.title}) : super(key: key);
+  CrmCard({Key key, @required this.crm}) : super(key: key);
 
   @override
-  _CrmTileState createState() => _CrmTileState();
+  _CrmCardState createState() => _CrmCardState();
 }
 
-class _CrmTileState extends State<CrmTile> {
+class _CrmCardState extends State<CrmCard> {
   configure() {
     setState(
       () {
-        widget.configured = true;
+        widget.crm.enabled = true;
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.configured) {
-      return Container(
-        padding: EdgeInsets.all(8),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.business_center),
-              Text(
-                widget.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
-              ),
-              RaisedButton(
-                child: Icon(
-                  Icons.done,
-                  color: Colors.deepPurpleAccent[100],
-                ),
-                disabledColor: Colors.grey[200],
-                onPressed: null,
-              )
-            ],
-          ),
-        ),
-        color: Colors.grey[100],
-      );
-    } else {
-      return Container(
-        padding: EdgeInsets.all(8),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.business_center),
-              Text(
-                widget.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                ),
-              ),
-              RaisedButton(
-                child: Text("Configure"),
-                onPressed: () => {
-                  Navigator.pushNamed(
-                    context,
-                    CrmLoginScreen.id,
+    final String assetName = 'assets/${widget.crm.logo}';
+    final Widget logoWidget = SvgPicture.asset(
+      assetName,
+      semanticsLabel: widget.crm.name,
+    );
+
+    return Card(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              child: logoWidget,
+            ),
+            Text(
+              widget.crm.name,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            (widget.crm.enabled)
+                ? Icon(
+                    Icons.done,
+                  )
+                : RaisedButton(
+                    child: Text("Configure"),
+                    onPressed: () => {
+                      Navigator.pushNamed(
+                        context,
+                        CrmLoginScreen.id,
+                      ),
+                      configure(),
+                    },
                   ),
-                  configure(),
-                },
-              )
-            ],
-          ),
+          ],
         ),
-        color: Colors.grey[100],
-      );
-    }
+      ),
+    );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/models/goal_manager.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
+import 'package:verb_crm_flutter/widgets/import.dart';
 
 class GoalPickerScreen extends StatefulWidget {
   static const String id = 'goal_picker_screen';
@@ -12,9 +13,10 @@ class GoalPickerScreen extends StatefulWidget {
 class _GoalPickerScreenState extends State<GoalPickerScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      body: Container(
+        margin: EdgeInsets.only(top: 22),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -23,10 +25,7 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
               child: Center(
                 child: Text(
                   "Which Goals are important to you?",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
             ),
@@ -44,9 +43,6 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
                     child: Container(
                       margin: EdgeInsets.only(top: 8.0),
                       height: 150,
-                      color: (Provider.of<GoalManager>(context, listen: false).entities[index].enabled)
-                          ? Colors.deepPurpleAccent[100]
-                          : Colors.grey[200],
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -58,13 +54,8 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
                                   ? Icon(Icons.done)
                                   : null,
                             ),
-                            Text(
-                              Provider.of<GoalManager>(context, listen: false).entities[index].name,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            Text(Provider.of<GoalManager>(context, listen: false).entities[index].name,
+                                style: Theme.of(context).textTheme.bodyText1),
                           ],
                         ),
                       ),

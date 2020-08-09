@@ -8,7 +8,7 @@ class Crm {
   String refreshToken;
   bool enabled;
 
-  Crm({this.name}) {
+  Crm({this.name, this.logo}) {
     this.enabled = false;
     this.icon = Icon(Icons.business_center);
   }

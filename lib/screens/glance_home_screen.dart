@@ -42,7 +42,6 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
             left: 0.0,
             right: 0.0,
             child: new Container(
-              color: Colors.deepPurpleAccent[200].withOpacity(0.0),
               padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 5.0),
               child: new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +54,7 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
                             "Today",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.deepPurpleAccent[100],
+                              color: Theme.of(context).accentColor,
                             ),
                           ),
                           Container(
@@ -65,7 +64,7 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
                             ),
                             child: Divider(
                               thickness: 3.0,
-                              color: Colors.deepPurpleAccent[100],
+                              color: Theme.of(context).accentColor,
                             ),
                           )
                         ],
@@ -89,7 +88,7 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
                             ),
                             child: Divider(
                               thickness: 3.0,
-                              color: Colors.deepPurpleAccent[200].withAlpha(0),
+                              color: Colors.white.withAlpha(0),
                             ),
                           )
                         ],
@@ -102,9 +101,6 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
                         children: [
                           Text(
                             "Later (9)",
-                            style: TextStyle(
-//                              fontWeight: FontWeight.bold,
-                                ),
                           ),
                           Container(
                             padding: EdgeInsets.only(
@@ -113,7 +109,7 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
                             ),
                             child: Divider(
                               thickness: 3.0,
-                              color: Colors.deepPurpleAccent[200].withAlpha(0),
+                              color: Colors.white.withAlpha(0),
                             ),
                           )
                         ],
