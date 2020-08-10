@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
+import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 
 class CrmAppHome extends StatefulWidget {
   static const String id = 'crm_app_home';
@@ -81,20 +82,23 @@ class _CrmAppHomeState extends State<CrmAppHome> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Verb'),
-        leading: IconButton(
-          tooltip: "Profile",
-          icon: const Icon(
-            Icons.menu,
-          ),
-          onPressed: () => {},
-        ),
+        leading: Container(),
         actions: [
           IconButton(
-            tooltip: "Settings",
+            tooltip: "Connectors",
             icon: const Icon(
-              Icons.person,
+              Icons.sync,
             ),
-            onPressed: () => {},
+            onPressed: () => {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CrmPickerScreen(
+                      modal: true,
+                    ),
+                    fullscreenDialog: true,
+                  ))
+            },
           )
         ],
       ),

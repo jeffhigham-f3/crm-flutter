@@ -8,15 +8,24 @@ import 'package:verb_crm_flutter/models/crm_manager.dart';
 class CrmPickerScreen extends StatelessWidget {
   static const String id = 'crm_picker_screen';
 
+  final bool modal;
+  const CrmPickerScreen({Key key, this.modal}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CrmCardGrid(),
+      body: CrmCardGrid(
+        modal: this.modal,
+      ),
     );
   }
 }
 
 class CrmCardGrid extends StatelessWidget {
+  final bool modal;
+
+  const CrmCardGrid({Key key, this.modal}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,12 +62,14 @@ class CrmCardGrid extends StatelessWidget {
           child: Center(
             child: OutlineButton(
               child: Text("Continue"),
-              onPressed: () => {
-                Navigator.pushReplacementNamed(
-                  context,
-                  CrmAppHome.id,
-                ),
-              },
+              onPressed: (() {
+                (this.modal != null && this.modal)
+                    ? Navigator.pop(context)
+                    : Navigator.pushReplacementNamed(
+                        context,
+                        CrmAppHome.id,
+                      );
+              }),
             ),
           ),
         )
@@ -99,22 +110,25 @@ class _CrmCardState extends State<CrmCard> {
                 : OutlineButton(
                     child: Text("Configure"),
                     onPressed: () => {
-                      Navigator.pushNamed(
-                        context,
-                        CrmLoginScreen.id,
-                        arguments: CrmRouteArgs(widget.crm),
-                      ).then(
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CrmLoginScreen(crm: widget.crm),
+                            fullscreenDialog: true,
+                          )).then(
                         (value) => {
                           setState(() {}),
-                          Scaffold.of(context).showSnackBar(new SnackBar(
-                            content: Text(
-                              '${widget.crm.name} configured!',
-                              style: Theme.of(context).textTheme.subtitle2,
-                              textAlign: TextAlign.center,
+                          Scaffold.of(context).showSnackBar(
+                            new SnackBar(
+                              content: Text(
+                                '${widget.crm.name} configured!',
+                                style: Theme.of(context).textTheme.subtitle2,
+                                textAlign: TextAlign.center,
+                              ),
+                              duration: Duration(seconds: 1),
+                              backgroundColor: Theme.of(context).accentColor,
                             ),
-                            duration: Duration(seconds: 2),
-                            backgroundColor: Theme.of(context).accentColor,
-                          ))
+                          )
                         },
                       )
                     },

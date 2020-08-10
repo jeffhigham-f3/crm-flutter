@@ -5,6 +5,10 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class CrmLoginScreen extends StatefulWidget {
   static const String id = 'crm_login_screen';
+  final Crm crm;
+
+  const CrmLoginScreen({Key key, this.crm}) : super(key: key);
+
   @override
   _CrmLoginScreenState createState() => _CrmLoginScreenState();
 }
@@ -22,14 +26,13 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
       });
       Navigator.pop(
         context,
-        CrmPickerScreen.id,
       );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final CrmRouteArgs args = ModalRoute.of(context).settings.arguments;
+//    final CrmRouteArgs args = ModalRoute.of(context).settings.arguments;
 
     return ModalProgressHUD(
       inAsyncCall: _saving,
@@ -42,12 +45,12 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
               Container(
                 width: 86,
                 height: 86,
-                child: args.crm.logoSvg,
+                child: widget.crm.logoSvg,
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 20),
                 child: Text(
-                  args.crm.name,
+                  widget.crm.name,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -73,10 +76,10 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: OutlineButton(
                   onPressed: (() {
-                    args.crm.enabled = true;
+                    widget.crm.enabled = true;
                     this.login();
                   }),
-                  child: Text('${args.crm.name} Login'),
+                  child: Text('${widget.crm.name} Login'),
                 ),
               ),
             ],
