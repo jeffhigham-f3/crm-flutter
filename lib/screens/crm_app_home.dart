@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
+import 'package:verb_crm_flutter/screens/people_home_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 
@@ -14,25 +14,25 @@ class CrmAppHome extends StatefulWidget {
 class _CrmAppHomeState extends State<CrmAppHome> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
-    GlanceHomeScreen(),
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'People',
+          'Glance',
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'Contacts, Prospects, Leads. Everything you need to build relationships!',
+            'This is the Glance home screen.',
             textAlign: TextAlign.center,
             softWrap: true,
           ),
         ),
       ],
     ),
+    PeopleHomeScreen(),
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

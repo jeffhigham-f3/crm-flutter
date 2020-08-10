@@ -4,7 +4,7 @@ import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_app_home.dart';
 import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
-import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
+import 'package:verb_crm_flutter/screens/people_home_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
 
 class MainApp extends StatelessWidget {
@@ -63,7 +63,7 @@ class MainApp extends StatelessWidget {
         CrmLoginScreen.id: (context) => CrmLoginScreen(),
         CrmAppHome.id: (context) => CrmAppHome(),
         GoalPickerScreen.id: (context) => GoalPickerScreen(),
-        GlanceHomeScreen.id: (context) => GlanceHomeScreen(),
+        PeopleHomeScreen.id: (context) => PeopleHomeScreen(),
         LiveVideoScreen.id: (context) => LiveVideoScreen(),
       },
       debugShowCheckedModeBanner: false,

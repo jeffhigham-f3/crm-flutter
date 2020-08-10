@@ -108,7 +108,7 @@ class _CrmCardState extends State<CrmCard> {
                     Icons.done,
                   )
                 : OutlineButton(
-                    child: Text("Configure"),
+                    child: Text("Connect"),
                     onPressed: () => {
                       Navigator.push(
                           context,
@@ -121,7 +121,7 @@ class _CrmCardState extends State<CrmCard> {
                           Scaffold.of(context).showSnackBar(
                             new SnackBar(
                               content: Text(
-                                '${widget.crm.name} configured!',
+                                '${widget.crm.name} Connected!',
                                 style: Theme.of(context).textTheme.subtitle2,
                                 textAlign: TextAlign.center,
                               ),

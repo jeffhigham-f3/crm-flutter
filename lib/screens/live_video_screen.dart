@@ -11,7 +11,15 @@ class _LiveVideoScreenState extends State<LiveVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        child: Image.asset('assets/live.png'),
+        child: Container(
+          color: Colors.black87,
+          width: double.infinity,
+          height: double.infinity,
+          child: Image.asset(
+            'assets/live.png',
+            repeat: ImageRepeat.noRepeat,
+          ),
+        ),
         onTap: (() {
           Navigator.pop(context);
         }),

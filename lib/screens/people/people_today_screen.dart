@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GlanceToday extends StatefulWidget {
+class PeopleTodayScreen extends StatefulWidget {
   static const String id = 'glance_today_screen';
 
   @override
-  _GlanceTodayState createState() => _GlanceTodayState();
+  _PeopleTodayScreenState createState() => _PeopleTodayScreenState();
 }
 
-class _GlanceTodayState extends State<GlanceToday> {
+class _PeopleTodayScreenState extends State<PeopleTodayScreen> {
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GlanceTomorrow extends StatefulWidget {
-  static const String id = 'glance_tomorrow_screen';
+class PeopleLaterScreen extends StatefulWidget {
+  static const String id = 'glance_later_screen';
 
   @override
-  _GlanceTomorrowState createState() => _GlanceTomorrowState();
+  _PeopleLaterScreenState createState() => _PeopleLaterScreenState();
 }
 
-class _GlanceTomorrowState extends State<GlanceTomorrow> {
+class _PeopleLaterScreenState extends State<PeopleLaterScreen> {
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
@@ -17,13 +17,13 @@ class _GlanceTomorrowState extends State<GlanceTomorrow> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Tomorrow',
+          'Later',
           style: optionStyle,
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'Everything you need to do tomorrow.',
+            'Everything you need to do later.',
             textAlign: TextAlign.center,
             softWrap: true,
           ),
