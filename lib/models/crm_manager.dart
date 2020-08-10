@@ -145,16 +145,11 @@ class CrmManager with ChangeNotifier {
     ),
     Crm(
       name: 'Zendesk Sell',
-      logo: 'ZendesSell.svg',
+      logo: 'ZendeskSell.svg',
     ),
     Crm(
       name: 'Zoho CRM',
       logo: 'ZohoCRM.svg',
     )
   ];
-
-  toggle({Crm crm}) {
-    crm.enabled = !crm.enabled;
-    this.notifyListeners();
-  }
 }

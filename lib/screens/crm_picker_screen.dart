@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:universal_platform/universal_platform.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_app_home.dart';
 import 'package:verb_crm_flutter/models/crm.dart';
 import 'package:verb_crm_flutter/models/crm_manager.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CrmPickerScreen extends StatelessWidget {
   static const String id = 'crm_picker_screen';
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: NewWidget(),
-      ),
+    return Scaffold(
+      body: CrmCardGrid(),
     );
   }
 }
 
-class NewWidget extends StatelessWidget {
-  const NewWidget({
-    Key key,
-  }) : super(key: key);
-
+class CrmCardGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,15 +43,15 @@ class NewWidget extends StatelessWidget {
             itemCount: Provider.of<CrmManager>(context, listen: true).entities.length,
             itemBuilder: (BuildContext context, int index) {
               return CrmCard(
-                crm: Provider.of<CrmManager>(context, listen: false).entities[index],
+                crm: Provider.of<CrmManager>(context, listen: true).entities[index],
               );
             },
           ),
         ),
         Expanded(
           child: Center(
-            child: RaisedButton(
-              child: Text("Let's Get Selling!"),
+            child: OutlineButton(
+              child: Text("Continue"),
               onPressed: () => {
                 Navigator.pushReplacementNamed(
                   context,
@@ -76,7 +68,6 @@ class NewWidget extends StatelessWidget {
 
 class CrmCard extends StatefulWidget {
   final Crm crm;
-
   CrmCard({Key key, @required this.crm}) : super(key: key);
 
   @override
@@ -84,22 +75,8 @@ class CrmCard extends StatefulWidget {
 }
 
 class _CrmCardState extends State<CrmCard> {
-  configure() {
-    setState(
-      () {
-        widget.crm.enabled = true;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final String assetName = 'assets/${widget.crm.logo}';
-    final Widget logoWidget = SvgPicture.asset(
-      assetName,
-      semanticsLabel: widget.crm.name,
-    );
-
     return Card(
       child: Center(
         child: Column(
@@ -108,7 +85,7 @@ class _CrmCardState extends State<CrmCard> {
             Container(
               width: 42,
               height: 42,
-              child: logoWidget,
+              child: widget.crm.logoSvg,
             ),
             Text(
               widget.crm.name,
@@ -118,14 +95,14 @@ class _CrmCardState extends State<CrmCard> {
                 ? Icon(
                     Icons.done,
                   )
-                : RaisedButton(
+                : OutlineButton(
                     child: Text("Configure"),
                     onPressed: () => {
                       Navigator.pushNamed(
                         context,
                         CrmLoginScreen.id,
-                      ),
-                      configure(),
+                        arguments: CrmRouteArgs(widget.crm),
+                      ).then((value) => setState(() {}))
                     },
                   ),
           ],

@@ -24,13 +24,13 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
               flex: 1,
               child: Center(
                 child: Text(
-                  "Which Goals are important to you?",
+                  "What goals are important to you?",
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
             ),
             Expanded(
-              flex: 8,
+              flex: 6,
               child: ListView.builder(
                 padding: const EdgeInsets.all(8),
                 itemCount: Provider.of<GoalManager>(context, listen: true).entities.length,
@@ -41,8 +41,8 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
                       Provider.of<GoalManager>(context, listen: false).toggle(goal: goal);
                     }),
                     child: Container(
-                      margin: EdgeInsets.only(top: 8.0),
-                      height: 150,
+                      margin: EdgeInsets.only(top: 2.0),
+                      height: 48,
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,9 +65,10 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
               ),
             ),
             Expanded(
+              flex: 2,
               child: Center(
-                child: RaisedButton(
-                  child: Text("Next Step >"),
+                child: OutlineButton(
+                  child: Text("Continue"),
                   onPressed: () => {
                     Navigator.pushReplacementNamed(
                       context,

@@ -31,7 +31,12 @@ class MainApp extends StatelessWidget {
           subtitle1: TextStyle(),
           subtitle2: TextStyle(),
         ),
-//        buttonColor: Colors.green,
+        buttonTheme: ButtonThemeData(
+          textTheme: ButtonTextTheme.accent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
         inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(
 //            color: Color(0xFFF3F6FA),

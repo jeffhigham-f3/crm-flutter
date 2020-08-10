@@ -73,9 +73,6 @@ class LoginWidget extends StatelessWidget {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * .65,
                   child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
                     textColor: Colors.white,
                     color: Colors.white.withOpacity(0.2),
                     onPressed: () => {

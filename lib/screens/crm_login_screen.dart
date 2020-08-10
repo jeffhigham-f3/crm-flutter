@@ -1,55 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:verb_crm_flutter/models/crm.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 
-class CrmLoginScreen extends StatefulWidget {
+class CrmLoginScreen extends StatelessWidget {
   static const String id = 'crm_login_screen';
 
   @override
-  _CrmLoginScreenState createState() => _CrmLoginScreenState();
-}
-
-class _CrmLoginScreenState extends State<CrmLoginScreen> {
-  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * .65,
-                child: TextFormField(
-                  decoration: const InputDecoration(hintText: "CRM Username"),
-                ),
+    final CrmRouteArgs args = ModalRoute.of(context).settings.arguments;
+    return Scaffold(
+      body: Form(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 86,
+              height: 86,
+              child: args.crm.logoSvg,
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Text(
+                args.crm.name,
+                style: Theme.of(context).textTheme.headline6,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * .65,
-                child: TextFormField(
-                  decoration: const InputDecoration(hintText: "CRM Password"),
-                ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .65,
+              child: TextFormField(
+                decoration: const InputDecoration(hintText: "Username"),
+                keyboardType: TextInputType.text,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .65,
+              child: TextFormField(
+                decoration: const InputDecoration(hintText: "Password"),
+                obscureText: true,
+                keyboardType: TextInputType.text,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: MaterialButton(
-                  minWidth: 200.0,
-                  height: 40.0,
-                  color: Colors.grey[100],
-                  elevation: 0,
-                  onPressed: () => {
-                    Navigator.pop(
-                      context,
-                    ),
-                  },
-                  child: Text('Authenticate'),
-                ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: OutlineButton(
+                onPressed: (() {
+                  args.crm.toggleEnabled();
+                  Navigator.pop(
+                    context,
+                    CrmPickerScreen.id,
+                  );
+                }),
+                child: Text('${args.crm.name} Login'),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
