@@ -32,8 +32,8 @@ class CrmManager with ChangeNotifier {
       logo: 'CapsuleCRM.svg',
     ),
     Crm(
-      name: 'Clarifysoft',
-      logo: 'Clarifysoft.svg',
+      name: 'Claritysoft',
+      logo: 'Claritysoft.svg',
     ),
     Crm(
       name: 'Close.io',
@@ -125,7 +125,7 @@ class CrmManager with ChangeNotifier {
     ),
     Crm(
       name: 'Virtuous CRM',
-      logo: 'VirtuousCRM.svg',
+      logo: 'Virtuous.svg',
     ),
     Crm(
       name: 'Vlocity',

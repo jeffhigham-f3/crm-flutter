@@ -7,6 +7,7 @@ import 'package:verb_crm_flutter/models/crm_manager.dart';
 
 class CrmPickerScreen extends StatelessWidget {
   static const String id = 'crm_picker_screen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +103,20 @@ class _CrmCardState extends State<CrmCard> {
                         context,
                         CrmLoginScreen.id,
                         arguments: CrmRouteArgs(widget.crm),
-                      ).then((value) => setState(() {}))
+                      ).then(
+                        (value) => {
+                          setState(() {}),
+                          Scaffold.of(context).showSnackBar(new SnackBar(
+                            content: Text(
+                              '${widget.crm.name} configured!',
+                              style: Theme.of(context).textTheme.subtitle2,
+                              textAlign: TextAlign.center,
+                            ),
+                            duration: Duration(seconds: 2),
+                            backgroundColor: Theme.of(context).accentColor,
+                          ))
+                        },
+                      )
                     },
                   ),
           ],
