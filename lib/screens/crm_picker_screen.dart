@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
-import 'package:verb_crm_flutter/screens/crm_app_home.dart';
+import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:verb_crm_flutter/models/crm.dart';
 import 'package:verb_crm_flutter/models/crm_manager.dart';
 
@@ -67,7 +67,7 @@ class CrmCardGrid extends StatelessWidget {
                     ? Navigator.pop(context)
                     : Navigator.pushReplacementNamed(
                         context,
-                        CrmAppHome.id,
+                        AppHome.id,
                       );
               }),
             ),

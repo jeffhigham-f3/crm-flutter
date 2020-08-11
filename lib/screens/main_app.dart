@@ -3,10 +3,11 @@ import 'package:verb_crm_flutter/screens/login_screen.dart';
 import 'package:verb_crm_flutter/screens/signup_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
-import 'package:verb_crm_flutter/screens/crm_app_home.dart';
+import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
 import 'package:verb_crm_flutter/screens/people_home_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
+import 'package:verb_crm_flutter/screens/glance_detail_screen.dart';
 
 class MainApp extends StatelessWidget {
   @override
@@ -50,13 +51,13 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-      home: CrmAppHome(),
+      home: LoginScreen(),
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         SignupScreen.id: (context) => SignupScreen(),
         CrmPickerScreen.id: (context) => CrmPickerScreen(),
         CrmLoginScreen.id: (context) => CrmLoginScreen(),
-        CrmAppHome.id: (context) => CrmAppHome(),
+        AppHome.id: (context) => AppHome(),
         GoalPickerScreen.id: (context) => GoalPickerScreen(),
         PeopleHomeScreen.id: (context) => PeopleHomeScreen(),
         LiveVideoScreen.id: (context) => LiveVideoScreen(),

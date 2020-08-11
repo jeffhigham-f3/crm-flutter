@@ -3,36 +3,20 @@ import 'package:verb_crm_flutter/screens/people_home_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 import 'package:verb_crm_flutter/screens/profile_screen.dart';
+import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
 
-class CrmAppHome extends StatefulWidget {
+class AppHome extends StatefulWidget {
   static const String id = 'crm_app_home';
-  CrmAppHome({Key key}) : super(key: key);
+  AppHome({Key key}) : super(key: key);
   @override
-  _CrmAppHomeState createState() => _CrmAppHomeState();
+  _AppHomeState createState() => _AppHomeState();
 }
 
-class _CrmAppHomeState extends State<CrmAppHome> {
+class _AppHomeState extends State<AppHome> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Glance',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
-            'This is the Glance home screen.',
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ),
-        ),
-      ],
-    ),
+    GlanceHomeScreen(),
     PeopleHomeScreen(),
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
