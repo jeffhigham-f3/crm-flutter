@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
+import 'package:verb_crm_flutter/screens/signup_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_app_home.dart';
@@ -18,18 +19,18 @@ class MainApp extends StatelessWidget {
 //        canvasColor: Colors.white,
         // https://api.flutter.dev/flutter/widgets/Text-class.html
         textTheme: TextTheme(
-          bodyText1: TextStyle(),
-          bodyText2: TextStyle(),
-          button: TextStyle(),
-          caption: TextStyle(),
-          headline1: TextStyle(),
-          headline2: TextStyle(),
-          headline3: TextStyle(),
-          headline4: TextStyle(),
-          headline5: TextStyle(),
-          headline6: TextStyle(),
-          subtitle1: TextStyle(),
-          subtitle2: TextStyle(),
+          bodyText1: const TextStyle(),
+          bodyText2: const TextStyle(),
+          button: const TextStyle(),
+          caption: const TextStyle(),
+          headline1: const TextStyle(),
+          headline2: const TextStyle(),
+          headline3: const TextStyle(),
+          headline4: const TextStyle(),
+          headline5: const TextStyle(),
+          headline6: const TextStyle(),
+          subtitle1: const TextStyle(),
+          subtitle2: const TextStyle(),
         ),
         buttonTheme: ButtonThemeData(
           textTheme: ButtonTextTheme.accent,
@@ -38,27 +39,21 @@ class MainApp extends StatelessWidget {
           ),
         ),
         inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(
-//            color: Color(0xFFF3F6FA),
-              ),
-          hintStyle: TextStyle(
-//            color: Color(0xFFF3F6FA),
-              ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-//              color: Color(0xFFF3F6FA),
-                ),
+          labelStyle: const TextStyle(),
+          hintStyle: const TextStyle(),
+          errorStyle: const TextStyle(),
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: const BorderSide(),
           ),
-          focusedBorder: UnderlineInputBorder(
-//            borderSide: BorderSide(
-//              color: Colors.blue,
-//            ),
-              ),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: const BorderSide(),
+          ),
         ),
       ),
       home: LoginScreen(),
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
+        SignupScreen.id: (context) => SignupScreen(),
         CrmPickerScreen.id: (context) => CrmPickerScreen(),
         CrmLoginScreen.id: (context) => CrmLoginScreen(),
         CrmAppHome.id: (context) => CrmAppHome(),

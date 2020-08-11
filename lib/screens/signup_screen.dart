@@ -4,33 +4,34 @@ import 'package:verb_crm_flutter/widgets/import.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animate_do/animate_do.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const String id = 'login_screen';
+class SignupScreen extends StatelessWidget {
+  static const String id = 'signup_screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GradientContainer(
-        child: LoginForm(),
+        child: SignupForm(),
       ),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
+class SignupForm extends StatefulWidget {
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _SignupFormState createState() => _SignupFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _SignupFormState extends State<SignupForm> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordVerifyController = TextEditingController();
 
-  void _signInWithEmailAndPassword() async {
+  void _register() async {
     FirebaseUser user;
     try {
-      user = (await _auth.signInWithEmailAndPassword(
+      user = (await _auth.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       ))
@@ -48,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
       Scaffold.of(context).showSnackBar(
         new SnackBar(
           content: Text(
-            'Login Failed',
+            'Signup Failed',
             style: Theme.of(context).textTheme.subtitle2,
             textAlign: TextAlign.center,
           ),
@@ -63,6 +64,7 @@ class _LoginFormState extends State<LoginForm> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _passwordVerifyController.dispose();
     super.dispose();
   }
 
@@ -124,6 +126,27 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           Container(
+            width: MediaQuery.of(context).size.width * .65,
+            child: TextFormField(
+              controller: _passwordVerifyController,
+              obscureText: true,
+              cursorColor: Colors.white,
+              keyboardType: TextInputType.text,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+              decoration: const InputDecoration(
+                hintText: "Verify Password",
+              ),
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return 'Please verify password';
+                }
+                return null;
+              },
+            ),
+          ),
+          Container(
             width: MediaQuery.of(context).size.width,
           ),
           Padding(
@@ -135,11 +158,11 @@ class _LoginFormState extends State<LoginForm> {
                 color: Colors.white.withOpacity(0.2),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    _signInWithEmailAndPassword();
+                    _register();
                   }
                 },
                 child: const Text(
-                  'Login',
+                  'Create Account',
                   style: TextStyle(
                     fontSize: 18.0,
                   ),

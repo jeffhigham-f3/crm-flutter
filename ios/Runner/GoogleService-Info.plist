@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>249437242933-9e2u78g8fgbvv8g79ts985l128g6hvv0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.249437242933-9e2u78g8fgbvv8g79ts985l128g6hvv0</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD7vx8R1fvYGP6CWU2oQO5udLDnVzWxzXs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>249437242933</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jeffhigham.VerbFlutter</string>
+	<key>PROJECT_ID</key>
+	<string>verb-flutter</string>
+	<key>STORAGE_BUCKET</key>
+	<string>verb-flutter.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:249437242933:ios:71ae59d08f42af00ad537c</string>
+	<key>DATABASE_URL</key>
+	<string>https://verb-flutter.firebaseio.com</string>
+</dict>
+</plist>
