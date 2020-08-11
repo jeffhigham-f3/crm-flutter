@@ -40,23 +40,34 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
                       final goal = Provider.of<GoalManager>(context, listen: false).entities[index];
                       Provider.of<GoalManager>(context, listen: false).toggle(goal: goal);
                     }),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 2.0),
-                      height: 48,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: (Provider.of<GoalManager>(context, listen: false).entities[index].enabled)
-                                  ? Icon(Icons.done)
-                                  : null,
-                            ),
-                            Text(Provider.of<GoalManager>(context, listen: false).entities[index].name,
-                                style: Theme.of(context).textTheme.bodyText1),
-                          ],
+                    child: Card(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 2.0),
+                        height: 75,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: (Provider.of<GoalManager>(context, listen: false).entities[index].enabled)
+                                    ? Icon(
+                                        Icons.check_box,
+                                        color: Theme.of(context).accentColor,
+                                      )
+                                    : Icon(
+                                        Icons.check_box_outline_blank,
+                                      ),
+                              ),
+                              Container(
+//                                padding: const EdgeInsets.all(8.0),
+                                margin: const EdgeInsets.all(8.0),
+                                child: Text(Provider.of<GoalManager>(context, listen: false).entities[index].name,
+                                    style: Theme.of(context).textTheme.headline6),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

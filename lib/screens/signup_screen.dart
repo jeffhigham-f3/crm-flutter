@@ -170,6 +170,12 @@ class _SignupFormState extends State<SignupForm> {
               ),
             ),
           ),
+          Container(
+            child: FlatButton(
+              onPressed: () => {Navigator.pop(context)},
+              child: Text("Login"),
+            ),
+          )
         ],
       ),
     );

@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/people_home_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
+import 'package:verb_crm_flutter/screens/profile_screen.dart';
 
 class CrmAppHome extends StatefulWidget {
   static const String id = 'crm_app_home';
   CrmAppHome({Key key}) : super(key: key);
-
   @override
   _CrmAppHomeState createState() => _CrmAppHomeState();
 }
 
 class _CrmAppHomeState extends State<CrmAppHome> {
   int _selectedIndex = 0;
+
   static List<Widget> _widgetOptions = <Widget>[
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +83,26 @@ class _CrmAppHomeState extends State<CrmAppHome> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Verb'),
-        leading: Container(),
+        leading: GestureDetector(
+          onTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProfileScreen(),
+                fullscreenDialog: true,
+              ),
+            )
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CircleAvatar(
+              child: Center(
+                child: Icon(Icons.person),
+              ),
+              backgroundColor: Colors.white,
+            ),
+          ),
+        ),
         actions: [
           IconButton(
             tooltip: "Connectors",

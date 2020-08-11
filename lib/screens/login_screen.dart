@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
+import 'package:verb_crm_flutter/screens/signup_screen.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animate_do/animate_do.dart';
@@ -147,6 +148,17 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
           ),
+          Container(
+            child: FlatButton(
+              onPressed: () => {
+                Navigator.pushNamed(
+                  context,
+                  SignupScreen.id,
+                )
+              },
+              child: Text("Sign Up"),
+            ),
+          )
         ],
       ),
     );
