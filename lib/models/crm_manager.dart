@@ -5,151 +5,151 @@ class CrmManager with ChangeNotifier {
   final List<Crm> entities = [
     Crm(
       name: 'Agile CRM',
-      logo: 'AgileCRM.svg',
+      logo: 'AgileCRM.png',
     ),
     Crm(
       name: 'amoCRM',
-      logo: 'amoCRM.svg',
+      logo: 'amoCRM.png',
     ),
     Crm(
       name: 'Anaconda',
-      logo: 'Anaconda.svg',
+      logo: 'Anaconda.png',
     ),
     Crm(
       name: 'Autotask Pro',
-      logo: 'AutotaskPro.svg',
+      logo: 'AutotaskPro.png',
     ),
     Crm(
       name: 'Base',
-      logo: 'Base.svg',
+      logo: 'Base.png',
     ),
     Crm(
       name: 'Benchmark',
-      logo: 'Benchmark.svg',
+      logo: 'Benchmark.png',
     ),
     Crm(
       name: 'Capsule CRM',
-      logo: 'CapsuleCRM.svg',
+      logo: 'CapsuleCRM.png',
     ),
     Crm(
       name: 'Claritysoft',
-      logo: 'Claritysoft.svg',
+      logo: 'Claritysoft.png',
     ),
     Crm(
       name: 'Close.io',
-      logo: 'Close.io.svg',
+      logo: 'Close.io.png',
     ),
     Crm(
       name: 'Cosential',
-      logo: 'Cosential.svg',
+      logo: 'Cosential.png',
     ),
     Crm(
       name: 'CRMNEXT',
-      logo: 'CRMNEXT.svg',
+      logo: 'CRMNEXT.png',
     ),
     Crm(
       name: 'Dynamo',
-      logo: 'Dynamo.svg',
+      logo: 'Dynamo.png',
     ),
     Crm(
       name: 'Freshsales',
-      logo: 'Freshsales.svg',
+      logo: 'Freshsales.png',
     ),
     Crm(
       name: 'FreshWorks',
-      logo: 'FreshWorks.svg',
+      logo: 'FreshWorks.png',
     ),
     Crm(
       name: 'Infusionsoft',
-      logo: 'Infusionsoft.svg',
+      logo: 'Infusionsoft.png',
     ),
     Crm(
       name: 'Insightly',
-      logo: 'Insightly.svg',
+      logo: 'Insightly.png',
     ),
     Crm(
       name: 'LeadMaster',
-      logo: 'LeadMaster.svg',
+      logo: 'LeadMaster.png',
     ),
     Crm(
       name: 'LeadSquared',
-      logo: 'LeadSquared.svg',
+      logo: 'LeadSquared.png',
     ),
     Crm(
       name: 'LionDesk',
-      logo: 'LionDesk.svg',
+      logo: 'LionDesk.png',
     ),
     Crm(
       name: 'Oracel CRM',
-      logo: 'OracleCRM.svg',
+      logo: 'OracleCRM.png',
     ),
     Crm(
       name: 'Pegasystems',
-      logo: 'Pegasystems.svg',
+      logo: 'Pegasystems.png',
     ),
     Crm(
       name: 'Pipedrive',
-      logo: 'Pipedrive.svg',
+      logo: 'Pipedrive.png',
     ),
     Crm(
       name: 'PipelineDeals',
-      logo: 'PipelineDeals.svg',
+      logo: 'PipelineDeals.png',
     ),
     Crm(
       name: 'Pipeliner',
-      logo: 'Pipeliner.svg',
+      logo: 'Pipeliner.png',
     ),
     Crm(
       name: 'Raider\'s Edge\nNXT',
-      logo: 'Raider_s_Edge_NXT.svg',
+      logo: 'Raider_s_Edge_NXT.png',
     ),
     Crm(
       name: 'SalesForce',
-      logo: 'Salesforce.svg',
+      logo: 'Salesforce.png',
     ),
     Crm(
       name: 'SalesforceIQ',
-      logo: 'SalesforceIQ.svg',
+      logo: 'SalesforceIQ.png',
     ),
     Crm(
       name: 'SAP CRM',
-      logo: 'SAPCRM.svg',
+      logo: 'SAPCRM.png',
     ),
     Crm(
       name: 'ServiceNow',
-      logo: 'ServiceNow.svg',
+      logo: 'ServiceNow.png',
     ),
     Crm(
       name: 'SugarCRM',
-      logo: 'SugarCRM.svg',
+      logo: 'SugarCRM.png',
     ),
     Crm(
       name: 'Virtuous CRM',
-      logo: 'Virtuous.svg',
+      logo: 'Virtuous.png',
     ),
     Crm(
       name: 'Vlocity',
-      logo: 'Vlocity.svg',
+      logo: 'Vlocity.png',
     ),
     Crm(
       name: 'Vtiger',
-      logo: 'Vtiger.svg',
+      logo: 'Vtiger.png',
     ),
     Crm(
       name: 'Workbooks',
-      logo: 'Workbooks.svg',
+      logo: 'Workbooks.png',
     ),
     Crm(
       name: 'X2Engine',
-      logo: 'X2Engine.svg',
+      logo: 'X2Engine.png',
     ),
     Crm(
       name: 'Zendesk Sell',
-      logo: 'ZendeskSell.svg',
+      logo: 'ZendeskSell.png',
     ),
     Crm(
       name: 'Zoho CRM',
-      logo: 'ZohoCRM.svg',
+      logo: 'ZohoCRM.png',
     )
   ];
 }

@@ -45,7 +45,10 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
               Container(
                 width: 86,
                 height: 86,
-                child: widget.crm.logoSvg,
+                child: Image.asset('assets/${widget.crm.logo}'),
+              ),
+              SizedBox(
+                height: 20,
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 20),
@@ -53,6 +56,9 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
                   widget.crm.name,
                   style: Theme.of(context).textTheme.headline6,
                 ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               Container(
                 width: MediaQuery.of(context).size.width * .65,

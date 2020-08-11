@@ -92,16 +92,22 @@ class _CrmCardState extends State<CrmCard> {
     return Card(
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 42,
-              height: 42,
-              child: widget.crm.logoSvg,
+              width: 56,
+              height: 56,
+              child: Image.asset('assets/${widget.crm.logo}'),
+            ),
+            SizedBox(
+              height: 20.0,
             ),
             Text(
               widget.crm.name,
               style: Theme.of(context).textTheme.bodyText2,
+            ),
+            SizedBox(
+              height: 20.0,
             ),
             (widget.crm.enabled)
                 ? Icon(

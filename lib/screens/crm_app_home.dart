@@ -102,8 +102,14 @@ class _CrmAppHomeState extends State<CrmAppHome> {
           )
         ],
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 0.5,
