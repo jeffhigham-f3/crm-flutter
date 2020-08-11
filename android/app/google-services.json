@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "249437242933",
+    "firebase_url": "https://verb-flutter.firebaseio.com",
+    "project_id": "verb-flutter",
+    "storage_bucket": "verb-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249437242933:android:2158eb96afcfe838ad537c",
+        "android_client_info": {
+          "package_name": "com.jeffhigham.VerbFlutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249437242933-50jc58mudhl111q4ciselq0v08n3bdfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6nnjxQ2wRXJuKBAmVWNND6HUz6g5B-6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249437242933-50jc58mudhl111q4ciselq0v08n3bdfd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "249437242933-9e2u78g8fgbvv8g79ts985l128g6hvv0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jeffhigham.VerbFlutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

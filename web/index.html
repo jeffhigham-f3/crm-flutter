@@ -28,6 +28,30 @@
       });
     }
   </script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-auth.js"></script>
+
+  <script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyD3t0Q1m4lLiv3vd81i1cF0bsW0bCQo0NU",
+    authDomain: "verb-flutter.firebaseapp.com",
+    databaseURL: "https://verb-flutter.firebaseio.com",
+    projectId: "verb-flutter",
+    storageBucket: "verb-flutter.appspot.com",
+    messagingSenderId: "249437242933",
+    appId: "1:249437242933:web:1f4963f9b33665bead537c",
+    measurementId: "G-KBKQ6PNLTB"
+  };
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+   </script>
+
+
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.jeffhigham.verb_crm_flutter
+package com.jeffhigham.VerbFlutter
 
 import io.flutter.embedding.android.FlutterActivity
 
