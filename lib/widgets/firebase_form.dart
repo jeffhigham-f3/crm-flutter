@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
+import 'package:provider/provider.dart';
+import 'package:verb_crm_flutter/service/auth_service.dart';
 
 class FirebaseForm extends StatefulWidget {
   LoginType loginType;
@@ -13,78 +15,49 @@ class FirebaseForm extends StatefulWidget {
 }
 
 class _FirebaseFormState extends State<FirebaseForm> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordVerifyController = TextEditingController();
 
   void _register() async {
-    FirebaseUser user;
     try {
-      user = (await _auth.createUserWithEmailAndPassword(
+      await Provider.of<AuthService>(context, listen: false).firebaseSignUp(
         email: _emailController.text,
         password: _passwordController.text,
-      ))
-          .user;
+      );
 
-      if (user != null) {
-        _accountSuccess();
-      } else {
-        _accountFailure("Signup Failed");
-      }
-    } catch (e) {
-      _handleFirebaseError(e);
-    }
-  }
-
-  void _signInWithEmailAndPassword() async {
-    FirebaseUser user;
-    try {
-      user = (await _auth.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      ))
-          .user;
-      if (user != null) {
+      if (Provider.of<AuthService>(context, listen: false).currentUser != null) {
         _accountSuccess();
       } else {
         _accountFailure("Login Failed");
       }
     } catch (e) {
-      _handleFirebaseError(e);
+      _handleAuthError(e);
     }
   }
 
-  void _handleFirebaseError(e) {
-    // https://gist.github.com/jeffhigham-f3/48fabf0b5efd4906a2bf458b50910b98
-    print(e);
-    switch (e.code) {
-      case "ERROR_OPERATION_NOT_ALLOWED":
-        _accountFailure("Anonymous accounts are not enabled");
-        break;
+  void _signInWithEmailAndPassword() async {
+    try {
+      await Provider.of<AuthService>(context, listen: false).firebaseLogin(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
 
-      case "ERROR_WEAK_PASSWORD":
-        _accountFailure("Your password is too weak");
-        break;
-
-      case "ERROR_INVALID_EMAIL":
-        _accountFailure("Your password is too weak");
-        break;
-
-      case "ERROR_EMAIL_ALREADY_IN_USE":
-        _accountFailure("The email address is already in use");
-        break;
-
-      case "ERROR_INVALID_CREDENTIAL":
-        _accountFailure("Your email is invalid");
-        break;
-
-      default:
-        (widget.loginType == LoginType.firebaseLogin)
-            ? _accountFailure("Login Failed")
-            : _accountFailure("Signup Failed");
+      if (Provider.of<AuthService>(context, listen: false).currentUser != null) {
+        _accountSuccess();
+      } else {
+        _accountFailure("Login Failed");
+      }
+    } catch (e) {
+      _handleAuthError(e);
     }
+  }
+
+  void _handleAuthError(e) {
+    print(e);
+    final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: e);
+    _accountFailure(errorText);
   }
 
   void _accountSuccess() {

@@ -4,6 +4,7 @@ import 'package:verb_crm_flutter/models/goal_manager.dart';
 import 'package:verb_crm_flutter/models/crm_manager.dart';
 import 'package:verb_crm_flutter/models/glance_task_manager.dart';
 import 'package:verb_crm_flutter/screens/main_app.dart';
+import 'package:verb_crm_flutter/service/auth_service.dart';
 
 void main() {
   runApp(
@@ -17,7 +18,10 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => GlanceTaskManager(),
-        )
+        ),
+        ChangeNotifierProvider<AuthService>.value(
+          value: AuthService(),
+        ),
       ],
       child: MainApp(),
     ),
