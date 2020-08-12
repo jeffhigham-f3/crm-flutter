@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
-import 'package:verb_crm_flutter/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
 
@@ -28,15 +27,14 @@ class _FirebaseFormState extends State<FirebaseForm> {
         password: _passwordController.text,
       ))
           .user;
-    } on Exception catch (e) {
-      print(e);
-      _accountFailure("Signup Failed");
-    }
 
-    if (user != null) {
-      _accountSuccess();
-    } else {
-      _accountFailure("Signup Failed");
+      if (user != null) {
+        _accountSuccess();
+      } else {
+        _accountFailure("Signup Failed");
+      }
+    } catch (e) {
+      _handleFirebaseError(e);
     }
   }
 
@@ -48,14 +46,44 @@ class _FirebaseFormState extends State<FirebaseForm> {
         password: _passwordController.text,
       ))
           .user;
-    } on Exception catch (e) {
-      print(e);
+      if (user != null) {
+        _accountSuccess();
+      } else {
+        _accountFailure("Login Failed");
+      }
+    } catch (e) {
+      _handleFirebaseError(e);
     }
+  }
 
-    if (user != null) {
-      _accountSuccess();
-    } else {
-      _accountFailure("Login Failed");
+  void _handleFirebaseError(e) {
+    // https://gist.github.com/jeffhigham-f3/48fabf0b5efd4906a2bf458b50910b98
+    print(e);
+    switch (e.code) {
+      case "ERROR_OPERATION_NOT_ALLOWED":
+        _accountFailure("Anonymous accounts are not enabled");
+        break;
+
+      case "ERROR_WEAK_PASSWORD":
+        _accountFailure("Your password is too weak");
+        break;
+
+      case "ERROR_INVALID_EMAIL":
+        _accountFailure("Your password is too weak");
+        break;
+
+      case "ERROR_EMAIL_ALREADY_IN_USE":
+        _accountFailure("The email address is already in use");
+        break;
+
+      case "ERROR_INVALID_CREDENTIAL":
+        _accountFailure("Your email is invalid");
+        break;
+
+      default:
+        (widget.loginType == LoginType.firebaseLogin)
+            ? _accountFailure("Login Failed")
+            : _accountFailure("Signup Failed");
     }
   }
 
@@ -203,12 +231,6 @@ class _FormInput extends StatelessWidget {
         decoration: InputDecoration(
           hintText: this.hintText,
         ),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return '${this.hintText} required';
-          }
-          return null;
-        },
       ),
     );
   }

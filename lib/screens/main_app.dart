@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
-import 'package:verb_crm_flutter/screens/signup_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 import 'package:verb_crm_flutter/screens/crm_login_screen.dart';
 import 'package:verb_crm_flutter/screens/app_home.dart';
@@ -54,7 +53,6 @@ class MainApp extends StatelessWidget {
       home: LoginScreen(),
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
-        SignupScreen.id: (context) => SignupScreen(),
         CrmPickerScreen.id: (context) => CrmPickerScreen(),
         CrmLoginScreen.id: (context) => CrmLoginScreen(),
         AppHome.id: (context) => AppHome(),
