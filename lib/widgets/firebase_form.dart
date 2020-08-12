@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class FirebaseForm extends StatefulWidget {
   LoginType loginType;
@@ -20,64 +21,25 @@ class _FirebaseFormState extends State<FirebaseForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordVerifyController = TextEditingController();
 
-  void _register() async {
-    try {
-      await Provider.of<AuthService>(context, listen: false).firebaseSignUp(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-
-      if (Provider.of<AuthService>(context, listen: false).currentUser != null) {
-        _accountSuccess();
-      } else {
-        _accountFailure("Login Failed");
-      }
-    } catch (e) {
-      _handleAuthError(e);
-    }
-  }
-
-  void _signInWithEmailAndPassword() async {
-    try {
-      await Provider.of<AuthService>(context, listen: false).firebaseLogin(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-
-      if (Provider.of<AuthService>(context, listen: false).currentUser != null) {
-        _accountSuccess();
-      } else {
-        _accountFailure("Login Failed");
-      }
-    } catch (e) {
-      _handleAuthError(e);
-    }
-  }
-
-  void _handleAuthError(e) {
-    print(e);
-    final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: e);
-    _accountFailure(errorText);
-  }
-
-  void _accountSuccess() {
-    Navigator.pushReplacementNamed(
-      context,
-      GoalPickerScreen.id,
-    );
-  }
-
-  void _accountFailure(String message) {
+  void _onError(dynamic error) {
+    final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: error);
     Scaffold.of(context).showSnackBar(
       new SnackBar(
         content: Text(
-          message,
+          errorText,
           style: Theme.of(context).textTheme.subtitle2,
           textAlign: TextAlign.center,
         ),
         duration: Duration(seconds: 1),
         backgroundColor: Theme.of(context).accentColor,
       ),
+    );
+  }
+
+  void _onSuccess(AuthResult result) {
+    Navigator.pushReplacementNamed(
+      context,
+      GoalPickerScreen.id,
     );
   }
 
@@ -91,6 +53,8 @@ class _FirebaseFormState extends State<FirebaseForm> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = context.watch<AuthService>();
+
     return Form(
       key: _formKey,
       child: Container(
@@ -113,9 +77,25 @@ class _FirebaseFormState extends State<FirebaseForm> {
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   if (widget.loginType == LoginType.firebaseLogin) {
-                    _signInWithEmailAndPassword();
+                    authService
+                        .firebaseLogin(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        )
+                        .then((result) => _onSuccess(result))
+                        .catchError(
+                          (e) => _onError(e),
+                        );
                   } else {
-                    _register();
+                    authService
+                        .firebaseSignUp(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        )
+                        .then((result) => _onSuccess(result))
+                        .catchError(
+                          (e) => _onError(e),
+                        );
                   }
                   _formKey.currentState.reset();
                 }
