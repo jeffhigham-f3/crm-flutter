@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/crm.dart';
-import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class CrmLoginScreen extends StatefulWidget {

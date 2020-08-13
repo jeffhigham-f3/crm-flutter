@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:verb_crm_flutter/models/user.dart';
+import 'package:verb_crm_flutter/service/auth0_service.dart';
 
 abstract class AuthServiceAbstract extends ChangeNotifier {
   User get currentUser;
@@ -9,12 +10,14 @@ abstract class AuthServiceAbstract extends ChangeNotifier {
   Future<AuthResult> firebaseAnonymous({@required String name, @required String email});
   Future<AuthResult> firebaseSignUp({@required String email, @required String password});
   Future<AuthResult> firebaseLogin({@required String email, @required String password});
+  Future<void> Auth0Login();
   Future<void> signOut();
   String decodeError({@required exception});
 }
 
 class AuthService extends AuthServiceAbstract {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final Auth0Service _auth0 = Auth0Service();
   User _currentUser;
 
   @override
@@ -61,6 +64,16 @@ class AuthService extends AuthServiceAbstract {
   }
 
   @override
+  Future<void> Auth0Login() async {
+    final userDetails = await _auth0.loginAction();
+    if (userDetails != null) {
+      _currentUser = User.fromAuth0(userDetails);
+      print('Login from: ${_currentUser.name}');
+      notifyListeners();
+    }
+  }
+
+  @override
   Future<void> signOut() async {
     await Future.wait([
       _firebaseAuth.signOut(),
@@ -94,6 +107,10 @@ class AuthService extends AuthServiceAbstract {
 
       case "ERROR_INVALID_CREDENTIAL":
         return 'Your email is invalid';
+        break;
+
+      case "authorize_and_exchange_code_failed":
+        return 'Authorization failed';
         break;
 
       default:

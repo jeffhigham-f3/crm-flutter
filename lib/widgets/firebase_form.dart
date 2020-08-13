@@ -22,6 +22,7 @@ class _FirebaseFormState extends State<FirebaseForm> {
   final TextEditingController _passwordVerifyController = TextEditingController();
 
   void _onError(dynamic error) {
+    print(error);
     final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: error);
     Scaffold.of(context).showSnackBar(
       new SnackBar(
@@ -36,7 +37,7 @@ class _FirebaseFormState extends State<FirebaseForm> {
     );
   }
 
-  void _onSuccess(AuthResult result) {
+  void _onSuccess(dynamic result) {
     Navigator.pushReplacementNamed(
       context,
       GoalPickerScreen.id,
@@ -61,7 +62,7 @@ class _FirebaseFormState extends State<FirebaseForm> {
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _FormInput(
               hintText: "Email address",
@@ -71,6 +72,9 @@ class _FirebaseFormState extends State<FirebaseForm> {
               hintText: "Password",
               obscureText: true,
               controller: _passwordController,
+            ),
+            SizedBox(
+              height: 20.0,
             ),
             _FormButton(
               text: (widget.loginType == LoginType.firebaseLogin) ? "Login" : "Signup",
@@ -101,20 +105,61 @@ class _FirebaseFormState extends State<FirebaseForm> {
                 }
               },
             ),
-            Container(
-              child: FlatButton(
-                onPressed: () => setState(() {
-                  if (widget.loginType == LoginType.firebaseLogin) {
-                    widget.loginType = LoginType.firebaseSignup;
-                  } else {
-                    widget.loginType = LoginType.firebaseLogin;
-                  }
-                  _formKey.currentState.reset();
-                }),
-                child: (widget.loginType == LoginType.firebaseLogin) ? Text("Sign Up") : Text("Login"),
-              ),
-            )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _SecondaryButton(
+                  onPressed: () => setState(() {
+                    if (widget.loginType == LoginType.firebaseLogin) {
+                      widget.loginType = LoginType.firebaseSignup;
+                    } else {
+                      widget.loginType = LoginType.firebaseLogin;
+                    }
+                    _formKey.currentState.reset();
+                  }),
+                  text: (widget.loginType == LoginType.firebaseLogin) ? 'Sign Up' : 'Login',
+                ),
+                Container(
+                  color: Colors.white.withOpacity(0.5),
+                  width: 1,
+                  height: 10,
+                ),
+                _SecondaryButton(
+                  onPressed: () => authService.Auth0Login()
+                      .then(
+                        (result) => _onSuccess(null),
+                      )
+                      .catchError(
+                        (e) => _onError(e),
+                      ),
+                  text: 'Auth0',
+                ),
+              ],
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SecondaryButton extends StatelessWidget {
+  final Function onPressed;
+  final String text;
+
+  const _SecondaryButton({Key key, this.onPressed, this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: FlatButton(
+        onPressed: this.onPressed,
+        child: Text(
+          this.text,
+          style: TextStyle(
+            color: Colors.white.withOpacity(0.5),
+            fontSize: 14.0,
+          ),
         ),
       ),
     );
@@ -128,25 +173,24 @@ class _FormButton extends StatelessWidget {
   const _FormButton({Key key, this.onPressed, this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        maxWidth: 500,
-      ),
-      width: MediaQuery.of(context).size.width * .65,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * .65,
-          child: FlatButton(
-            textColor: Colors.white,
-            color: Colors.white.withOpacity(0.2),
-            onPressed: this.onPressed,
-            child: Text(
-              this.text,
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
-            ),
+    return InkWell(
+      onTap: this.onPressed,
+      child: Container(
+        alignment: Alignment.center,
+        constraints: BoxConstraints(
+          maxWidth: 500,
+          minHeight: 40,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50.0),
+          color: Colors.white.withOpacity(0.2),
+        ),
+        width: MediaQuery.of(context).size.width * .65,
+        child: Text(
+          this.text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
           ),
         ),
       ),
@@ -176,13 +220,23 @@ class _FormInput extends StatelessWidget {
       child: TextFormField(
         controller: this.controller,
         obscureText: (this.obscureText != null) ? this.obscureText : false,
-        cursorColor: Colors.white,
+        cursorColor: Colors.white.withOpacity(0.2),
         keyboardType: TextInputType.text,
         style: const TextStyle(
           color: Colors.white,
+          fontSize: 24.0,
         ),
         decoration: InputDecoration(
           hintText: this.hintText,
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          hintStyle: TextStyle(
+            color: Colors.white.withOpacity(0.2),
+            fontSize: 24.0,
+          ),
         ),
       ),
     );

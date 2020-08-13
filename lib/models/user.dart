@@ -6,9 +6,10 @@ class User {
   final String name;
   final String email;
   final String photoUrl;
-
   final String firstName;
   final String lastName;
+  final String locale;
+  final String authProvider;
 
   const User({
     @required this.id,
@@ -17,7 +18,37 @@ class User {
     @required this.lastName,
     @required this.email,
     @required this.photoUrl,
+    @required this.locale,
+    @required this.authProvider,
   });
+
+  factory User.fromAuth0(Map<String, dynamic> user) {
+    /*
+    flutter: {sub: google-oauth2|109631922330034187458, given_name: Jeff, family_name: Higham, nickname: jeffhigham,
+    name: Jeff Higham, picture: https://lh3.googleusercontent.com/a-/AOh14Gi4YRoulgS17Yrs0zcrqS4YeUl0unHVnJ24ZkDEYQ,
+    locale: en, updated_at: 2020-08-12T20:29:44.082Z}
+     */
+
+    final sub = user['sub'];
+    final firstName = user['given_name'];
+    final lastName = user['family_name'];
+    final name = user['name'];
+    final photoUrl = user['picture'];
+    final locale = user['locale'];
+    final authProvider = sub.toString().split('|')[0];
+    final id = sub.toString().split('|')[1];
+
+    return User(
+      id: id,
+      name: name,
+      email: '',
+      photoUrl: photoUrl,
+      firstName: firstName,
+      lastName: lastName,
+      locale: locale,
+      authProvider: authProvider,
+    );
+  }
 
   factory User.fromFirebase(FirebaseUser user) {
     final String name = (user.displayName?.isNotEmpty == true) ? user.displayName : 'Anonymous';
@@ -26,13 +57,14 @@ class User {
     final String lastName = index < 0 ? '' : name.substring(index + 1);
 
     return User(
-      id: user.uid,
-      name: name,
-      email: user.email,
-      photoUrl: user.photoUrl,
-      firstName: firstName,
-      lastName: lastName,
-    );
+        id: user.uid,
+        name: name,
+        email: user.email,
+        photoUrl: user.photoUrl,
+        firstName: firstName,
+        lastName: lastName,
+        locale: 'en',
+        authProvider: 'FirebaseAuth');
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
