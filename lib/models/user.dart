@@ -22,12 +22,8 @@ class User {
     @required this.authProvider,
   });
 
-  factory User.fromAuth0(Map<String, dynamic> user) {
-    /*
-    flutter: {sub: google-oauth2|109631922330034187458, given_name: Jeff, family_name: Higham, nickname: jeffhigham,
-    name: Jeff Higham, picture: https://lh3.googleusercontent.com/a-/AOh14Gi4YRoulgS17Yrs0zcrqS4YeUl0unHVnJ24ZkDEYQ,
-    locale: en, updated_at: 2020-08-12T20:29:44.082Z}
-     */
+  factory User.fromAuth0(Map<String, Object> user) {
+    print(user);
 
     final sub = user['sub'];
     final firstName = user['given_name'];
@@ -51,6 +47,7 @@ class User {
   }
 
   factory User.fromFirebase(FirebaseUser user) {
+    print(user);
     final String name = (user.displayName?.isNotEmpty == true) ? user.displayName : 'Anonymous';
     final int index = name.indexOf(RegExp(r'\s'));
     final String firstName = index < 0 ? name : name.substring(0, index);

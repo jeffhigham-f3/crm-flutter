@@ -5,6 +5,7 @@ import 'package:verb_crm_flutter/enums/import.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String id = 'login_screen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,4 +30,10 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class LoginScreenArguments {
+  final bool logout;
+
+  LoginScreenArguments({@required this.logout});
 }

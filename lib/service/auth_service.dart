@@ -28,7 +28,17 @@ class AuthService extends AuthServiceAbstract {
 
   Future<User> loadCurrentUser() async {
     final FirebaseUser firebaseUser = await _firebaseAuth.currentUser();
-    _currentUser = firebaseUser == null ? null : User.fromFirebase(firebaseUser);
+    final Object auth0User = await _auth0.currentUser();
+    if (firebaseUser != null) {
+      print("User is from Firebase");
+      _currentUser = User.fromFirebase(firebaseUser);
+    } else if (auth0User != null) {
+      print("User is from Auth0");
+      _currentUser = User.fromAuth0(auth0User);
+    } else {
+      return null;
+    }
+    print(_currentUser);
     return _currentUser;
   }
 
@@ -47,6 +57,7 @@ class AuthService extends AuthServiceAbstract {
     final AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     if (result?.user != null) {
       _currentUser = User.fromFirebase(result.user);
+      print('Signup from: ${_currentUser.email}');
       notifyListeners();
     }
     return result;
@@ -68,7 +79,7 @@ class AuthService extends AuthServiceAbstract {
     final userDetails = await _auth0.loginAction();
     if (userDetails != null) {
       _currentUser = User.fromAuth0(userDetails);
-      print('Login from: ${_currentUser.name}');
+      print('Auth0 login from: ${_currentUser.name}');
       notifyListeners();
     }
   }
@@ -78,6 +89,7 @@ class AuthService extends AuthServiceAbstract {
     await Future.wait([
       _firebaseAuth.signOut(),
     ]);
+    await _auth0.logoutAction();
     _currentUser = null;
     notifyListeners();
   }

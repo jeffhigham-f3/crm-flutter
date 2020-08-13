@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class FirebaseForm extends StatefulWidget {
   LoginType loginType;
@@ -21,27 +19,10 @@ class _FirebaseFormState extends State<FirebaseForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordVerifyController = TextEditingController();
 
-  void _onError(dynamic error) {
-    print(error);
-    final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: error);
-    Scaffold.of(context).showSnackBar(
-      new SnackBar(
-        content: Text(
-          errorText,
-          style: Theme.of(context).textTheme.subtitle2,
-          textAlign: TextAlign.center,
-        ),
-        duration: Duration(seconds: 1),
-        backgroundColor: Theme.of(context).accentColor,
-      ),
-    );
-  }
-
-  void _onSuccess(dynamic result) {
-    Navigator.pushReplacementNamed(
-      context,
-      GoalPickerScreen.id,
-    );
+  @override
+  void initState() {
+    super.initState();
+    _loadState();
   }
 
   @override
@@ -140,6 +121,41 @@ class _FirebaseFormState extends State<FirebaseForm> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _loadState() async {
+    context.read<AuthService>().loadCurrentUser().then(
+      (user) {
+        if (user != null) {
+          _onSuccess(user);
+        }
+      },
+    ).catchError(
+      (e) => _onError(e),
+    );
+  }
+
+  void _onError(dynamic error) {
+    print(error);
+    final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: error);
+    Scaffold.of(context).showSnackBar(
+      new SnackBar(
+        content: Text(
+          errorText,
+          style: Theme.of(context).textTheme.subtitle2,
+          textAlign: TextAlign.center,
+        ),
+        duration: Duration(seconds: 1),
+        backgroundColor: Theme.of(context).accentColor,
+      ),
+    );
+  }
+
+  void _onSuccess(dynamic result) {
+    Navigator.pushReplacementNamed(
+      context,
+      GoalPickerScreen.id,
     );
   }
 }

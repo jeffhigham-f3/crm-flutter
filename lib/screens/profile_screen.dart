@@ -1,47 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:verb_crm_flutter/service/auth_service.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
+import 'package:verb_crm_flutter/widgets/gradient_container.dart';
 
-class ProfileScreen extends StatelessWidget {
-  final user = FirebaseAuth.instance.currentUser();
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        scrollDirection: Axis.vertical,
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            title: Text("Profile"),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: CircleAvatar(
-                radius: 48,
-                child: Text(
-                  "JH",
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                    fontSize: 24,
+    final authService = context.watch<AuthService>();
+
+    return (authService.isSignedIn)
+        ? Scaffold(
+            body: CustomScrollView(
+              scrollDirection: Axis.vertical,
+              slivers: [
+                SliverAppBar(
+                  floating: true,
+                  title: Text(authService.currentUser.name),
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(20),
+                        child: CircleAvatar(
+                          radius: 75,
+                          backgroundColor: Theme.of(context).accentColor,
+                          child: CircleAvatar(
+                              backgroundImage: (authService.currentUser.photoUrl != null)
+                                  ? NetworkImage(authService.currentUser.photoUrl)
+                                  : null,
+                              radius: 70,
+                              backgroundColor: Theme.of(context).canvasColor,
+                              child: (authService.currentUser.photoUrl == null)
+                                  ? Text(
+                                      authService.currentUser.initials,
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                        fontSize: 42.0,
+                                      ),
+                                    )
+                                  : null),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                backgroundColor: Colors.white,
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Center(
-              child: OutlineButton(
-                onPressed: () => {
-                  Navigator.pop(context),
-                },
-                child: Text("Sign Out"),
-              ),
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: OutlineButton(
+                      onPressed: () => {
+                        authService.signOut(),
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          LoginScreen.id,
+                          (Route<dynamic> route) => false,
+                        ),
+                      },
+                      child: Text("Sign Out"),
+                    ),
+                  ),
+                )
+              ],
             ),
           )
-        ],
-      ),
-    );
+        : Scaffold(body: GradientContainer());
   }
 }
