@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Bounce(
-              delay: Duration(seconds: 0),
+              duration: Duration(milliseconds: 800),
               child: Container(
                 width: 150.0,
                 margin: EdgeInsets.only(bottom: 30.0),

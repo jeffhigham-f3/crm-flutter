@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/models/glance_task_manager.dart';
+import 'package:verb_crm_flutter/models/glance_task.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class GlanceHomeScreen extends StatefulWidget {
   static const String id = 'goal_picker_screen';
@@ -12,10 +12,10 @@ class GlanceHomeScreen extends StatefulWidget {
 }
 
 class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
-  bool _loading = true;
-
   @override
   Widget build(BuildContext context) {
+    final taskManager = context.watch<GlanceTaskManager>();
+
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: Column(
@@ -33,12 +33,23 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
           ),
           Expanded(
             flex: 10,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: Provider.of<GlanceTaskManager>(context, listen: true).entities.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GlanceTaskWidget(
-                  task: Provider.of<GlanceTaskManager>(context, listen: true).entities[index],
+            child: StreamBuilder(
+              stream: taskManager.entityStream(),
+              builder: (context, snapshot) {
+                List<GlanceTaskWidget> widgets = [];
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                for (var task in snapshot.data) {
+                  widgets.add(
+                    GlanceTaskWidget(task: task),
+                  );
+                }
+                return ListView(
+                  padding: const EdgeInsets.all(8),
+                  children: widgets,
                 );
               },
             ),

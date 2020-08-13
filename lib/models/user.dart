@@ -54,14 +54,15 @@ class User {
     final String lastName = index < 0 ? '' : name.substring(index + 1);
 
     return User(
-        id: user.uid,
-        name: name,
-        email: user.email,
-        photoUrl: user.photoUrl,
-        firstName: firstName,
-        lastName: lastName,
-        locale: 'en',
-        authProvider: 'FirebaseAuth');
+      id: user.uid,
+      name: name,
+      email: user.email,
+      photoUrl: user.photoUrl,
+      firstName: firstName,
+      lastName: lastName,
+      locale: 'en',
+      authProvider: 'FirebaseAuth',
+    );
   }
 
   factory User.fromJson(Map<String, dynamic> json) {

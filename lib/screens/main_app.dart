@@ -50,7 +50,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-      home: LoginScreen(),
+      home: AppHome(),
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         CrmPickerScreen.id: (context) => CrmPickerScreen(),

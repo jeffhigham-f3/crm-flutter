@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verb_crm_flutter/widgets/contact_list_widget.dart';
 
 class PeopleTomorrowScreen extends StatefulWidget {
   static const String id = 'glance_tomorrow_screen';
@@ -13,21 +14,10 @@ class _PeopleTomorrowScreenState extends State<PeopleTomorrowScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          'Tomorrow',
-          style: optionStyle,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
-            'Everything you need to do tomorrow.',
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ),
-        )
+        ContactListWidget(),
       ],
     );
   }

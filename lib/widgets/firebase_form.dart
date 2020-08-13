@@ -114,7 +114,7 @@ class _FirebaseFormState extends State<FirebaseForm> {
                       .catchError(
                         (e) => _onError(e),
                       ),
-                  text: 'Auth0',
+                  text: 'More',
                 ),
               ],
             ),
