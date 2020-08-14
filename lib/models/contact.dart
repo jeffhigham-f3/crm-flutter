@@ -13,10 +13,18 @@ class Contact {
 
   Contact({
     this.id,
+    this.name,
     this.firstName,
     this.lastName,
+    this.email,
+    this.phone,
     this.photoUrl,
+    this.locale,
   });
+
+  String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)
+      ? '${firstName.substring(0, 1).toUpperCase()}${lastName.substring(0, 1).toUpperCase()}'
+      : id.substring(0, 2).toUpperCase();
 }
 
 enum FollowUp { today, tomorrow, later }

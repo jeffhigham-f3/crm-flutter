@@ -3,6 +3,7 @@ import 'package:verb_crm_flutter/screens/people/people_today_screen.dart';
 import 'package:verb_crm_flutter/screens/people/people_tomorrow_screen.dart';
 import 'package:verb_crm_flutter/screens/people/people_later_screen.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class PeopleHomeScreen extends StatefulWidget {
   static const String id = 'glance_home_screen';
@@ -41,7 +42,7 @@ class _PeopleHomeScreenState extends State<PeopleHomeScreen> {
           PageviewNavigator(
             children: <Widget>[
               PageviewNavigationButton(
-                text: "Today",
+                text: "Leads",
                 onPressed: () {
                   if (_pageController.hasClients) {
                     _pageController.animateToPage(
@@ -53,7 +54,7 @@ class _PeopleHomeScreenState extends State<PeopleHomeScreen> {
                 },
               ),
               PageviewNavigationButton(
-                text: "Tomorro (3)",
+                text: "Customers",
                 onPressed: () {
                   if (_pageController.hasClients) {
                     _pageController.animateToPage(
@@ -65,7 +66,7 @@ class _PeopleHomeScreenState extends State<PeopleHomeScreen> {
                 },
               ),
               PageviewNavigationButton(
-                text: "Later (20)",
+                text: "Contacts",
                 onPressed: () {
                   if (_pageController.hasClients) {
                     _pageController.animateToPage(
@@ -77,6 +78,34 @@ class _PeopleHomeScreenState extends State<PeopleHomeScreen> {
                 },
               ),
             ],
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Theme.of(context).cardColor,
+            ),
+            margin: EdgeInsets.all(10),
+            width: MediaQuery.of(context).size.width,
+            child: TextFormField(
+              keyboardType: TextInputType.text,
+              style: const TextStyle(
+                fontSize: 18.0,
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                hintText: '',
+                hintStyle: TextStyle(
+                  fontSize: 18.0,
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                ),
+              ),
+            ),
           ),
           Expanded(
             child: PageView.builder(
