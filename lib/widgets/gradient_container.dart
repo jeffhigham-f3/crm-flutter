@@ -13,8 +13,8 @@ class GradientContainer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment(1.0, 1.0),
+          begin: Alignment.topCenter,
+          end: Alignment(1.0, 1.5),
           colors: [const Color(0xFF6B3EFF), const Color(0xFF5058FF), const Color(0xFF00A2FF)],
           tileMode: TileMode.clamp,
         ),
