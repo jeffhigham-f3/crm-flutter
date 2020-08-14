@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
+import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
@@ -42,8 +42,8 @@ class _AccountFormFormState extends State<AccountFormForm> {
       child: Container(
         width: double.infinity,
         constraints: BoxConstraints(
-          maxHeight: 310,
-          minHeight: 310,
+          maxHeight: 320,
+          minHeight: 320,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,6 +83,8 @@ class _AccountFormFormState extends State<AccountFormForm> {
             _FormButton(
               text: (widget.loginType == LoginType.firebaseLogin) ? "LOGIN" : "SIGNUP",
               onPressed: () async {
+                print("login");
+
                 if (_formKey.currentState.validate()) {
                   if (widget.loginType == LoginType.firebaseLogin) {
                     authService
@@ -268,7 +270,7 @@ class _AccountFormFormState extends State<AccountFormForm> {
   void _onSuccess(dynamic result) {
     Navigator.pushReplacementNamed(
       context,
-      GoalPickerScreen.id,
+      AppHome.id,
     );
   }
 }

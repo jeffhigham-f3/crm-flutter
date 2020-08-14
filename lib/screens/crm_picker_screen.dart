@@ -28,6 +28,8 @@ class CrmCardGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final crmManager = context.watch<CrmManager>();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,10 +52,10 @@ class CrmCardGrid extends StatelessWidget {
               crossAxisCount: 2,
             ),
             padding: const EdgeInsets.all(20),
-            itemCount: Provider.of<CrmManager>(context, listen: true).entities.length,
+            itemCount: crmManager.entities.length,
             itemBuilder: (BuildContext context, int index) {
               return CrmCard(
-                crm: Provider.of<CrmManager>(context, listen: true).entities[index],
+                crm: crmManager.entities[index],
               );
             },
           ),
@@ -95,19 +97,19 @@ class _CrmCardState extends State<CrmCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 56,
-              height: 56,
+              width: 50,
+              height: 50,
               child: Image.asset('assets/${widget.crm.logo}'),
             ),
             SizedBox(
-              height: 20.0,
+              height: 10.0,
             ),
             Text(
               widget.crm.name,
               style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
-              height: 20.0,
+              height: 10.0,
             ),
             (widget.crm.enabled)
                 ? Icon(
