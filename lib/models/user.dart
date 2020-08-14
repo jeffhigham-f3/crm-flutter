@@ -23,8 +23,6 @@ class User {
   });
 
   factory User.fromAuth0(Map<String, Object> user) {
-    print(user);
-
     final sub = user['sub'];
     final firstName = user['given_name'];
     final lastName = user['family_name'];
@@ -84,5 +82,5 @@ class User {
       : id.substring(0, 2).toUpperCase();
 
   @override
-  String toString() => '[$id] $name';
+  String toString() => '[$id] $firstName $lastName ($initials),$email';
 }

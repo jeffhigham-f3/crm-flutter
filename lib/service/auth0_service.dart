@@ -1,20 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:verb_crm_flutter/secure_constants.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-const String AUTH0_DOMAIN = 'jeffhigham-dev.us.auth0.com';
-const String AUTH0_CLIENT_ID = '6kk42nzkDApAG1G4pSAPI71GtugWhXGV';
-
-const String AUTH0_REDIRECT_URI = 'com.auth0.flutterdemo://login-callback';
-const String AUTH0_ISSUER = 'https://$AUTH0_DOMAIN';
-
+//https://auth0.com/blog/get-started-with-flutter-authentication/
+// Web support: https://github.com/MaikuB/flutter_appauth/issues/70
 abstract class Auth0ServiceAbstract {}
 
 class Auth0Service extends Auth0ServiceAbstract {
-  //https://auth0.com/blog/get-started-with-flutter-authentication/
-  // Web support: https://github.com/MaikuB/flutter_appauth/issues/70
   final FlutterAppAuth appAuth = FlutterAppAuth();
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
@@ -24,15 +18,19 @@ class Auth0Service extends Auth0ServiceAbstract {
       return null;
     }
 
-    final TokenResponse response = await appAuth.token(TokenRequest(
-      AUTH0_CLIENT_ID,
-      AUTH0_REDIRECT_URI,
-      issuer: AUTH0_ISSUER,
-      refreshToken: storedRefreshToken,
-    ));
+    final TokenResponse response = await appAuth.token(
+      TokenRequest(
+        kAuth0ClientId,
+        kAuth0RedirectUri,
+        issuer: 'https://$kAuth0Domain',
+        refreshToken: storedRefreshToken,
+      ),
+    );
 
     final Map<String, dynamic> idToken = _parseIdToken(response.idToken);
     final Map<String, dynamic> userDetails = await _getUserDetails(response.accessToken);
+    final Map<String, dynamic> privateUserDetails = await _getUserPrivateDetails(sub: userDetails['sub']);
+    print(privateUserDetails);
     await secureStorage.write(key: 'refresh_token', value: response.refreshToken);
     return userDetails;
   }
@@ -40,16 +38,23 @@ class Auth0Service extends Auth0ServiceAbstract {
   Future<Object> loginAction() async {
     final AuthorizationTokenResponse response = await appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
-        AUTH0_CLIENT_ID,
-        AUTH0_REDIRECT_URI,
-        issuer: 'https://$AUTH0_DOMAIN',
-        scopes: <String>['openid', 'profile', 'offline_access'],
+        kAuth0ClientId,
+        kAuth0RedirectUri,
+        issuer: 'https://$kAuth0Domain',
+        scopes: <String>[
+          'openid',
+          'profile',
+          'email',
+          'offline_access',
+          'api',
+        ],
       ),
     );
     final Map<String, Object> idToken = _parseIdToken(response.idToken);
     final Map<String, Object> userDetails = await _getUserDetails(response.accessToken);
+    final Map<String, dynamic> privateUserDetails = await _getUserPrivateDetails(sub: userDetails['sub']);
+    print(privateUserDetails);
     await secureStorage.write(key: 'refresh_token', value: response.refreshToken);
-    print('idToken: $idToken, userDetails: $userDetails');
     return userDetails;
   }
 
@@ -61,7 +66,7 @@ class Auth0Service extends Auth0ServiceAbstract {
   }
 
   Future<Map<String, Object>> _getUserDetails(String accessToken) async {
-    final String url = 'https://$AUTH0_DOMAIN/userinfo';
+    final String url = 'https://$kAuth0Domain/userinfo';
     final http.Response response = await http.get(
       url,
       headers: <String, String>{'Authorization': 'Bearer $accessToken'},
@@ -72,6 +77,34 @@ class Auth0Service extends Auth0ServiceAbstract {
       return rawUser;
     } else {
       throw Exception('Failed to get user details');
+    }
+  }
+
+  Future<Map<String, Object>> _getUserPrivateDetails({String accessToken, String sub}) async {
+    final String tokenUrl = 'https://$kAuth0BackEndDomain/oauth/token';
+    final http.Response tokenResponse = await http.post(
+      tokenUrl,
+      body: {
+        'grant_type': 'client_credentials',
+        'client_id': kAuth0BackEndClientId,
+        'client_secret': kAuth0BackEndClientSecret,
+        'audience': 'https://$kAuth0BackEndDomain/api/v2/',
+      },
+    );
+
+    final accessToken = jsonDecode(tokenResponse.body)['access_token'];
+
+    final String url = 'https://$kAuth0BackEndDomain/api/v2/users/$sub';
+    final http.Response response = await http.get(
+      url,
+      headers: <String, String>{'Authorization': 'Bearer $accessToken'},
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      print(response.body);
+      throw Exception(response);
     }
   }
 

@@ -32,7 +32,9 @@ class ContactDetailScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [],
+              children: [
+                Text(contact.toString()),
+              ],
             ),
           ),
         ],

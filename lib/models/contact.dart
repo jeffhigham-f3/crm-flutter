@@ -25,6 +25,9 @@ class Contact {
   String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)
       ? '${firstName.substring(0, 1).toUpperCase()}${lastName.substring(0, 1).toUpperCase()}'
       : id.substring(0, 2).toUpperCase();
+
+  @override
+  String toString() => '[$id] $firstName $lastName ($initials),$email';
 }
 
 enum FollowUp { today, tomorrow, later }
