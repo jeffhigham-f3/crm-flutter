@@ -19,10 +19,10 @@ class GlanceTaskManager with ChangeNotifier {
 
   Stream entityStream() async* {
     List<GlanceTask> glanceTasks = [];
-    await Future<void>.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(milliseconds: 700));
 
     for (var task in this._entities) {
-      await Future<void>.delayed(Duration(milliseconds: 10));
+      await Future<void>.delayed(Duration(milliseconds: 100));
       glanceTasks.add(task);
       yield glanceTasks;
     }

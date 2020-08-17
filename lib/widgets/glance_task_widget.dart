@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/glance_task.dart';
 import 'package:verb_crm_flutter/screens/glance_detail_screen.dart';
 
-class GlanceTaskWidget extends StatelessWidget {
+class GlanceTaskWidget extends StatefulWidget {
   final GlanceTask task;
-
   const GlanceTaskWidget({Key key, this.task}) : super(key: key);
+
+  @override
+  _GlanceTaskWidgetState createState() => _GlanceTaskWidgetState();
+}
+
+class _GlanceTaskWidgetState extends State<GlanceTaskWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -15,7 +20,7 @@ class GlanceTaskWidget extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => GlanceDetailScreen(
-                task: this.task,
+                task: widget.task,
               ),
               fullscreenDialog: true,
             ),
@@ -32,14 +37,14 @@ class GlanceTaskWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    this.task.name,
+                    widget.task.name,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(
                     height: 8.0,
                   ),
                   Text(
-                    this.task.description,
+                    widget.task.description,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ],
