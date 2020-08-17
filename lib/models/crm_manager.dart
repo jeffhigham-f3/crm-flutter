@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/crm.dart';
 
+// TODO: move to services/crm_service.dart
+
 class CrmManager with ChangeNotifier {
   final List<Crm> entities = [
     Crm(

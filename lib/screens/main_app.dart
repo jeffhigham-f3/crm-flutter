@@ -14,6 +14,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       //https://api.flutter.dev/flutter/material/ThemeData-class.html
       theme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
 //        primaryColor: Color(0xFF6B3EFF),
 //        accentColor: Color(0xFF6B3EFF),
 //        canvasColor: Colors.white,

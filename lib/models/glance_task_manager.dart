@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/glance_task.dart';
 
+// TODO: move to services/glance_service.dart
+
 class GlanceTaskManager with ChangeNotifier {
   final List<GlanceTask> _entities = [
     GlanceTask(name: "Task 1", description: "This is task one."),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
 import 'package:verb_crm_flutter/models/contact.dart';
+import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 
 class ContactListWidget extends StatefulWidget {
   final Contact contact;
@@ -45,27 +46,13 @@ class _ContactListWidgetState extends State<ContactListWidget> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            radius: 25,
+                          ProfileAvatar(
+                            imageUrl: widget.contact.photoUrl,
+                            radius: 25.0,
                             backgroundColor: Theme.of(context).accentColor,
-                            child: CircleAvatar(
-                              backgroundImage: (widget.contact.photoUrl != null)
-                                  ? NetworkImage(
-                                      widget.contact.photoUrl,
-                                    )
-                                  : null,
-                              radius: 23,
-                              backgroundColor: Theme.of(context).canvasColor,
-                              child: (widget.contact.photoUrl == null)
-                                  ? Text(
-                                      widget.contact.initials,
-                                      style: TextStyle(
-                                        color: Theme.of(context).accentColor,
-                                        fontSize: 42.0,
-                                      ),
-                                    )
-                                  : null,
-                            ),
+                            borderColor: Colors.white,
+                            hasBorder: true,
+                            isActive: widget.contact.online,
                           ),
                           SizedBox(width: 20),
                           Text(

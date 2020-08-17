@@ -3,7 +3,6 @@ import 'package:verb_crm_flutter/screens/people/people_today_screen.dart';
 import 'package:verb_crm_flutter/screens/people/people_tomorrow_screen.dart';
 import 'package:verb_crm_flutter/screens/people/people_later_screen.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class PeopleHomeScreen extends StatefulWidget {
   static const String id = 'glance_home_screen';

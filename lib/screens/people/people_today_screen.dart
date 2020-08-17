@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/widgets/contact_list_widget.dart';
 import 'package:verb_crm_flutter/models/contact_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class PeopleTodayScreen extends StatefulWidget {
   static const String id = 'glance_today_screen';

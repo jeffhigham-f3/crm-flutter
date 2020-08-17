@@ -9,6 +9,7 @@ class Contact {
   String locale;
   bool prospect;
   bool lead;
+  bool online;
   FollowUp followUp;
 
   Contact({
@@ -20,6 +21,7 @@ class Contact {
     this.phone,
     this.photoUrl,
     this.locale,
+    this.online,
   });
 
   String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)

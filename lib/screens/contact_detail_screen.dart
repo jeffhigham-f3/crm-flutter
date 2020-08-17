@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/contact.dart';
+import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 
 class ContactDetailScreen extends StatelessWidget {
   final Contact contact;
@@ -61,22 +62,13 @@ class _ContactAvatar extends StatelessWidget {
           margin: EdgeInsets.only(
             top: 40,
           ),
-          child: CircleAvatar(
-            radius: 45,
-            backgroundColor: Theme.of(context).backgroundColor,
-            child: CircleAvatar(
-                backgroundImage: (this.contact.photoUrl != null) ? NetworkImage(this.contact.photoUrl) : null,
-                radius: 40,
-                backgroundColor: Theme.of(context).canvasColor,
-                child: (this.contact.photoUrl == null)
-                    ? Text(
-                        this.contact.initials,
-                        style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontSize: 42.0,
-                        ),
-                      )
-                    : null),
+          child: ProfileAvatar(
+            imageUrl: this.contact.photoUrl,
+            radius: 40.0,
+            backgroundColor: Theme.of(context).accentColor,
+            borderColor: Colors.white,
+            hasBorder: true,
+            isActive: true,
           ),
         ),
         Text('${this.contact.firstName} ${this.contact.lastName}'),

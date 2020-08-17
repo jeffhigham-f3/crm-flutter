@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
 import 'package:verb_crm_flutter/widgets/gradient_container.dart';
+import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -30,24 +31,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Container(
                         margin: EdgeInsets.all(20),
-                        child: CircleAvatar(
-                          radius: 75,
+                        child: ProfileAvatar(
+                          imageUrl: authService.currentUser.photoUrl,
+                          radius: 60.0,
                           backgroundColor: Theme.of(context).accentColor,
-                          child: CircleAvatar(
-                              backgroundImage: (authService.currentUser.photoUrl != null)
-                                  ? NetworkImage(authService.currentUser.photoUrl)
-                                  : null,
-                              radius: 70,
-                              backgroundColor: Theme.of(context).canvasColor,
-                              child: (authService.currentUser.photoUrl == null)
-                                  ? Text(
-                                      authService.currentUser.initials,
-                                      style: TextStyle(
-                                        color: Theme.of(context).accentColor,
-                                        fontSize: 42.0,
-                                      ),
-                                    )
-                                  : null),
+                          borderColor: Theme.of(context).accentColor,
+                          hasBorder: true,
+                          isActive: false,
                         ),
                       )
                     ],
