@@ -19,7 +19,7 @@ class _ContactFollowUpWidgetState extends State<ContactFollowUpWidget> {
   @override
   Widget build(BuildContext context) {
     return Bounce(
-      delay: Duration(seconds: 2),
+      delay: Duration(seconds: 3),
       duration: Duration(milliseconds: 500),
       child: Card(
         child: Container(
@@ -30,7 +30,7 @@ class _ContactFollowUpWidgetState extends State<ContactFollowUpWidget> {
             children: [
               Container(
                 child: Text(
-                  "Online Now",
+                  "Available Now",
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
