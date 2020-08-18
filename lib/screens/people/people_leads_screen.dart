@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/widgets/contact_list_widget.dart';
-import 'package:verb_crm_flutter/models/contact_manager.dart';
+import 'package:verb_crm_flutter/service/contact_service.dart';
 import 'package:provider/provider.dart';
 
-class PeopleTodayScreen extends StatefulWidget {
+class PeopleLeadsScreen extends StatefulWidget {
   static const String id = 'glance_today_screen';
 
   @override
-  _PeopleTodayScreenState createState() => _PeopleTodayScreenState();
+  _PeopleLeadsScreenState createState() => _PeopleLeadsScreenState();
 }
 
-class _PeopleTodayScreenState extends State<PeopleTodayScreen> {
+class _PeopleLeadsScreenState extends State<PeopleLeadsScreen> {
   @override
   Widget build(BuildContext context) {
-    final contactManager = context.watch<ContactManager>();
+    final contactService = context.watch<ContactService>();
 
     return Container(
       child: StreamBuilder(
-        stream: contactManager.entityStream(),
+        stream: contactService.entityStream(),
         builder: (context, snapshot) {
           List<ContactListWidget> widgets = [];
           if (!snapshot.hasData) {
@@ -26,9 +26,11 @@ class _PeopleTodayScreenState extends State<PeopleTodayScreen> {
             );
           }
           for (var contact in snapshot.data) {
-            widgets.add(
-              ContactListWidget(contact: contact),
-            );
+            if (contact.lead == true) {
+              widgets.add(
+                ContactListWidget(contact: contact),
+              );
+            }
           }
           return ListView(
             padding: const EdgeInsets.all(8),

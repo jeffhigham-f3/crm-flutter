@@ -4,7 +4,7 @@ import 'package:faker/faker.dart';
 
 // TODO: move to services/contact_service.dart
 
-class ContactManager with ChangeNotifier {
+class ContactService with ChangeNotifier {
   Stream entityStream() async* {
     await Future<void>.delayed(Duration(milliseconds: 700));
 
@@ -19,6 +19,10 @@ class ContactManager with ChangeNotifier {
           email: faker.internet.email(),
           photoUrl: 'http://placeimg.com/200/200/people?id=${faker.randomGenerator.integer(100000)}',
           online: faker.randomGenerator.boolean(),
+          locale: 'en',
+          lead: faker.randomGenerator.boolean(),
+          customer: faker.randomGenerator.boolean(),
+          followUp: faker.randomGenerator.boolean(),
         ),
       );
       yield contacts;

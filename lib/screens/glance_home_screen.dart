@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/models/glance_task_manager.dart';
+import 'package:verb_crm_flutter/service/glance_service.dart';
 import 'package:verb_crm_flutter/models/glance_task.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class GlanceHomeScreen extends StatefulWidget {
 class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final taskManager = context.watch<GlanceTaskManager>();
+    final taskManager = context.watch<GlanceService>();
 
     return Container(
       margin: EdgeInsets.only(top: 20),

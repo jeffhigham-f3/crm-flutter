@@ -68,7 +68,7 @@ class _ContactAvatar extends StatelessWidget {
             backgroundColor: Theme.of(context).accentColor,
             borderColor: Colors.white,
             hasBorder: true,
-            isActive: true,
+            isActive: this.contact.online,
           ),
         ),
         Text('${this.contact.firstName} ${this.contact.lastName}'),

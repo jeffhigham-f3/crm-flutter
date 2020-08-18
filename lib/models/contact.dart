@@ -7,10 +7,10 @@ class Contact {
   String phone;
   String photoUrl;
   String locale;
-  bool prospect;
   bool lead;
+  bool customer;
   bool online;
-  FollowUp followUp;
+  bool followUp;
 
   Contact({
     this.id,
@@ -21,6 +21,9 @@ class Contact {
     this.phone,
     this.photoUrl,
     this.locale,
+    this.lead,
+    this.customer,
+    this.followUp,
     this.online,
   });
 

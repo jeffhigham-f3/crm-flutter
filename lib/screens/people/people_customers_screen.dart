@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/widgets/contact_list_widget.dart';
-import 'package:verb_crm_flutter/models/contact_manager.dart';
+import 'package:verb_crm_flutter/service/contact_service.dart';
 import 'package:provider/provider.dart';
 
-class PeopleLaterScreen extends StatefulWidget {
-  static const String id = 'glance_later_screen';
+class PeopleCustomersScreen extends StatefulWidget {
+  static const String id = 'glance_tomorrow_screen';
 
   @override
-  _PeopleLaterScreenState createState() => _PeopleLaterScreenState();
+  _PeopleCustomersScreenState createState() => _PeopleCustomersScreenState();
 }
 
-class _PeopleLaterScreenState extends State<PeopleLaterScreen> {
+class _PeopleCustomersScreenState extends State<PeopleCustomersScreen> {
   @override
   Widget build(BuildContext context) {
-    final contactManager = context.watch<ContactManager>();
+    final contactManager = context.watch<ContactService>();
 
     return Container(
       child: StreamBuilder(
@@ -26,9 +26,11 @@ class _PeopleLaterScreenState extends State<PeopleLaterScreen> {
             );
           }
           for (var contact in snapshot.data) {
-            widgets.add(
-              ContactListWidget(contact: contact),
-            );
+            if (contact.customer == true) {
+              widgets.add(
+                ContactListWidget(contact: contact),
+              );
+            }
           }
           return ListView(
             padding: const EdgeInsets.all(8),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/screens/people/people_today_screen.dart';
-import 'package:verb_crm_flutter/screens/people/people_tomorrow_screen.dart';
-import 'package:verb_crm_flutter/screens/people/people_later_screen.dart';
+import 'package:verb_crm_flutter/screens/people/people_leads_screen.dart';
+import 'package:verb_crm_flutter/screens/people/people_customers_screen.dart';
+import 'package:verb_crm_flutter/screens/people/people_contacts_screen.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
 
 class PeopleHomeScreen extends StatefulWidget {
@@ -28,9 +28,9 @@ class _PeopleHomeScreenState extends State<PeopleHomeScreen> {
   }
 
   final List<Widget> _pages = <Widget>[
-    PeopleTodayScreen(),
-    PeopleTomorrowScreen(),
-    PeopleLaterScreen(),
+    PeopleLeadsScreen(),
+    PeopleCustomersScreen(),
+    PeopleContactsScreen(),
   ];
 
   @override
