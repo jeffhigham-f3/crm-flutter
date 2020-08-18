@@ -7,34 +7,16 @@ class ContactService with ChangeNotifier {
   final _controller = StreamController.broadcast();
 
   ContactService() {
-    var _count = 1;
+    _controller.sink.add(
+      generateContacts(),
+    );
 
     Timer.periodic(
       Duration(seconds: 5),
       (timer) {
-        List<Contact> contacts = [];
-
-        var max = faker.randomGenerator.integer(20);
-        print("Adding $max contact to stream...");
-
-        for (var i = 0; i < max; i++) {
-          contacts.add(
-            Contact(
-              id: '$_count',
-              firstName: faker.person.firstName(),
-              lastName: faker.person.lastName(),
-              email: faker.internet.email(),
-              photoUrl: 'http://placeimg.com/200/200/people?id=${faker.randomGenerator.integer(100000)}',
-              online: faker.randomGenerator.boolean(),
-              locale: 'en',
-              lead: true,
-              customer: faker.randomGenerator.boolean(),
-              followUp: true,
-            ),
-          );
-        }
-        _controller.sink.add(contacts);
-        _count++;
+        _controller.sink.add(
+          generateContacts(),
+        );
       },
     );
   }
@@ -43,17 +25,21 @@ class ContactService with ChangeNotifier {
 
   Stream entityStream() async* {
     await Future<void>.delayed(Duration(milliseconds: 700));
+    yield generateContacts();
+  }
 
+  List<Contact> generateContacts() {
     List<Contact> contacts = [];
-    for (var i = 0; i < 20; i++) {
-      await Future<void>.delayed(Duration(milliseconds: 10));
+
+    var max = faker.randomGenerator.integer(50, min: 5);
+    for (var i = 0; i < max; i++) {
       contacts.add(
         Contact(
           id: '$i',
           firstName: faker.person.firstName(),
           lastName: faker.person.lastName(),
           email: faker.internet.email(),
-          photoUrl: 'http://placeimg.com/200/200/people?id=${faker.randomGenerator.integer(100000)}',
+          photoUrl: 'http://placeimg.com/200/200/people?id=${faker.randomGenerator.integer(50, min: 1)}',
           online: faker.randomGenerator.boolean(),
           locale: 'en',
           lead: faker.randomGenerator.boolean(),
@@ -61,7 +47,7 @@ class ContactService with ChangeNotifier {
           followUp: faker.randomGenerator.boolean(),
         ),
       );
-      yield contacts;
     }
+    return contacts;
   }
 }
