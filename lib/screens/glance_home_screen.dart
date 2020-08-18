@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/glance_service.dart';
-import 'package:verb_crm_flutter/models/glance_task.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
-import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/widgets/contact_followup_widget.dart';
-import 'package:faker/faker.dart';
 
 class GlanceHomeScreen extends StatefulWidget {
   static const String id = 'goal_picker_screen';
@@ -17,7 +14,7 @@ class GlanceHomeScreen extends StatefulWidget {
 class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final taskManager = context.watch<GlanceService>();
+    final glanceService = context.watch<GlanceService>();
 
     return Container(
       margin: EdgeInsets.only(top: 20),
@@ -37,7 +34,7 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
           Expanded(
             flex: 10,
             child: StreamBuilder(
-              stream: taskManager.entityStream(),
+              stream: glanceService.entityStream(),
               builder: (context, snapshot) {
                 List<Widget> widgets = [];
                 if (!snapshot.hasData) {

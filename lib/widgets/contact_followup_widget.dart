@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/glance_task.dart';
+import 'package:verb_crm_flutter/models/contact.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
-import 'package:faker/faker.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:provider/provider.dart';
+import 'package:verb_crm_flutter/service/contact_service.dart';
+import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
 
 class ContactFollowUpWidget extends StatefulWidget {
   final GlanceTask task;
@@ -16,6 +19,7 @@ class _ContactFollowUpWidgetState extends State<ContactFollowUpWidget> {
   @override
   Widget build(BuildContext context) {
     return Bounce(
+      delay: Duration(seconds: 2),
       duration: Duration(milliseconds: 500),
       child: Card(
         child: Container(
@@ -38,169 +42,105 @@ class _ContactFollowUpWidgetState extends State<ContactFollowUpWidget> {
                 ),
               ),
               SizedBox(height: 20.0),
-              Container(
-                height: 50.0,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1000',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1001',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1002',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1003',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1004',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1005',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1006',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1007',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1008',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1009',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1010',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1011',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1012',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: ProfileAvatar(
-                        imageUrl: 'http://placeimg.com/200/200/people?id=1013',
-                        radius: 25.0,
-                        backgroundColor: Colors.white,
-                        borderColor: Colors.white,
-                        isActive: true,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              _ContactRowSlider(),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ContactRowSlider extends StatefulWidget {
+  const _ContactRowSlider({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  __ContactRowSliderState createState() => __ContactRowSliderState();
+}
+
+class __ContactRowSliderState extends State<_ContactRowSlider> {
+  @override
+  Widget build(BuildContext context) {
+    final contactService = context.watch<ContactService>();
+
+    return Container(
+      height: 100.0,
+      child: StreamBuilder(
+        stream: contactService.stream,
+        builder: (context, snapshot) {
+          List<Widget> widgets = [];
+          if (!snapshot.hasData || snapshot.data.length == 0) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          for (var contact in snapshot.data) {
+            if (contact.online && contact.followUp) {
+              widgets.add(
+                _ContactContainer(contact: contact),
+              );
+            }
+          }
+          return ListView(
+            scrollDirection: Axis.horizontal,
+            children: widgets,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _ContactContainer extends StatelessWidget {
+  final Contact contact;
+
+  const _ContactContainer({
+    Key key,
+    @required this.contact,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ContactDetailScreen(
+              contact: contact,
+            ),
+            fullscreenDialog: true,
+          ),
+        )
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: Container(
+          width: 100,
+          child: Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 45,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: ProfileAvatar(
+                    imageUrl: contact.photoUrl,
+                    radius: 22.0,
+                    backgroundColor: Colors.white,
+                    borderColor: Colors.white,
+                    isActive: contact.online,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('${contact.firstName}'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
