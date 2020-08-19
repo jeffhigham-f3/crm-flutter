@@ -45,13 +45,12 @@ class User {
   }
 
   factory User.fromFirebase(FirebaseUser user) {
-    print(user);
-    final String name = (user.displayName?.isNotEmpty == true) ? user.displayName : 'Anonymous';
+    final String name = (user.displayName?.isNotEmpty == true) ? user.displayName : user.email;
     final int index = name.indexOf(RegExp(r'\s'));
     final String firstName = index < 0 ? name : name.substring(0, index);
     final String lastName = index < 0 ? '' : name.substring(index + 1);
 
-    return User(
+    final u = User(
       id: user.uid,
       name: name,
       email: user.email,
@@ -61,6 +60,9 @@ class User {
       locale: 'en',
       authProvider: 'FirebaseAuth',
     );
+
+    print(u);
+    return u;
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -79,8 +81,8 @@ class User {
 
   String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)
       ? '${firstName.substring(0, 1).toUpperCase()}${lastName.substring(0, 1).toUpperCase()}'
-      : id.substring(0, 2).toUpperCase();
+      : email.substring(0, 2).toUpperCase();
 
   @override
-  String toString() => '[$id] $firstName $lastName ($initials),$email';
+  String toString() => '[$id] $firstName $lastName ($initials), $email';
 }

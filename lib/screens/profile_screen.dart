@@ -36,6 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           radius: 60.0,
                           backgroundColor: Theme.of(context).accentColor,
                           borderColor: Theme.of(context).accentColor,
+                          initials: authService.currentUser.initials,
                           hasBorder: true,
                           isActive: false,
                         ),

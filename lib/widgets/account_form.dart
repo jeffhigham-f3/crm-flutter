@@ -82,32 +82,31 @@ class _AccountFormFormState extends State<AccountFormForm> {
             ),
             _FormButton(
               text: (widget.loginType == LoginType.firebaseLogin) ? "LOGIN" : "SIGNUP",
-              onPressed: () async {
-                print("login");
+              onPressed: () {
+                final email = _emailController.text;
+                final password = _passwordController.text;
+                _formKey.currentState.reset();
 
-                if (_formKey.currentState.validate()) {
-                  if (widget.loginType == LoginType.firebaseLogin) {
-                    authService
-                        .firebaseLogin(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        )
-                        .then((result) => _onSuccess(result))
-                        .catchError(
-                          (e) => _onError(e),
-                        );
-                  } else {
-                    authService
-                        .firebaseSignUp(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        )
-                        .then((result) => _onSuccess(result))
-                        .catchError(
-                          (e) => _onError(e),
-                        );
-                  }
-                  _formKey.currentState.reset();
+                if (widget.loginType == LoginType.firebaseLogin) {
+                  authService
+                      .firebaseLogin(
+                        email: email,
+                        password: password,
+                      )
+                      .then((result) => _onSuccess(result))
+                      .catchError(
+                        (e) => _onError(e),
+                      );
+                } else {
+                  authService
+                      .firebaseSignUp(
+                        email: email,
+                        password: password,
+                      )
+                      .then((result) => _onSuccess(result))
+                      .catchError(
+                        (e) => _onError(e),
+                      );
                 }
               },
             ),
@@ -312,7 +311,7 @@ class _FormButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width * .65,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => this.onPressed,
+        onPressed: this.onPressed,
         padding: EdgeInsets.all(10.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),

@@ -10,6 +10,7 @@ class ProfileAvatar extends StatelessWidget {
   final double radius; // 20.0
   final Color backgroundColor; // Colors.grey[200]
   final Color borderColor; // Colors.white
+  final String initials;
 
   const ProfileAvatar({
     Key key,
@@ -17,6 +18,7 @@ class ProfileAvatar extends StatelessWidget {
     @required this.radius,
     @required this.backgroundColor,
     @required this.borderColor,
+    this.initials = "",
     this.isActive = false,
     this.hasBorder = false,
   }) : super(key: key);
@@ -28,11 +30,19 @@ class ProfileAvatar extends StatelessWidget {
         CircleAvatar(
           radius: radius,
           backgroundColor: borderColor,
-          child: CircleAvatar(
-            radius: hasBorder ? radius - 3 : radius,
-            backgroundColor: backgroundColor,
-            backgroundImage: CachedNetworkImageProvider(imageUrl),
-          ),
+          child: imageUrl != null
+              ? CircleAvatar(
+                  radius: hasBorder ? radius - 3 : radius,
+                  backgroundColor: backgroundColor,
+                  backgroundImage: CachedNetworkImageProvider(imageUrl),
+                )
+              : Text(
+                  this.initials,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: radius * .75,
+                  ),
+                ),
         ),
         isActive
             ? Positioned(

@@ -56,8 +56,9 @@ class AuthService extends AuthServiceAbstract {
   Future<AuthResult> firebaseSignUp({@required String email, @required String password}) async {
     final AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     if (result?.user != null) {
+      print("Firebase User");
+      print(result.user);
       _currentUser = User.fromFirebase(result.user);
-      print('Signup from: ${_currentUser.email}');
       notifyListeners();
     }
     return result;
@@ -68,7 +69,6 @@ class AuthService extends AuthServiceAbstract {
     final AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     if (result?.user != null) {
       _currentUser = User.fromFirebase(result.user);
-      print('Login from: ${_currentUser.email}');
       notifyListeners();
     }
     return result;

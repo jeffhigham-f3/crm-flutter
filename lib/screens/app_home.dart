@@ -91,6 +91,7 @@ class _AppHomeState extends State<AppHome> {
                   radius: 16.0,
                   backgroundColor: Theme.of(context).accentColor,
                   borderColor: Colors.white,
+                  initials: authService.currentUser.initials,
                   hasBorder: false,
                   isActive: false,
                 ),
