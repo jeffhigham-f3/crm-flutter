@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/models/crm.dart';
+import 'package:verb_crm_flutter/models/tray_io/tray_solution.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class CrmLoginScreen extends StatefulWidget {
-  static const String id = 'crm_login_screen';
-  final Crm crm;
+class SolutionAuthScreen extends StatefulWidget {
+  static const String id = 'solution_auth_screen';
+  final TraySolution solution;
 
-  const CrmLoginScreen({Key key, this.crm}) : super(key: key);
+  const SolutionAuthScreen({Key key, this.solution}) : super(key: key);
 
   @override
-  _CrmLoginScreenState createState() => _CrmLoginScreenState();
+  _SolutionAuthScreenState createState() => _SolutionAuthScreenState();
 }
 
-class _CrmLoginScreenState extends State<CrmLoginScreen> {
+class _SolutionAuthScreenState extends State<SolutionAuthScreen> {
   bool _saving = false;
 
   login() {
@@ -31,7 +31,7 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-//    final CrmRouteArgs args = ModalRoute.of(context).settings.arguments;
+//    final TraySolutionRouteArgs args = ModalRoute.of(context).settings.arguments;
 
     return ModalProgressHUD(
       inAsyncCall: _saving,
@@ -44,7 +44,7 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
               Container(
                 width: 86,
                 height: 86,
-                child: Image.asset('assets/${widget.crm.logo}'),
+                child: Image.asset('assets/${widget.solution.title}.png'),
               ),
               SizedBox(
                 height: 20,
@@ -52,7 +52,7 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
               Container(
                 margin: EdgeInsets.only(bottom: 20),
                 child: Text(
-                  widget.crm.name,
+                  widget.solution.title,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -81,10 +81,10 @@ class _CrmLoginScreenState extends State<CrmLoginScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: OutlineButton(
                   onPressed: (() {
-                    widget.crm.enabled = true;
+                    widget.solution.enabled = true;
                     this.login();
                   }),
-                  child: Text('${widget.crm.name} Login'),
+                  child: Text('${widget.solution.title} Login'),
                 ),
               ),
             ],

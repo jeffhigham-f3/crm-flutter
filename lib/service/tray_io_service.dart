@@ -5,23 +5,15 @@ import 'dart:async';
 import 'package:graphql/client.dart';
 
 class TrayIOService with ChangeNotifier {
-  final TrayIOSolutionServiceAbstract streamService = TrayIOSolutionService();
+  final TrayIOSolutionService solutionService = TrayIOSolutionService();
 }
 
-abstract class TrayIOSolutionServiceAbstract {}
-
-class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
+class TrayIOSolutionService {
   final _servicesController = StreamController.broadcast();
 
   Stream get stream => _servicesController.stream;
 
-  TrayIOSolutionService() {
-    _servicesController.sink.add(
-      index(),
-    );
-  }
-
-  Future<Object> index() async {
+  Future<Object> readIndex() async {
     final HttpLink _httpLink = HttpLink(
       uri: kTrayIOGraphQlUrl,
     );
@@ -48,10 +40,16 @@ class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
         result.exception.toString(),
       );
     }
-    final List<dynamic> services = result.data['viewer']['solutions']['edges'] as List<dynamic>;
-    print("Tray.io Solutions:");
-    print(services.toString());
-    print('');
-    return services;
+
+    final List<Object> graphQlSolutions = result.data['viewer']['solutions']['edges'] as List<Object>;
+
+    List<TraySolution> solutions = [];
+    for (var s in graphQlSolutions) {
+      solutions.add(
+        TraySolution.fromTrayGraphQL(s),
+      );
+      print(solutions.last.toString());
+    }
+    _servicesController.sink.add(solutions);
   }
 }

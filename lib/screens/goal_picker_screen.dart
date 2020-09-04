@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/models/goal_manager.dart';
-import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
+import 'package:verb_crm_flutter/screens/solution_screen.dart';
 
 class GoalPickerScreen extends StatefulWidget {
   static const String id = 'goal_picker_screen';
@@ -82,7 +82,7 @@ class _GoalPickerScreenState extends State<GoalPickerScreen> {
                   onPressed: () => {
                     Navigator.pushReplacementNamed(
                       context,
-                      CrmPickerScreen.id,
+                      SolutionsScreen.id,
                     ),
                   },
                 ),

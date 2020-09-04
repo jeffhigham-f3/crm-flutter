@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
 import 'package:verb_crm_flutter/screens/people_home_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
-import 'package:verb_crm_flutter/screens/crm_picker_screen.dart';
+import 'package:verb_crm_flutter/screens/solution_screen.dart';
 import 'package:verb_crm_flutter/screens/profile_screen.dart';
 import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
@@ -110,7 +110,7 @@ class _AppHomeState extends State<AppHome> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CrmPickerScreen(
+                    builder: (context) => SolutionsScreen(
                       modal: true,
                     ),
                     fullscreenDialog: true,
