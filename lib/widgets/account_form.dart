@@ -3,6 +3,7 @@ import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
+import 'package:verb_crm_flutter/service/tray_io_user_service.dart';
 
 class AccountFormForm extends StatefulWidget {
   LoginType loginType;
@@ -89,24 +90,14 @@ class _AccountFormFormState extends State<AccountFormForm> {
 
                 if (widget.loginType == LoginType.firebaseLogin) {
                   authService
-                      .firebaseLogin(
-                        email: email,
-                        password: password,
-                      )
-                      .then((result) => _onSuccess(result))
-                      .catchError(
-                        (e) => _onError(e),
-                      );
+                      .firebaseLogin(email: email, password: password)
+                      .then((result) => _loadState())
+                      .catchError((e) => _onLoginError(e));
                 } else {
                   authService
-                      .firebaseSignUp(
-                        email: email,
-                        password: password,
-                      )
-                      .then((result) => _onSuccess(result))
-                      .catchError(
-                        (e) => _onError(e),
-                      );
+                      .firebaseSignUp(email: email, password: password)
+                      .then((result) => _loadState())
+                      .catchError((e) => _onLoginError(e));
                 }
               },
             ),
@@ -145,11 +136,9 @@ class _AccountFormFormState extends State<AccountFormForm> {
                   GestureDetector(
                     onTap: () => authService.Auth0Login()
                         .then(
-                          (result) => _onSuccess(null),
+                          (result) => _loadState(),
                         )
-                        .catchError(
-                          (e) => _onError(e),
-                        ),
+                        .catchError((e) => _onLoginError(e)),
                     child: Container(
                       height: 48.0,
                       width: 48.0,
@@ -174,11 +163,9 @@ class _AccountFormFormState extends State<AccountFormForm> {
                   GestureDetector(
                     onTap: () => authService.Auth0Login()
                         .then(
-                          (result) => _onSuccess(null),
+                          (result) => _loadState(),
                         )
-                        .catchError(
-                          (e) => _onError(e),
-                        ),
+                        .catchError((e) => _onLoginError(e)),
                     child: Container(
                       height: 48.0,
                       width: 48.0,
@@ -203,11 +190,9 @@ class _AccountFormFormState extends State<AccountFormForm> {
                   GestureDetector(
                     onTap: () => authService.Auth0Login()
                         .then(
-                          (result) => _onSuccess(null),
+                          (result) => _loadState(),
                         )
-                        .catchError(
-                          (e) => _onError(e),
-                        ),
+                        .catchError((e) => _onLoginError(e)),
                     child: Container(
                       height: 48.0,
                       width: 48.0,
@@ -242,15 +227,27 @@ class _AccountFormFormState extends State<AccountFormForm> {
     context.read<AuthService>().loadCurrentUser().then(
       (user) {
         if (user != null) {
-          _onSuccess(user);
+          context.read<TrayIOUserService>().loadCurrentUser().then(
+            (trayUser) {
+              print(user);
+              print(trayUser);
+              if (trayUser == null) {
+                context
+                    .read<TrayIOUserService>()
+                    .createUser(appUser: user)
+                    .then((trayUser) => {_onUserSuccess(user)})
+                    .catchError((e) => _onLoginError(e));
+              } else {
+                _onUserSuccess(user);
+              }
+            },
+          ).catchError((e) => _onLoginError(e));
         }
       },
-    ).catchError(
-      (e) => _onError(e),
-    );
+    ).catchError((e) => _onLoginError(e));
   }
 
-  void _onError(dynamic error) {
+  void _onLoginError(dynamic error) {
     print(error);
     final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: error);
     Scaffold.of(context).showSnackBar(
@@ -266,7 +263,7 @@ class _AccountFormFormState extends State<AccountFormForm> {
     );
   }
 
-  void _onSuccess(dynamic result) {
+  void _onUserSuccess(dynamic result) {
     Navigator.pushReplacementNamed(
       context,
       AppHome.id,

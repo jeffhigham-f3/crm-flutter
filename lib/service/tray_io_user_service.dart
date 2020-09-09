@@ -13,6 +13,7 @@ abstract class TrayIOUserServiceAbstract extends TrayIOService {
   Future<TrayUser> createUser();
   Future<TrayUser> loadCurrentUser();
   Future<List<TrayUser>> readIndex();
+//  TrayIOUserServiceAbstract();
 }
 
 class TrayIOUserService extends TrayIOUserServiceAbstract {
@@ -21,9 +22,10 @@ class TrayIOUserService extends TrayIOUserServiceAbstract {
 
   TrayUser _currentUser;
 
-  TrayIOUserService() {
-    loadCurrentUser();
-  }
+//  @override
+//  TrayIOUserService() {
+//    loadCurrentUser();
+//  }
 
   @override
   TrayUser get currentUser => _currentUser;
@@ -31,15 +33,40 @@ class TrayIOUserService extends TrayIOUserServiceAbstract {
   @override
   Stream get stream => _usersController.stream;
 
+  // TODO: update to use proper syntax for Mutations
+  /*
+
+  final MutationOptions options = MutationOptions(
+    documentNode: gql(addStar),
+    variables: <String, dynamic>{
+      'starrableId': repositoryID,
+    },
+  );
+  final QueryResult result = await _client.mutate(options);
+
+if (result.hasException) {
+    print(result.exception.toString());
+    return;
+}
+
+final bool isStarred =
+    result.data['action']['starrable']['viewerHasStarred'] as bool;
+
+if (isStarred) {
+  print('Thanks for your star!');
+  return;
+}
+
+
+  */
+
   @override
   Future<TrayUser> createUser({@required User appUser}) async {
-    options = QueryOptions(
-        documentNode: gql(TrayUser.createSchema),
-        variables: <String, dynamic>{
-          'externalUserId': appUser.id,
-          'name': appUser.name,
-        });
-
+    options = QueryOptions(documentNode: gql(TrayUser.createSchema), variables: <String, dynamic>{
+      'externalUserId': appUser.id.toString(),
+      'name': appUser.name.toString(),
+    });
+    print('Client value is: $client');
     final QueryResult result = await client.query(options);
 
     if (result.hasException) {
@@ -50,6 +77,7 @@ class TrayIOUserService extends TrayIOUserServiceAbstract {
 
     final Object qlUser = result.data['createExternalUser'] as Object;
     final user = TrayUser.fromTrayGraphQL(qlUser);
+    print('Setting the "tray_user_id" value to: ${user.id}');
     await _secureStorage.write(key: 'tray_user_id', value: user.id);
     print(user.toString());
     readIndex();
@@ -61,6 +89,7 @@ class TrayIOUserService extends TrayIOUserServiceAbstract {
   Future<TrayUser> loadCurrentUser() async {
     final String userId = await _secureStorage.read(key: 'tray_user_id');
     if (userId == null) {
+      print('"tray_user_id" not found in local cache.');
       return null;
     }
 

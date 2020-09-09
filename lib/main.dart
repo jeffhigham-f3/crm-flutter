@@ -10,6 +10,7 @@ import 'package:verb_crm_flutter/screens/main_app.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [

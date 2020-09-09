@@ -35,6 +35,13 @@ query ($userId: String!){
                 id
                 externalUserId
             }
+            cursor
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+          hasPreviousPage
+          startCursor
         }
 	}
 }
