@@ -46,7 +46,8 @@ class User {
   }
 
   factory User.fromFirebase(FirebaseUser user) {
-    final String name = (user.displayName?.isNotEmpty == true) ? user.displayName : user.email;
+    final String name =
+        (user.displayName?.isNotEmpty == true) ? user.displayName : user.email;
     final int index = name.indexOf(RegExp(r'\s'));
     final String firstName = index < 0 ? name : name.substring(0, index);
     final String lastName = index < 0 ? '' : name.substring(index + 1);
@@ -82,7 +83,8 @@ class User {
     );
   }
 
-  String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)
+  String get initials => (firstName?.isNotEmpty == true &&
+          lastName?.isNotEmpty == true)
       ? '${firstName.substring(0, 1).toUpperCase()}${lastName.substring(0, 1).toUpperCase()}'
       : email.substring(0, 2).toUpperCase();
 

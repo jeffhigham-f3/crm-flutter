@@ -2,13 +2,23 @@ import 'package:verb_crm_flutter/service/tray_io_service.dart';
 import 'package:verb_crm_flutter/models/tray_io/tray_solution.dart';
 import 'package:graphql/client.dart';
 import 'dart:async';
+import 'package:meta/meta.dart';
 
-class TrayIOSolutionService extends TrayIOService {
+
+abstract class TrayIOSolutionServiceAbstract extends TrayIOService {
+  Stream get stream;
+  Future<List<TraySolution>> readIndex();
+
+}
+
+class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
   final _servicesController = StreamController.broadcast();
 
+  @override
   Stream get stream => _servicesController.stream;
 
-  Future<void> readIndex() async {
+  @override
+  Future<List<TraySolution>> readIndex() async {
     final QueryOptions options = QueryOptions(
       documentNode: gql(TraySolution.readIndexSchema),
     );
@@ -21,7 +31,8 @@ class TrayIOSolutionService extends TrayIOService {
       );
     }
 
-    final List<Object> qlSolutions = result.data['viewer']['solutions']['edges'] as List<Object>;
+    final List<Object> qlSolutions =
+        result.data['viewer']['solutions']['edges'] as List<Object>;
 
     List<TraySolution> solutions = [];
     for (var s in qlSolutions) {
@@ -31,5 +42,7 @@ class TrayIOSolutionService extends TrayIOService {
       print(solutions.last.toString());
     }
     _servicesController.sink.add(solutions);
+    notifyListeners();
+    return solutions;
   }
 }
