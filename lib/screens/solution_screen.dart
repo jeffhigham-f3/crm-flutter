@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/service/tray_io_service.dart';
+import 'package:verb_crm_flutter/service/tray_io_solution_service.dart';
 import 'package:verb_crm_flutter/screens/solution_auth_screen.dart';
 import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +18,13 @@ class SolutionsScreen extends StatefulWidget {
 class _SolutionsScreenState extends State<SolutionsScreen> {
   @override
   Widget build(BuildContext context) {
-    final trayIOService = context.watch<TrayIOService>();
-    trayIOService.solutionService.readIndex();
+    final trayIOSolutionService = context.watch<TrayIOSolutionService>();
+    trayIOSolutionService.readIndex();
+
     return Scaffold(
       body: Container(
         child: StreamBuilder(
-          stream: trayIOService.solutionService.stream,
+          stream: trayIOSolutionService.stream,
           builder: (context, snapshot) {
             List<SolutionCard> widgets = [];
             if (!snapshot.hasData) {
