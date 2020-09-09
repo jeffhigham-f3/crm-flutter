@@ -2,13 +2,10 @@ import 'package:verb_crm_flutter/service/tray_io_service.dart';
 import 'package:verb_crm_flutter/models/tray_io/tray_solution.dart';
 import 'package:graphql/client.dart';
 import 'dart:async';
-import 'package:meta/meta.dart';
-
 
 abstract class TrayIOSolutionServiceAbstract extends TrayIOService {
   Stream get stream;
   Future<List<TraySolution>> readIndex();
-
 }
 
 class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {

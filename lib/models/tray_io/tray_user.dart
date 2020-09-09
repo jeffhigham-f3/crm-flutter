@@ -2,8 +2,10 @@ import 'package:meta/meta.dart';
 
 class TrayUser {
   final String id;
+  String accessToken;
+  String authorizationCode;
 
-  const TrayUser({
+  TrayUser({
     @required this.id,
   });
 
@@ -26,6 +28,26 @@ mutation($externalUserId: String!, $name: String!) {
 }
 ''';
 
+  static final String createUserTokenSchema = r'''
+mutation ($userId: ID!) {
+  authorize(input: {
+      userId: $userId
+  }) {
+    accessToken
+  }
+}
+''';
+
+  static final String createConfigWizardAuthorizationSchema = r'''
+mutation ($userId: ID!) {
+  generateAuthorizationCode( input: {
+    userId: $userId
+  }) {
+    authorizationCode
+  }
+}
+''';
+
   static final String getSchema = r'''
 query ($userId: String!){
     users(criteria: { userId: $userId }) {
@@ -44,6 +66,14 @@ query ($userId: String!){
           startCursor
         }
 	}
+}
+''';
+
+  static final String deleteSchema = r'''
+mutation($userInput: RemoveExternalUserInput!) {
+  removeExternalUser(input: $userInput) {
+      clientMutationId # REQUIRED - must specify as return field, not required to provide this in mutation function
+  }
 }
 ''';
 

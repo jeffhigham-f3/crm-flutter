@@ -82,7 +82,9 @@ class _AccountFormFormState extends State<AccountFormForm> {
               height: 20.0,
             ),
             _FormButton(
-              text: (widget.loginType == LoginType.firebaseLogin) ? "LOGIN" : "SIGNUP",
+              text: (widget.loginType == LoginType.firebaseLogin)
+                  ? "LOGIN"
+                  : "SIGNUP",
               onPressed: () {
                 final email = _emailController.text;
                 final password = _passwordController.text;
@@ -134,7 +136,8 @@ class _AccountFormFormState extends State<AccountFormForm> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => authService.Auth0Login()
+                    onTap: () => authService
+                        .auth0Login()
                         .then(
                           (result) => _loadState(),
                         )
@@ -161,7 +164,8 @@ class _AccountFormFormState extends State<AccountFormForm> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => authService.Auth0Login()
+                    onTap: () => authService
+                        .auth0Login()
                         .then(
                           (result) => _loadState(),
                         )
@@ -188,7 +192,8 @@ class _AccountFormFormState extends State<AccountFormForm> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => authService.Auth0Login()
+                    onTap: () => authService
+                        .auth0Login()
                         .then(
                           (result) => _loadState(),
                         )
@@ -249,7 +254,8 @@ class _AccountFormFormState extends State<AccountFormForm> {
 
   void _onLoginError(dynamic error) {
     print(error);
-    final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: error);
+    final errorText = Provider.of<AuthService>(context, listen: false)
+        .decodeError(exception: error);
     Scaffold.of(context).showSnackBar(
       new SnackBar(
         content: Text(
@@ -271,27 +277,28 @@ class _AccountFormFormState extends State<AccountFormForm> {
   }
 }
 
-class _SecondaryButton extends StatelessWidget {
-  final Function onPressed;
-  final String text;
-
-  const _SecondaryButton({Key key, this.onPressed, this.text}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FlatButton(
-        onPressed: this.onPressed,
-        child: Text(
-          this.text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 14.0,
-          ),
-        ),
-      ),
-    );
-  }
-}
+//class _SecondaryButton extends StatelessWidget {
+//  final Function onPressed;
+//  final String text;
+//
+//  const _SecondaryButton({Key key, this.onPressed, this.text})
+//      : super(key: key);
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      child: FlatButton(
+//        onPressed: this.onPressed,
+//        child: Text(
+//          this.text,
+//          style: TextStyle(
+//            color: Colors.white,
+//            fontSize: 14.0,
+//          ),
+//        ),
+//      ),
+//    );
+//  }
+//}
 
 class _FormButton extends StatelessWidget {
   final Function onPressed;

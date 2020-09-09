@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:verb_crm_flutter/models/tray_io/tray_user.dart';
 import 'package:meta/meta.dart';
 
 class User {

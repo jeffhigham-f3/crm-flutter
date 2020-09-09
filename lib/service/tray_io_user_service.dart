@@ -11,9 +11,11 @@ abstract class TrayIOUserServiceAbstract extends TrayIOService {
   TrayUser get currentUser;
   Stream get stream;
   Future<TrayUser> createUser();
+  Future<String> createUserToken();
+  Future<String> createConfigWizardAuthorization();
   Future<TrayUser> loadCurrentUser();
+  Future<void> deleteUser();
   Future<List<TrayUser>> readIndex();
-//  TrayIOUserServiceAbstract();
 }
 
 class TrayIOUserService extends TrayIOUserServiceAbstract {
@@ -22,10 +24,10 @@ class TrayIOUserService extends TrayIOUserServiceAbstract {
 
   TrayUser _currentUser;
 
-//  @override
-//  TrayIOUserService() {
-//    loadCurrentUser();
-//  }
+  @override
+  TrayIOUserService() {
+    loadCurrentUser();
+  }
 
   @override
   TrayUser get currentUser => _currentUser;
@@ -33,46 +35,19 @@ class TrayIOUserService extends TrayIOUserServiceAbstract {
   @override
   Stream get stream => _usersController.stream;
 
-  // TODO: update to use proper syntax for Mutations
-  /*
-
-  final MutationOptions options = MutationOptions(
-    documentNode: gql(addStar),
-    variables: <String, dynamic>{
-      'starrableId': repositoryID,
-    },
-  );
-  final QueryResult result = await _client.mutate(options);
-
-if (result.hasException) {
-    print(result.exception.toString());
-    return;
-}
-
-final bool isStarred =
-    result.data['action']['starrable']['viewerHasStarred'] as bool;
-
-if (isStarred) {
-  print('Thanks for your star!');
-  return;
-}
-
-
-  */
-
   @override
   Future<TrayUser> createUser({@required User appUser}) async {
-    options = QueryOptions(documentNode: gql(TrayUser.createSchema), variables: <String, dynamic>{
-      'externalUserId': appUser.id.toString(),
-      'name': appUser.name.toString(),
-    });
-    print('Client value is: $client');
-    final QueryResult result = await client.query(options);
+    final mutationOptions = MutationOptions(
+        documentNode: gql(TrayUser.createSchema),
+        variables: <String, dynamic>{
+          'externalUserId': appUser.id.toString(),
+          'name': appUser.name.toString(),
+        });
+
+    final QueryResult result = await client.mutate(mutationOptions);
 
     if (result.hasException) {
-      throw Exception(
-        result.exception.toString(),
-      );
+      throw result.exception;
     }
 
     final Object qlUser = result.data['createExternalUser'] as Object;
@@ -83,6 +58,52 @@ if (isStarred) {
     readIndex();
     notifyListeners();
     return user;
+  }
+
+  @override
+  Future<String> createUserToken() async {
+    final mutationOptions = MutationOptions(
+        documentNode: gql(TrayUser.createUserTokenSchema),
+        variables: <String, dynamic>{
+          'userId': _currentUser.id,
+        });
+
+    final QueryResult result = await client.mutate(mutationOptions);
+
+    if (result.hasException) {
+      throw result.exception;
+    }
+
+    final String accessToken =
+        result.data['authorize']['accessToken'] as String;
+    print('Setting the "tray_user_token" value to: $accessToken');
+    await _secureStorage.write(key: 'tray_access_token', value: accessToken);
+    _currentUser.accessToken = accessToken;
+    notifyListeners();
+    return accessToken;
+  }
+
+  @override
+  Future<String> createConfigWizardAuthorization() async {
+    final mutationOptions = MutationOptions(
+        documentNode: gql(TrayUser.createConfigWizardAuthorizationSchema),
+        variables: <String, dynamic>{
+          'userId': _currentUser.id,
+        });
+
+    final QueryResult result = await client.mutate(mutationOptions);
+
+    if (result.hasException) {
+      throw result.exception;
+    }
+
+    final String authCode =
+        result.data['authorize']['authorizationCode'] as String;
+    print('Setting the "tray_authorization_code" value to: $authCode');
+    await _secureStorage.write(key: 'tray_authorization_code', value: authCode);
+    _currentUser.authorizationCode = authCode;
+    notifyListeners();
+    return authCode;
   }
 
   @override
@@ -111,9 +132,32 @@ if (isStarred) {
     final Object qlUser = result.data['users']['edges']['node'] as Object;
     // TODO: GraphQL API will return status 200 with an empty list if the user is not found. Check for an empty list before assigning.
     _currentUser = TrayUser.fromTrayGraphQL(qlUser);
+    print("User is from Tray.io");
     print(_currentUser.toString());
     notifyListeners();
     return _currentUser;
+  }
+
+  @override
+  Future<void> deleteUser() async {
+    final mutationOptions = MutationOptions(
+        documentNode: gql(TrayUser.deleteSchema),
+        variables: <String, dynamic>{
+          'userInput': _currentUser.id,
+        });
+
+    final QueryResult result = await client.mutate(mutationOptions);
+
+    if (result.hasException) {
+      throw result.exception;
+    }
+
+    await _secureStorage.delete(key: 'tray_user_id');
+    await _secureStorage.delete(key: 'tray_user_token');
+    await _secureStorage.delete(key: 'tray_authorization_code');
+    _currentUser = null;
+    notifyListeners();
+    readIndex();
   }
 
   @override
