@@ -82,9 +82,7 @@ class _AccountFormFormState extends State<AccountFormForm> {
               height: 20.0,
             ),
             _FormButton(
-              text: (widget.loginType == LoginType.firebaseLogin)
-                  ? "LOGIN"
-                  : "SIGNUP",
+              text: (widget.loginType == LoginType.firebaseLogin) ? "LOGIN" : "SIGNUP",
               onPressed: () {
                 final email = _emailController.text;
                 final password = _passwordController.text;
@@ -232,10 +230,8 @@ class _AccountFormFormState extends State<AccountFormForm> {
     context.read<AuthService>().loadCurrentUser().then(
       (user) {
         if (user != null) {
-          context.read<TrayIOUserService>().loadCurrentUser().then(
+          context.read<TrayIOUserService>().loadCurrentUser(externalUserId: user.id).then(
             (trayUser) {
-              print(user);
-              print(trayUser);
               if (trayUser == null) {
                 context
                     .read<TrayIOUserService>()
@@ -254,8 +250,7 @@ class _AccountFormFormState extends State<AccountFormForm> {
 
   void _onLoginError(dynamic error) {
     print(error);
-    final errorText = Provider.of<AuthService>(context, listen: false)
-        .decodeError(exception: error);
+    final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: error);
     Scaffold.of(context).showSnackBar(
       new SnackBar(
         content: Text(

@@ -7,12 +7,11 @@ class TrayIOService with ChangeNotifier {
   AuthLink authLink;
   Link link;
   GraphQLClient client;
-  QueryOptions options;
 
   TrayIOService() {
     httpLink = HttpLink(uri: kTrayIOGraphQlUrl);
     authLink = AuthLink(getToken: () async => 'Bearer $kTrayIOMasterToken');
-    client = GraphQLClient(cache: InMemoryCache(), link: link);
     link = authLink.concat(httpLink);
+    client = GraphQLClient(cache: InMemoryCache(), link: link);
   }
 }

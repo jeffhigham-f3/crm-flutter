@@ -1,24 +1,30 @@
 import 'package:meta/meta.dart';
 
 class TrayUser {
+  final String name;
   final String id;
+  final String externalUserId;
+
   String accessToken;
   String authorizationCode;
 
   TrayUser({
+    @required this.name,
     @required this.id,
+    @required this.externalUserId,
   });
 
-  factory TrayUser.fromTrayGraphQL(Map<String, Object> user) {
-    final Map<String, Object> node = user['node'];
-    final id = node['id'];
+  factory TrayUser.fromTrayGraphQL(Map<String, dynamic> trayUser) {
+    print('Instantiating a new TrayUser with: $trayUser');
     return TrayUser(
-      id: id,
+      name: trayUser['name'],
+      id: trayUser['id'],
+      externalUserId: trayUser['externalUserId'],
     );
   }
 
   @override
-  String toString() => 'id: $id';
+  String toString() => 'name: ${this.name},\nid: ${this.id},\nexternalUserId: ${this.externalUserId}';
 
   static final String createSchema = r'''
 mutation($externalUserId: String!, $name: String!) {
@@ -49,8 +55,8 @@ mutation ($userId: ID!) {
 ''';
 
   static final String getSchema = r'''
-query ($userId: String!){
-    users(criteria: { userId: $userId }) {
+query ($userCriteria: UserSearchCriteria){
+    users (criteria: $userCriteria){
         edges {
             node {
                 name
@@ -65,7 +71,7 @@ query ($userId: String!){
           hasPreviousPage
           startCursor
         }
-	}
+    }
 }
 ''';
 

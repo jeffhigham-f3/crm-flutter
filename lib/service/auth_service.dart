@@ -7,12 +7,9 @@ abstract class AuthServiceAbstract extends ChangeNotifier {
   User get currentUser;
   bool get isSignedIn;
   Future<User> loadCurrentUser();
-  Future<AuthResult> firebaseAnonymous(
-      {@required String name, @required String email});
-  Future<AuthResult> firebaseSignUp(
-      {@required String email, @required String password});
-  Future<AuthResult> firebaseLogin(
-      {@required String email, @required String password});
+  Future<AuthResult> firebaseAnonymous({@required String name, @required String email});
+  Future<AuthResult> firebaseSignUp({@required String email, @required String password});
+  Future<AuthResult> firebaseLogin({@required String email, @required String password});
   Future<void> auth0Login();
   Future<void> signOut();
   String decodeError({@required exception});
@@ -46,8 +43,7 @@ class AuthService extends AuthServiceAbstract {
   }
 
   @override
-  Future<AuthResult> firebaseAnonymous(
-      {@required String name, @required String email}) async {
+  Future<AuthResult> firebaseAnonymous({@required String name, @required String email}) async {
     final AuthResult result = await _firebaseAuth.signInAnonymously();
     if (result?.user != null) {
       _currentUser = User.fromFirebase(result.user);
@@ -57,10 +53,8 @@ class AuthService extends AuthServiceAbstract {
   }
 
   @override
-  Future<AuthResult> firebaseSignUp(
-      {@required String email, @required String password}) async {
-    final AuthResult result = await _firebaseAuth
-        .createUserWithEmailAndPassword(email: email, password: password);
+  Future<AuthResult> firebaseSignUp({@required String email, @required String password}) async {
+    final AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     if (result?.user != null) {
       print("Firebase User");
       print(result.user);
@@ -71,10 +65,8 @@ class AuthService extends AuthServiceAbstract {
   }
 
   @override
-  Future<AuthResult> firebaseLogin(
-      {@required String email, @required String password}) async {
-    final AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
+  Future<AuthResult> firebaseLogin({@required String email, @required String password}) async {
+    final AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     if (result?.user != null) {
       _currentUser = User.fromFirebase(result.user);
       notifyListeners();
@@ -104,9 +96,9 @@ class AuthService extends AuthServiceAbstract {
 
   @override
   String decodeError({@required exception}) {
-    if (exception is Exception) {
-      return exception.toString();
-    }
+//    if (exception is Exception) {
+    return exception.toString();
+//    }
 
     switch (exception.code) {
       case "ERROR_ADMIN_RESTRICTED_OPERATION":

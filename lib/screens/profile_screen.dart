@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
+import 'package:verb_crm_flutter/service/tray_io_user_service.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
 import 'package:verb_crm_flutter/widgets/gradient_container.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
@@ -14,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
+    final trayUserService = context.watch<TrayIOUserService>();
 
     return (authService.isSignedIn)
         ? Scaffold(
@@ -40,7 +42,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           hasBorder: true,
                           isActive: false,
                         ),
-                      )
+                      ),
+                      Text('Auth User:'),
+                      Text(authService.currentUser.toString()),
+                      Text('TrayIO User'),
+                      Text(trayUserService.currentUser.toString()),
                     ],
                   ),
                 ),
@@ -54,10 +60,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           (Route<dynamic> route) => false,
                         ),
                       },
-                      child: Text("Sign Out"),
+                      child: Text('Sign Out'),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           )

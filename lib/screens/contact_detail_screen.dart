@@ -18,7 +18,7 @@ class ContactDetailScreen extends StatelessWidget {
             floating: true,
             pinned: false,
             snap: true,
-//            collapsedHeight: 150,
+            collapsedHeight: 150,
             expandedHeight: 150,
             flexibleSpace: FlexibleSpaceBar(
               stretchModes: <StretchMode>[
