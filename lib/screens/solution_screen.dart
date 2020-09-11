@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/service/tray_io_solution_service.dart';
-import 'package:verb_crm_flutter/screens/solution_auth_screen.dart';
+import 'package:verb_crm_flutter/service/tray_io_user_service.dart';
+//import 'package:verb_crm_flutter/screens/solution_auth_screen.dart';
 import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/models/tray_io/tray_solution.dart';
@@ -54,7 +55,7 @@ class _SolutionsScreenState extends State<SolutionsScreen> {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      crossAxisCount: 2,
+                      crossAxisCount: 1,
                     ),
                     padding: const EdgeInsets.all(20),
                     children: widgets,
@@ -101,14 +102,16 @@ class SolutionCard extends StatefulWidget {
 class _SolutionCardState extends State<SolutionCard> {
   @override
   Widget build(BuildContext context) {
+    final trayIOSolutionService = context.watch<TrayIOSolutionService>();
+    final trayIOUserService = context.watch<TrayIOUserService>();
+
     return Card(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 50,
-              height: 50,
+              width: 100,
               child: Image.asset('assets/${widget.solution.title}.png'),
             ),
             SizedBox(
@@ -126,30 +129,26 @@ class _SolutionCardState extends State<SolutionCard> {
                     Icons.done,
                   )
                 : OutlineButton(
-                    child: Text("Connect"),
-                    onPressed: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SolutionAuthScreen(solution: widget.solution),
-                            fullscreenDialog: true,
-                          )).then(
-                        (value) => {
-                          setState(() {}),
-                          Scaffold.of(context).showSnackBar(
-                            new SnackBar(
-                              content: Text(
-                                '${widget.solution.title} Connected!',
-                                style: Theme.of(context).textTheme.subtitle2,
-                                textAlign: TextAlign.center,
-                              ),
-                              duration: Duration(seconds: 1),
-                              backgroundColor: Theme.of(context).accentColor,
-                            ),
-                          )
-                        },
-                      )
-                    },
+                    child: Text("Configure"),
+                    onPressed: (() {
+                      final user = trayIOUserService.currentUser;
+                      final serviceInfo = '${widget.solution.title} [${widget.solution.id}]';
+                      final userInfo = '${trayIOUserService.currentUser.name} [${trayIOUserService.currentUser.id}]';
+                      print('Configuring $serviceInfo for $userInfo');
+                      trayIOUserService.createUserToken().then((token) {
+                        print('Access token variable is: $token');
+                        print('Access token is: ${user.accessToken}');
+
+                        trayIOUserService.createConfigWizardAuthorization().then((authorizationCode) {
+                          print('Authroization code variable is: $authorizationCode');
+                          print('Access token is: ${user.authorizationCode}');
+                        }).catchError((e) {
+                          print(e.toString());
+                        });
+                      }).catchError((e) {
+                        print(e.toString());
+                      });
+                    }),
                   ),
           ],
         ),
@@ -157,3 +156,25 @@ class _SolutionCardState extends State<SolutionCard> {
     );
   }
 }
+
+//                      Navigator.push(
+//                          context,
+//                          MaterialPageRoute(
+//                            builder: (context) => SolutionAuthScreen(solution: widget.solution),
+//                            fullscreenDialog: true,
+//                          )).then(
+//                        (value) => {
+//                          setState(() {}),
+//                          Scaffold.of(context).showSnackBar(
+//                            new SnackBar(
+//                              content: Text(
+//                                '${widget.solution.title} Connected!',
+//                                style: Theme.of(context).textTheme.subtitle2,
+//                                textAlign: TextAlign.center,
+//                              ),
+//                              duration: Duration(seconds: 1),
+//                              backgroundColor: Theme.of(context).accentColor,
+//                            ),
+//                          )
+//                        },
+//                      )

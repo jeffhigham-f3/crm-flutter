@@ -28,8 +28,7 @@ class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
       );
     }
 
-    final List<Object> qlSolutions =
-        result.data['viewer']['solutions']['edges'] as List<Object>;
+    final List<Object> qlSolutions = result.data['viewer']['solutions']['edges'] as List<Object>;
 
     List<TraySolution> solutions = [];
     for (var s in qlSolutions) {
@@ -39,7 +38,6 @@ class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
       print(solutions.last.toString());
     }
     _servicesController.sink.add(solutions);
-    notifyListeners();
     return solutions;
   }
 }

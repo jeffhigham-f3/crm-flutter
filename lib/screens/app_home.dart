@@ -104,7 +104,7 @@ class _AppHomeState extends State<AppHome> {
           IconButton(
             tooltip: "Connectors",
             icon: const Icon(
-              Icons.sync,
+              Icons.add,
             ),
             onPressed: () => {
               Navigator.push(

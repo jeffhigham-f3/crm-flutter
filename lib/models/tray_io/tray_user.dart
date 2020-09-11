@@ -14,42 +14,43 @@ class TrayUser {
     @required this.externalUserId,
   });
 
-  factory TrayUser.fromTrayGraphQL(Map<String, dynamic> trayUser) {
-    print('Instantiating a new TrayUser with: $trayUser');
+  factory TrayUser.fromTrayGraphQL(Map<String, dynamic> userParams) {
+    print('Instantiating a new TrayUser with: $userParams');
     return TrayUser(
-      name: trayUser['name'],
-      id: trayUser['id'],
-      externalUserId: trayUser['externalUserId'],
+      name: userParams['name'],
+      id: userParams['id'],
+      externalUserId: userParams['externalUserId'],
     );
   }
 
   @override
   String toString() => 'name: ${this.name},\nid: ${this.id},\nexternalUserId: ${this.externalUserId}';
 
+  static final String indexSchema = r'''
+query {
+    users {
+        edges {
+            node {
+                name
+                id
+                externalUserId
+            }
+            cursor
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+          hasPreviousPage
+          startCursor
+        }
+    }
+}
+''';
+
   static final String createSchema = r'''
 mutation($externalUserId: String!, $name: String!) {
   createExternalUser(input: { name: $name, externalUserId: $externalUserId }) {
       userId
-  }
-}
-''';
-
-  static final String createUserTokenSchema = r'''
-mutation ($userId: ID!) {
-  authorize(input: {
-      userId: $userId
-  }) {
-    accessToken
-  }
-}
-''';
-
-  static final String createConfigWizardAuthorizationSchema = r'''
-mutation ($userId: ID!) {
-  generateAuthorizationCode( input: {
-    userId: $userId
-  }) {
-    authorizationCode
   }
 }
 ''';
@@ -83,24 +84,23 @@ mutation($userInput: RemoveExternalUserInput!) {
 }
 ''';
 
-  static final String readIndexSchema = r'''
-query {
-    users {
-        edges {
-            node {
-                name
-                id
-                externalUserId
-            }
-            cursor
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
-          hasPreviousPage
-          startCursor
-        }
-    }
+  static final String createUserTokenSchema = r'''
+mutation ($userId: ID!) {
+  authorize(input: {
+      userId: $userId
+  }) {
+    accessToken
+  }
+}
+''';
+
+  static final String createConfigWizardAuthorizationSchema = r'''
+mutation ($userId: ID!) {
+  generateAuthorizationCode( input: {
+    userId: $userId
+  }) {
+    authorizationCode
+  }
 }
 ''';
 }
