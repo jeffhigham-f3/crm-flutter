@@ -55,7 +55,7 @@ query {
 ''';
 
   static final String createSchema = r'''
-utation (
+mutation (
     $authenticationName: String!,
     $serviceId: String!,
     $serviceEnvironmentId: String!,

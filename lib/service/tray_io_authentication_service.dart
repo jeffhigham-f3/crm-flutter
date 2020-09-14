@@ -80,7 +80,7 @@ class TrayIOAuthenticationService extends TrayIOAuthenticationServiceAbstract {
     final options = MutationOptions(
       documentNode: gql(TrayAuthentication.createSchema),
       variables: <String, dynamic>{
-        // TODO: Implement these parameters with existing
+        // TODO: Implement these parameters with existing account
         'authenticationName': '',
         'serviceId': '',
         'serviceEnvironmentId': '',

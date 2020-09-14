@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/service/tray_io_solution_service.dart';
-import 'package:verb_crm_flutter/service/tray_io_user_service.dart';
-//import 'package:verb_crm_flutter/screens/solution_auth_screen.dart';
+import 'package:verb_crm_flutter/screens/solution_auth_screen.dart';
 import 'package:verb_crm_flutter/screens/app_home.dart';
-import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/models/tray_io/tray_solution.dart';
+import 'package:provider/provider.dart';
 
 class SolutionsScreen extends StatefulWidget {
   static const String id = 'solution_screen';
@@ -21,7 +20,6 @@ class _SolutionsScreenState extends State<SolutionsScreen> {
   Widget build(BuildContext context) {
     final trayIOSolutionService = context.watch<TrayIOSolutionService>();
     trayIOSolutionService.readIndex();
-
     return Scaffold(
       body: Container(
         child: StreamBuilder(
@@ -102,9 +100,6 @@ class SolutionCard extends StatefulWidget {
 class _SolutionCardState extends State<SolutionCard> {
   @override
   Widget build(BuildContext context) {
-    final trayIOSolutionService = context.watch<TrayIOSolutionService>();
-    final trayIOUserService = context.watch<TrayIOUserService>();
-
     return Card(
       child: Center(
         child: Column(
@@ -131,23 +126,29 @@ class _SolutionCardState extends State<SolutionCard> {
                 : OutlineButton(
                     child: Text("Configure"),
                     onPressed: (() {
-                      final user = trayIOUserService.currentUser;
-                      final serviceInfo = '${widget.solution.title} [${widget.solution.id}]';
-                      final userInfo = '${trayIOUserService.currentUser.name} [${trayIOUserService.currentUser.id}]';
-                      print('Configuring $serviceInfo for $userInfo');
-                      trayIOUserService.createUserToken().then((token) {
-                        print('Access token variable is: $token');
-                        print('Access token is: ${user.accessToken}');
-
-                        trayIOUserService.createConfigWizardAuthorization().then((authorizationCode) {
-                          print('Authroization code variable is: $authorizationCode');
-                          print('Access token is: ${user.authorizationCode}');
-                        }).catchError((e) {
-                          print(e.toString());
-                        });
-                      }).catchError((e) {
-                        print(e.toString());
-                      });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SolutionAuthScreen(
+                              solution: widget.solution,
+                            ),
+                            fullscreenDialog: true,
+                          )).then(
+                        (value) => {
+                          setState(() {}),
+                          Scaffold.of(context).showSnackBar(
+                            new SnackBar(
+                              content: Text(
+                                '${widget.solution.title} Connected!',
+                                style: Theme.of(context).textTheme.subtitle2,
+                                textAlign: TextAlign.center,
+                              ),
+                              duration: Duration(seconds: 1),
+                              backgroundColor: Theme.of(context).accentColor,
+                            ),
+                          )
+                        },
+                      );
                     }),
                   ),
           ],
@@ -156,25 +157,3 @@ class _SolutionCardState extends State<SolutionCard> {
     );
   }
 }
-
-//                      Navigator.push(
-//                          context,
-//                          MaterialPageRoute(
-//                            builder: (context) => SolutionAuthScreen(solution: widget.solution),
-//                            fullscreenDialog: true,
-//                          )).then(
-//                        (value) => {
-//                          setState(() {}),
-//                          Scaffold.of(context).showSnackBar(
-//                            new SnackBar(
-//                              content: Text(
-//                                '${widget.solution.title} Connected!',
-//                                style: Theme.of(context).textTheme.subtitle2,
-//                                textAlign: TextAlign.center,
-//                              ),
-//                              duration: Duration(seconds: 1),
-//                              backgroundColor: Theme.of(context).accentColor,
-//                            ),
-//                          )
-//                        },
-//                      )
