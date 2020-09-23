@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/service/tray_io_solution_service.dart';
-import 'package:verb_crm_flutter/screens/solution_auth_screen.dart';
+import 'package:verb_crm_flutter/screens/solution_instance_screen.dart';
 import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:verb_crm_flutter/models/tray_io/tray_solution.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SolutionsScreen extends StatefulWidget {
   static const String id = 'solution_screen';
@@ -62,7 +63,7 @@ class _SolutionsScreenState extends State<SolutionsScreen> {
                 Expanded(
                   child: Center(
                     child: OutlineButton(
-                      child: Text("Continue"),
+                      child: Text("Done"),
                       onPressed: (() {
                         (widget.modal != null && widget.modal)
                             ? Navigator.pop(context)
@@ -124,14 +125,12 @@ class _SolutionCardState extends State<SolutionCard> {
                     Icons.done,
                   )
                 : OutlineButton(
-                    child: Text("Configure"),
+                    child: Text("Use"),
                     onPressed: (() {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SolutionAuthScreen(
-                              solution: widget.solution,
-                            ),
+                            builder: (context) => SolutionInstanceScreen(),
                             fullscreenDialog: true,
                           )).then(
                         (value) => {

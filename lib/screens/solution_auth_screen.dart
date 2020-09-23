@@ -29,11 +29,11 @@ class SolutionAuthScreen extends StatelessWidget {
         onWebViewCreated: (WebViewController webViewController) {
           trayIOUserService.createUserToken().then((accessToken) {
             trayIOUserService.createConfigWizardAuthorization().then((authorizationCode) {
-              final url =
-                  '$kTrayIOEmbedAPIUrl/external/solutions/$kTrayIOPartnerName/configure/${solution.id}?code=$authorizationCode';
-              final Map<String, String> headers = {'Authorization': 'Bearer $accessToken'};
-              print('Loading URL: $url with headers: $headers');
-              webViewController.loadUrl(url, headers: headers);
+//              final url = '$kTrayIOEmbedAPIUrl/external/solutions/$kTrayIOPartnerName/configure/${solution.id}?code=$authorizationCode';
+//              final Map<String, String> headers = {'Authorization': 'Bearer $accessToken'};
+//              print('Loading URL: $url with headers: $headers');
+//              webViewController.loadUrl(url, headers: headers);
+              webViewController.loadUrl('https://tray-embeded.f3code.io');
               _controller.complete(webViewController);
             }).catchError((e) {
               print(e.toString());

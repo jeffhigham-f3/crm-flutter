@@ -6,12 +6,12 @@ class TraySolutionInstance {
   final bool enabled;
   final String owner;
   final String created;
-  final Map<String, bool> solutionVersionFlags;
-  final List<Map<String, dynamic>> workflows;
-  final Map<String, String> authValues;
-  final Map<String, String> configValues;
+  final dynamic solutionVersionFlags;
+  final dynamic workflows;
+  final dynamic authValues;
+  final dynamic configValues;
   final String cursor;
-  final Map<String, dynamic> pageInfo;
+  final dynamic pageInfo;
 
   TraySolutionInstance({
     @required this.id,
@@ -28,7 +28,7 @@ class TraySolutionInstance {
   });
 
   factory TraySolutionInstance.fromTrayGraphQL(Map<String, dynamic> solutionInstance) {
-    final Map<String, Object> node = solutionInstance['node'];
+    final Map<String, dynamic> node = solutionInstance['node'];
 
     return TraySolutionInstance(
       id: node['id'],
@@ -48,7 +48,7 @@ class TraySolutionInstance {
   @override
   String toString() => 'id: $id, name: $name, enabled: $enabled, owner: $owner';
 
-  static final String readIndexSchema = r'''
+  static final String indexSchema = r'''
 query ($ownerId: String!){
 	viewer {
 		solutionInstances(criteria: { owner: $ownerId }) {

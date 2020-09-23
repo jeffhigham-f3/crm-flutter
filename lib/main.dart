@@ -5,6 +5,7 @@ import 'package:verb_crm_flutter/models/crm_manager.dart';
 import 'package:verb_crm_flutter/service/glance_service.dart';
 import 'package:verb_crm_flutter/service/contact_service.dart';
 import 'package:verb_crm_flutter/service/tray_io_solution_service.dart';
+import 'package:verb_crm_flutter/service/tray_io_solution_instance_service.dart';
 import 'package:verb_crm_flutter/service/tray_io_user_service.dart';
 import 'package:verb_crm_flutter/screens/main_app.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
@@ -31,6 +32,9 @@ void main() {
         ),
         ChangeNotifierProvider<TrayIOSolutionService>.value(
           value: TrayIOSolutionService(),
+        ),
+        ChangeNotifierProvider<TrayIOSolutionInstanceService>.value(
+          value: TrayIOSolutionInstanceService(),
         ),
         ChangeNotifierProvider<TrayIOUserService>.value(
           value: TrayIOUserService(),

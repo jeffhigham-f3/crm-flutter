@@ -24,7 +24,8 @@ class TrayUser {
   }
 
   @override
-  String toString() => 'name: ${this.name},\nid: ${this.id},\nexternalUserId: ${this.externalUserId}';
+  String toString() =>
+      'name: ${this.name},\nid: ${this.id},\nexternalUserId: ${this.externalUserId},\naccessToken: ${this.accessToken}';
 
   static final String indexSchema = r'''
 query {
