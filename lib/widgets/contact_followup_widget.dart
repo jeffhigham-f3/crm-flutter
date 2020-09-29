@@ -6,6 +6,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/contact_service.dart';
 import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
+import 'package:verb_crm_flutter/service/tray_io_solution_instance_service.dart';
 
 class ContactFollowUpWidget extends StatefulWidget {
   final GlanceTask task;
@@ -61,6 +62,31 @@ class _ContactRowSlider extends StatefulWidget {
 }
 
 class __ContactRowSliderState extends State<_ContactRowSlider> {
+  @override
+  void initState() {
+    final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
+    final contactService = context.read<ContactService>();
+
+    // TODO: Replace the workflow request with
+    if (solutionInstanceService.activeInstances.length != 0 &&
+        solutionInstanceService.activeInstances.first.workflows.length != 0) {
+      final instance = solutionInstanceService.activeInstances.first;
+      if (!instance.enabled) {
+        print('Solution Instance [${instance.id}] ${instance.name} is disabled');
+        return;
+      }
+
+      final workflow = instance.workflows.first;
+      if (workflow == null) {
+        print('${instance.name} does not have an active workflow.');
+        return;
+      }
+      print('Fetching contacts from triggerUrl: ${workflow.triggerUrl}');
+      contactService.getContacts(workflowUrl: workflow.triggerUrl);
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
@@ -129,10 +155,12 @@ class _ContactContainer extends StatelessWidget {
                   margin: EdgeInsets.only(right: 10.0),
                   child: ProfileAvatar(
                     imageUrl: contact.photoUrl,
-                    radius: 22.0,
-                    backgroundColor: Colors.white,
+                    radius: 30.0,
+                    backgroundColor: contact.accentColor,
                     borderColor: Colors.white,
                     isActive: contact.online,
+                    initials: contact.initials,
+                    hasBorder: true,
                   ),
                 ),
                 Padding(

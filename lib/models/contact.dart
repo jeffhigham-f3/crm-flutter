@@ -45,7 +45,7 @@ class Contact {
       lastName: json['LastName'] ??= '',
       lead: false,
       customer: true,
-      followUp: false,
+      followUp: faker.randomGenerator.boolean(),
       online: faker.randomGenerator.boolean(),
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
     );
