@@ -8,6 +8,9 @@ abstract class TrayIOSolutionInstanceServiceAbstract extends TrayIOService {
   /// Stream of TraySolutionInstances
   Stream get stream;
 
+  /// Active Instances
+  List<TraySolutionInstance> get activeInstances;
+
   /// Future<List<TraySolutionInstance>> getSolutionInstances({@required String accessToken,@required String ownerId})
   /// Return the Solution Instances associated with the user.
   /// Reference:
@@ -29,9 +32,13 @@ abstract class TrayIOSolutionInstanceServiceAbstract extends TrayIOService {
 
 class TrayIOSolutionInstanceService extends TrayIOSolutionInstanceServiceAbstract {
   final _servicesController = StreamController.broadcast();
+  List<TraySolutionInstance> _activeInstances = [];
 
   @override
   Stream get stream => _servicesController.stream;
+
+  @override
+  List<TraySolutionInstance> get activeInstances => _activeInstances;
 
   @override
   Future<List<TraySolutionInstance>> getSolutionInstances({
@@ -65,8 +72,9 @@ class TrayIOSolutionInstanceService extends TrayIOSolutionInstanceServiceAbstrac
       );
       print(instances.last.toString());
     }
-    _servicesController.sink.add(instances);
-    return instances;
+    this._activeInstances = instances;
+    _servicesController.sink.add(_activeInstances);
+    return _activeInstances;
   }
 
   @override

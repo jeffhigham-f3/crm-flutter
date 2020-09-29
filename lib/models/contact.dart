@@ -35,18 +35,22 @@ class Contact {
   factory Contact.fromJson(Map<String, dynamic> json) {
     final RandomColor _randomColor = RandomColor();
 
-    return Contact(
-        id: json['AccountId'],
-        name: '${json['FirstName']} ${json['LastName']}',
-        email: json['Email'],
-        phone: json['MobilePhone'],
-        firstName: json['FirstName'],
-        lastName: json['LastName'],
-        lead: false,
-        customer: true,
-        followUp: false,
-        online: faker.randomGenerator.boolean(),
-        accentColor: _randomColor.randomColor(colorHue: ColorHue.blue));
+    print(json);
+    final contact = Contact(
+      id: json['AccountId'] ??= '',
+      name: '${json['FirstName']} ${json['LastName']}',
+      email: json['Email'] ??= '',
+      phone: json['MobilePhone'] ??= '',
+      firstName: json['FirstName'] ??= '',
+      lastName: json['LastName'] ??= '',
+      lead: false,
+      customer: true,
+      followUp: false,
+      online: faker.randomGenerator.boolean(),
+      accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
+    );
+    print(contact);
+    return contact;
   }
 
   String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)
@@ -54,7 +58,8 @@ class Contact {
       : id.substring(0, 2).toUpperCase();
 
   @override
-  String toString() => '[$id] $firstName $lastName ($initials),$email';
+  String toString() =>
+      'id: $id, firstName: $firstName, lastName: $lastName, initials $initials, email: $email, phone: $phone';
 }
 
 enum FollowUp { today, tomorrow, later }

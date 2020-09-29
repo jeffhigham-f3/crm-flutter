@@ -17,11 +17,11 @@ class ContactService extends ContactServiceAbstract {
   final _controller = StreamController.broadcast();
 
   Stream get stream => _controller.stream;
-  List<Contact> contacts = [];
 
   Future<List<Contact>> getContacts({@required String workflowUrl}) async {
     var response = await http.get(workflowUrl);
-
+    print(response);
+    final List<Contact> contacts = [];
     switch (response.statusCode) {
       case 200:
         {
@@ -34,9 +34,7 @@ class ContactService extends ContactServiceAbstract {
         break;
 
       default:
-        {
-          _controller.sink.add(contacts);
-        }
+        _controller.sink.add([]);
         break;
     }
   }

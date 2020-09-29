@@ -30,12 +30,50 @@ class ContactDetailScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(contact.toString()),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(22.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  Text(
+                    'Status',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  Text(
+                    (contact.online) ? 'Online' : 'Offline',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Account ID',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  Text(
+                    contact.id,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Email',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  Text(
+                    contact.email,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Phone',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  Text(
+                    contact.phone,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -65,8 +103,8 @@ class _ContactAvatar extends StatelessWidget {
           child: ProfileAvatar(
             imageUrl: contact.photoUrl,
             radius: 40.0,
-            backgroundColor: Colors.white,
-            borderColor: contact.accentColor,
+            backgroundColor: contact.accentColor,
+            borderColor: Colors.white,
             hasBorder: true,
             isActive: contact.online,
             initials: contact.initials,

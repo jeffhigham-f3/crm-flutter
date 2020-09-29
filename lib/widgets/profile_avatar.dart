@@ -34,7 +34,12 @@ class ProfileAvatar extends StatelessWidget {
             radius: hasBorder ? radius - 3 : radius,
             backgroundColor: backgroundColor,
             backgroundImage: imageUrl == null ? null : CachedNetworkImageProvider(imageUrl),
-            child: imageUrl == null ? Text(initials) : null,
+            child: imageUrl == null
+                ? Text(
+                    (initials == null) ? '' : initials,
+                    style: TextStyle(color: borderColor),
+                  )
+                : null,
           ),
         ),
         isActive

@@ -4,6 +4,7 @@ import 'package:verb_crm_flutter/enums/import.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
 import 'package:verb_crm_flutter/service/tray_io_user_service.dart';
+import 'package:verb_crm_flutter/service/tray_io_solution_instance_service.dart';
 
 class AccountFormForm extends StatefulWidget {
   LoginType loginType;
@@ -227,19 +228,35 @@ class _AccountFormFormState extends State<AccountFormForm> {
   }
 
   Future<void> _loadState() async {
-    context.read<AuthService>().loadCurrentUser().then(
+    final authService = context.read<AuthService>();
+    final trayUserService = context.read<TrayIOUserService>();
+    final traySolutionInstanceService = context.read<TrayIOSolutionInstanceService>();
+
+    authService.loadCurrentUser().then(
       (user) {
         if (user != null) {
-          context.read<TrayIOUserService>().loadCurrentUser(externalUserId: user.id).then(
+          trayUserService.loadCurrentUser(externalUserId: user.id).then(
             (trayUser) {
               if (trayUser == null) {
-                context
-                    .read<TrayIOUserService>()
-                    .createUser(appUser: user)
-                    .then((trayUser) => {_onUserSuccess(user)})
-                    .catchError((e) => _onLoginError(e));
+                trayUserService.createUser(appUser: user).then((trayUser) {
+                  trayUserService.createUserToken().then(
+                    (accessToken) {
+                      traySolutionInstanceService
+                          .getSolutionInstances(accessToken: trayUser.accessToken, ownerId: trayUser.id)
+                          .catchError((e) => {print(e)});
+                      _onUserSuccess(user);
+                    },
+                  ).catchError((e) => {print(e)});
+                }).catchError((e) => _onLoginError(e));
               } else {
-                _onUserSuccess(user);
+                trayUserService.createUserToken().then(
+                  (accessToken) {
+                    traySolutionInstanceService
+                        .getSolutionInstances(accessToken: trayUser.accessToken, ownerId: trayUser.id)
+                        .catchError((e) => {print(e)});
+                    _onUserSuccess(user);
+                  },
+                ).catchError((e) => {print(e)});
               }
             },
           ).catchError((e) => _onLoginError(e));
