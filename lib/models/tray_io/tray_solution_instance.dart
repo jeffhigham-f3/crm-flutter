@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:verb_crm_flutter/models/tray_io/tray_workflow_instance.dart';
 
 class TraySolutionInstance {
   final String id;
@@ -7,7 +8,7 @@ class TraySolutionInstance {
   final String owner;
   final String created;
   final dynamic solutionVersionFlags;
-  final dynamic workflows;
+  final List<TrayWorkflowInstance> workflows;
   final dynamic authValues;
   final dynamic configValues;
   final String cursor;
@@ -30,6 +31,10 @@ class TraySolutionInstance {
   factory TraySolutionInstance.fromTrayGraphQL(Map<String, dynamic> solutionInstance) {
     final Map<String, dynamic> node = solutionInstance['node'];
 
+    List<TrayWorkflowInstance> workFlows = [];
+    for (var flow in node['workflows']['edges']) {
+      workFlows.add(TrayWorkflowInstance.fromTrayGraphQL(flow));
+    }
     return TraySolutionInstance(
       id: node['id'],
       name: node['name'],
@@ -37,7 +42,7 @@ class TraySolutionInstance {
       owner: node['owner'],
       created: node['created'],
       solutionVersionFlags: node['solutionVersionFlags'],
-      workflows: node['workflows'],
+      workflows: workFlows,
       authValues: node['authValues'],
       configValues: node['configValues'],
       cursor: node['cursor'],
@@ -46,7 +51,7 @@ class TraySolutionInstance {
   }
 
   @override
-  String toString() => 'id: $id, name: $name, enabled: $enabled, owner: $owner';
+  String toString() => 'TraySolutionInstance - id: $id, name: $name, enabled: $enabled, owner: $owner';
 
   static final String indexSchema = r'''
 query ($ownerId: String!){
@@ -92,6 +97,35 @@ query ($ownerId: String!){
 			}
 		}
 	}
+}
+''';
+
+  static final String updateSchema = r'''
+mutation($solutionInstanceId: ID!, $instanceName: String!, $enabled: Boolean!) {
+    updateSolutionInstance(
+    input: { 
+      solutionInstanceId: $solutionInstanceId, 
+      instanceName: $instanceName,
+      enabled: $enabled 
+    }){
+      solutionInstance {
+        id
+        name
+        enabled
+        created
+      }
+    }
+  }
+''';
+
+  static final String deleteSchema = r'''
+mutation($solutionInstanceId: ID!) {
+  removeSolutionInstance(
+  input: {
+      solutionInstanceId: $solutionInstanceId
+  }) {
+   clientMutationId
+ }
 }
 ''';
 }

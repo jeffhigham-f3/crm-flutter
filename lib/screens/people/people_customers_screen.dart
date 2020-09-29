@@ -17,7 +17,7 @@ class _PeopleCustomersScreenState extends State<PeopleCustomersScreen> {
 
     return Container(
       child: StreamBuilder(
-        stream: contactManager.entityStream(),
+        stream: contactManager.stream,
         builder: (context, snapshot) {
           List<ContactListWidget> widgets = [];
           if (!snapshot.hasData) {

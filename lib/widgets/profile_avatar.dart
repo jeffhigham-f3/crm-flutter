@@ -30,19 +30,12 @@ class ProfileAvatar extends StatelessWidget {
         CircleAvatar(
           radius: radius,
           backgroundColor: borderColor,
-          child: imageUrl != null
-              ? CircleAvatar(
-                  radius: hasBorder ? radius - 3 : radius,
-                  backgroundColor: backgroundColor,
-                  backgroundImage: CachedNetworkImageProvider(imageUrl),
-                )
-              : Text(
-                  this.initials,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: radius * .75,
-                  ),
-                ),
+          child: CircleAvatar(
+            radius: hasBorder ? radius - 3 : radius,
+            backgroundColor: backgroundColor,
+            backgroundImage: imageUrl == null ? null : CachedNetworkImageProvider(imageUrl),
+            child: imageUrl == null ? Text(initials) : null,
+          ),
         ),
         isActive
             ? Positioned(

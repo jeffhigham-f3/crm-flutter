@@ -12,18 +12,30 @@ class PeopleContactsScreen extends StatefulWidget {
 
 class _PeopleContactsScreenState extends State<PeopleContactsScreen> {
   @override
+  void initState() {
+    // TODO: Dynamically request workflowUrl from solution instance service.
+    final workflow = 'https://729cc208-74b4-437d-9370-0974b4ef4b69.trayapp.io';
+    final contactService = context.read<ContactService>();
+    contactService.getContacts(workflowUrl: workflow);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final contactManager = context.watch<ContactService>();
+    final conatactService = context.watch<ContactService>();
 
     return Container(
       child: StreamBuilder(
-        stream: contactManager.entityStream(),
+        stream: conatactService.stream,
         builder: (context, snapshot) {
           List<ContactListWidget> widgets = [];
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),
             );
+          }
+          if (snapshot.hasError) {
+            print(snapshot.error);
           }
           for (var contact in snapshot.data) {
             widgets.add(

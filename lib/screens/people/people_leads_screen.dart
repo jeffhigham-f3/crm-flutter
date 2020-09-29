@@ -17,7 +17,7 @@ class _PeopleLeadsScreenState extends State<PeopleLeadsScreen> {
 
     return Container(
       child: StreamBuilder(
-        stream: contactService.entityStream(),
+        stream: contactService.stream,
         builder: (context, snapshot) {
           List<ContactListWidget> widgets = [];
           if (!snapshot.hasData) {

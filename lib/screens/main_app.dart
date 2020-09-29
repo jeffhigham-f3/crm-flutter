@@ -5,8 +5,6 @@ import 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
 import 'package:verb_crm_flutter/screens/people_home_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
 import 'package:verb_crm_flutter/screens/solution_screen.dart';
-import 'package:verb_crm_flutter/screens/solution_auth_screen.dart';
-import 'package:verb_crm_flutter/screens/solution_instance_screen.dart';
 
 class MainApp extends StatelessWidget {
   @override
@@ -59,8 +57,6 @@ class MainApp extends StatelessWidget {
         PeopleHomeScreen.id: (context) => PeopleHomeScreen(),
         LiveVideoScreen.id: (context) => LiveVideoScreen(),
         SolutionsScreen.id: (context) => SolutionsScreen(),
-        SolutionAuthScreen.id: (context) => SolutionAuthScreen(),
-        SolutionInstanceScreen.id: (context) => SolutionInstanceScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

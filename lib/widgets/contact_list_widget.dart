@@ -49,10 +49,11 @@ class _ContactListWidgetState extends State<ContactListWidget> {
                           ProfileAvatar(
                             imageUrl: widget.contact.photoUrl,
                             radius: 25.0,
-                            backgroundColor: Theme.of(context).accentColor,
-                            borderColor: Colors.white,
+                            backgroundColor: Colors.white,
+                            borderColor: widget.contact.accentColor,
                             hasBorder: true,
                             isActive: widget.contact.online,
+                            initials: widget.contact.initials,
                           ),
                           SizedBox(width: 20),
                           Text(

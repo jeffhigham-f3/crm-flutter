@@ -27,7 +27,7 @@ class TraySolution {
   }
 
   @override
-  String toString() => 'id: $id, title: $title, description: $description';
+  String toString() => 'TraySolutionInstance - id: $id, title: $title, description: $description';
 
   static final String readIndexSchema = r'''
 query {

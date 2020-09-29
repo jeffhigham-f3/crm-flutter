@@ -28,8 +28,8 @@ class _PeopleHomeScreenState extends State<PeopleHomeScreen> {
   }
 
   final List<Widget> _pages = <Widget>[
-    PeopleLeadsScreen(),
-    PeopleCustomersScreen(),
+//    PeopleLeadsScreen(),
+//    PeopleCustomersScreen(),
     PeopleContactsScreen(),
   ];
 
@@ -40,42 +40,42 @@ class _PeopleHomeScreenState extends State<PeopleHomeScreen> {
         children: <Widget>[
           PageviewNavigator(
             children: <Widget>[
-              PageviewNavigationButton(
-                text: "Leads",
-                onPressed: () {
-                  if (_pageController.hasClients) {
-                    _pageController.animateToPage(
-                      0,
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                    );
-                  }
-                },
-              ),
-              PageviewNavigationButton(
-                text: "Customers",
-                onPressed: () {
-                  if (_pageController.hasClients) {
-                    _pageController.animateToPage(
-                      1,
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                    );
-                  }
-                },
-              ),
-              PageviewNavigationButton(
-                text: "Contacts",
-                onPressed: () {
-                  if (_pageController.hasClients) {
-                    _pageController.animateToPage(
-                      2,
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                    );
-                  }
-                },
-              ),
+//              PageviewNavigationButton(
+//                text: "Leads",
+//                onPressed: () {
+//                  if (_pageController.hasClients) {
+//                    _pageController.animateToPage(
+//                      0,
+//                      duration: const Duration(milliseconds: 400),
+//                      curve: Curves.easeInOut,
+//                    );
+//                  }
+//                },
+//              ),
+//              PageviewNavigationButton(
+//                text: "Customers",
+//                onPressed: () {
+//                  if (_pageController.hasClients) {
+//                    _pageController.animateToPage(
+//                      1,
+//                      duration: const Duration(milliseconds: 400),
+//                      curve: Curves.easeInOut,
+//                    );
+//                  }
+//                },
+//              ),
+//              PageviewNavigationButton(
+//                text: "Contacts",
+//                onPressed: () {
+//                  if (_pageController.hasClients) {
+//                    _pageController.animateToPage(
+//                      2,
+//                      duration: const Duration(milliseconds: 400),
+//                      curve: Curves.easeInOut,
+//                    );
+//                  }
+//                },
+//              ),
             ],
           ),
           Container(

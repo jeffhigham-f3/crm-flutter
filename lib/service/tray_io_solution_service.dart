@@ -2,10 +2,17 @@ import 'package:verb_crm_flutter/service/tray_io_service.dart';
 import 'package:verb_crm_flutter/models/tray_io/tray_solution.dart';
 import 'package:graphql/client.dart';
 import 'dart:async';
+import 'package:meta/meta.dart';
 
 abstract class TrayIOSolutionServiceAbstract extends TrayIOService {
+  /// Stream of TraySolutionInstances
   Stream get stream;
-  Future<List<TraySolution>> readIndex();
+
+  /// Future<List<TraySolution>> getSolutions({@required String accessToken,@required String ownerId})
+  /// Return the Solution Instances associated with the user.
+  /// Reference:
+  /// https://embedded-api-docs.tray.io/#896e9587-a3ac-487e-989b-4b24d06a01d0
+  Future<List<TraySolution>> getSolutionInstances({@required String accessToken});
 }
 
 class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
@@ -15,10 +22,13 @@ class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
   Stream get stream => _servicesController.stream;
 
   @override
-  Future<List<TraySolution>> readIndex() async {
+  Future<List<TraySolution>> getSolutionInstances({@required String accessToken}) async {
+    updateAccessToken(accessToken: accessToken);
+
     final QueryOptions options = QueryOptions(
       documentNode: gql(TraySolution.readIndexSchema),
     );
+    print('TrayIOSolutionService.readIndex: ${options.variables}');
 
     final QueryResult result = await client.query(options);
 

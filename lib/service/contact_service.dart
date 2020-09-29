@@ -1,53 +1,43 @@
-import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/contact.dart';
-import 'package:faker/faker.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:async';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
-class ContactService with ChangeNotifier {
+abstract class ContactServiceAbstract with ChangeNotifier {
+  /// Stream of TraySolutionInstances
+  Stream get stream;
+
+  /// Future<List<Contact>> getContacts({@required String workflowUrl});
+  /// Return contact records.
+  Future<List<Contact>> getContacts({@required String workflowUrl});
+}
+
+class ContactService extends ContactServiceAbstract {
   final _controller = StreamController.broadcast();
 
-  ContactService() {
-    _controller.sink.add(
-      generateContacts(),
-    );
-
-    Timer.periodic(
-      Duration(seconds: 5),
-      (timer) {
-        _controller.sink.add(
-          generateContacts(),
-        );
-      },
-    );
-  }
-
   Stream get stream => _controller.stream;
+  List<Contact> contacts = [];
 
-  Stream entityStream() async* {
-    await Future<void>.delayed(Duration(milliseconds: 700));
-    yield generateContacts();
-  }
+  Future<List<Contact>> getContacts({@required String workflowUrl}) async {
+    var response = await http.get(workflowUrl);
 
-  List<Contact> generateContacts() {
-    List<Contact> contacts = [];
+    switch (response.statusCode) {
+      case 200:
+        {
+          var jsonResponse = convert.jsonDecode(response.body);
+          for (var c in jsonResponse) {
+            contacts.add(Contact.fromJson(c));
+          }
+          _controller.sink.add(contacts);
+        }
+        break;
 
-    var max = faker.randomGenerator.integer(50, min: 5);
-    for (var i = 0; i < max; i++) {
-      contacts.add(
-        Contact(
-          id: '$i',
-          firstName: faker.person.firstName(),
-          lastName: faker.person.lastName(),
-          email: faker.internet.email(),
-          photoUrl: 'http://placeimg.com/200/200/people?id=${faker.randomGenerator.integer(50, min: 1)}',
-          online: faker.randomGenerator.boolean(),
-          locale: 'en',
-          lead: faker.randomGenerator.boolean(),
-          customer: faker.randomGenerator.boolean(),
-          followUp: faker.randomGenerator.boolean(),
-        ),
-      );
+      default:
+        {
+          _controller.sink.add(contacts);
+        }
+        break;
     }
-    return contacts;
   }
 }
