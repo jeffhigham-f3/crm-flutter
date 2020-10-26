@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/service/tray_io_solution_service.dart';
-import 'package:verb_crm_flutter/service/tray_io_solution_instance_service.dart';
-import 'package:verb_crm_flutter/service/tray_io_user_service.dart';
+import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_service.dart';
+import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
+import 'package:verb_crm_flutter/service/tray_io/tray_io_user_service.dart';
 import 'package:verb_crm_flutter/widgets/solution_instance_widget.dart';
 import 'package:verb_crm_flutter/widgets/solution_widget.dart';
 import 'package:provider/provider.dart';

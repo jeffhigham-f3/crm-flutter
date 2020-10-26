@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:verb_crm_flutter/service/tray_io_service.dart';
-import 'package:verb_crm_flutter/models/tray_io/tray_user.dart';
-import 'package:verb_crm_flutter/models/tray_io/tray_authentication.dart';
+import 'package:verb_crm_flutter/service/tray_io/tray_io_service.dart';
+import 'package:verb_crm_flutter/models/tray_io/import.dart';
 import 'package:graphql/client.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
