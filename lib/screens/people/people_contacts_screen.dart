@@ -17,7 +17,6 @@ class _PeopleContactsScreenState extends State<PeopleContactsScreen> {
     final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
     final contactService = context.read<ContactService>();
 
-    // TODO: Replace the workflow request with
     if (solutionInstanceService.activeInstances.length != 0 &&
         solutionInstanceService.activeInstances.first.workflows.length != 0) {
       final instance = solutionInstanceService.activeInstances.first;
@@ -40,7 +39,6 @@ class _PeopleContactsScreenState extends State<PeopleContactsScreen> {
   @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
-
     return Container(
       child: StreamBuilder(
         stream: contactService.stream,

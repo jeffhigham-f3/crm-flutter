@@ -1,13 +1,13 @@
 import 'package:meta/meta.dart';
 
 class TrayWorkflow {
-  final String uuid;
+  final String id;
   final String title;
   final String description;
   final String slug;
 
   TrayWorkflow({
-    @required this.uuid,
+    @required this.id,
     @required this.title,
     @required this.description,
     @required this.slug,
@@ -15,5 +15,5 @@ class TrayWorkflow {
 
   @override
   String toString() =>
-      'uuid: ${this.uuid},\ntitle: ${this.title},\description: ${this.description},\nslug: ${this.slug}';
+      '\nTrayWorkflow\nid: ${this.id},\ntitle: ${this.title},\ndescription: ${this.description},\nslug: ${this.slug}';
 }
