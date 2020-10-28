@@ -8,6 +8,9 @@ abstract class TrayIOSolutionServiceAbstract extends TrayIOService {
   /// Stream of TraySolutionInstances
   Stream get stream;
 
+  /// TraySolutionInstances
+  List<TraySolution> solutions;
+
   /// Future<List<TraySolution>> getSolutions({@required String accessToken,@required String ownerId})
   /// Return the Solution Instances associated with the user.
   /// Reference:
@@ -17,6 +20,10 @@ abstract class TrayIOSolutionServiceAbstract extends TrayIOService {
 
 class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
   final _servicesController = StreamController.broadcast();
+  final List<TraySolution> _solutions = [];
+
+  @override
+  List<TraySolution> get solutions => _solutions;
 
   @override
   Stream get stream => _servicesController.stream;
@@ -39,15 +46,14 @@ class TrayIOSolutionService extends TrayIOSolutionServiceAbstract {
     }
 
     final List<Object> qlSolutions = result.data['viewer']['solutions']['edges'] as List<Object>;
-
-    List<TraySolution> solutions = [];
+    this._solutions.removeRange(0, this._solutions.length);
     for (var s in qlSolutions) {
-      solutions.add(
+      _solutions.add(
         TraySolution.fromTrayGraphQL(s),
       );
-      print(solutions.last.toString());
     }
-    _servicesController.sink.add(solutions);
-    return solutions;
+    _servicesController.sink.add(_solutions);
+    notifyListeners();
+    return _solutions;
   }
 }

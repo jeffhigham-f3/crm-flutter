@@ -82,7 +82,7 @@ class __ContactRowSliderState extends State<_ContactRowSlider> {
         return;
       }
       print('Fetching contacts from triggerUrl: ${workflow.triggerUrl}');
-      contactService.getContacts(workflowUrl: workflow.triggerUrl);
+      contactService.getAll(triggerUrl: workflow.triggerUrl);
     }
     super.initState();
   }

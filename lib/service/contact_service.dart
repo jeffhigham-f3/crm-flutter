@@ -5,37 +5,61 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 abstract class ContactServiceAbstract with ChangeNotifier {
-  /// Stream of TraySolutionInstances
+  List<Contact> get contacts;
   Stream get stream;
-
-  /// Future<List<Contact>> getContacts({@required String workflowUrl});
-  /// Return contact records.
-  Future<List<Contact>> getContacts({@required String workflowUrl});
+  Comparator<Contact> lastNameComparator;
+  Future<List<Contact>> getAll({@required String triggerUrl});
+  Future<List<Contact>> searchAll({@required String searchText});
 }
 
 class ContactService extends ContactServiceAbstract {
   final _controller = StreamController.broadcast();
+  final List<Contact> _contacts = [];
 
+  @override
+  List<Contact> get contacts => _contacts;
+
+  @override
   Stream get stream => _controller.stream;
 
-  Future<List<Contact>> getContacts({@required String workflowUrl}) async {
-    var response = await http.get(workflowUrl);
-    print(response);
-    final List<Contact> contacts = [];
+  @override
+  Comparator<Contact> lastNameComparator = (c1, c2) => c1.lastName.compareTo(c2.lastName);
+
+  @override
+  Future<List<Contact>> getAll({@required String triggerUrl}) async {
+    var response = await http.get(triggerUrl);
+    _contacts.removeRange(0, _contacts.length);
     switch (response.statusCode) {
       case 200:
         {
           var jsonResponse = convert.jsonDecode(response.body);
           for (var c in jsonResponse) {
-            contacts.add(Contact.fromJson(c));
+            _contacts.add(Contact.fromJson(c));
           }
-          _controller.sink.add(contacts);
+          _contacts.sort(lastNameComparator);
+          _controller.sink.add(_contacts);
+          return _contacts;
         }
         break;
 
       default:
         _controller.sink.add([]);
+        return [];
         break;
     }
+  }
+
+  @override
+  Future<List<Contact>> searchAll({@required String searchText}) async {
+    final List<Contact> contactsFintered = [];
+    for (var c in _contacts) {
+      if (c.lastName.toLowerCase().startsWith(searchText.toLowerCase()) ||
+          c.firstName.toLowerCase().startsWith(searchText.toLowerCase())) {
+        contactsFintered.add(c);
+      }
+    }
+    contactsFintered.sort(lastNameComparator);
+    _controller.sink.add(contactsFintered);
+    return contactsFintered;
   }
 }

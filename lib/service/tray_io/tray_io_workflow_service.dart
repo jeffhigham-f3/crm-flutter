@@ -5,9 +5,9 @@ import 'dart:async';
 abstract class TrayIOWorkflowServiceAbstract with ChangeNotifier {
   Stream get stream;
   List<TrayWorkflow> get workflows;
-  Future<TrayWorkflow> getWorkFlowById({String id});
-  Future<TrayWorkflow> getWorkFlowBySlug({String slug});
-  Future<List<TrayWorkflow>> getWorkFlows();
+  Future<TrayWorkflow> getById({String id});
+  Future<TrayWorkflow> getBySlug({String slug});
+  Future<List<TrayWorkflow>> getAll();
 }
 
 class TrayIOWorkflowService extends TrayIOWorkflowServiceAbstract {
@@ -15,7 +15,7 @@ class TrayIOWorkflowService extends TrayIOWorkflowServiceAbstract {
   final List<TrayWorkflow> _workflows = [];
 
   TrayIOWorkflowService() {
-    this.getWorkFlows();
+    this.getAll();
   }
 
   @override
@@ -25,17 +25,17 @@ class TrayIOWorkflowService extends TrayIOWorkflowServiceAbstract {
   Stream get stream => _controller.stream;
 
   @override
-  Future<TrayWorkflow> getWorkFlowById({String id}) async {
+  Future<TrayWorkflow> getById({String id}) async {
     return this._workflows.firstWhere((workflow) => workflow.id == id);
   }
 
   @override
-  Future<TrayWorkflow> getWorkFlowBySlug({String slug}) async {
+  Future<TrayWorkflow> getBySlug({String slug}) async {
     return this._workflows.firstWhere((workflow) => workflow.slug == slug);
   }
 
   @override
-  Future<List<TrayWorkflow>> getWorkFlows() async {
+  Future<List<TrayWorkflow>> getAll() async {
     await Future.delayed(const Duration(milliseconds: 5));
     this._workflows.removeRange(0, this._workflows.length);
     _workflows.add(

@@ -1,4 +1,4 @@
-export 'package:verb_crm_flutter/screens/people/people_contacts_screen.dart';
+export 'package:verb_crm_flutter/screens/people_contacts_screen.dart';
 export 'package:verb_crm_flutter/screens/people/people_customers_screen.dart';
 export 'package:verb_crm_flutter/screens/people/people_leads_screen.dart';
 export 'package:verb_crm_flutter/screens/app_home.dart';

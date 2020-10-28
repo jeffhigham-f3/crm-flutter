@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/people/people_leads_screen.dart';
 import 'package:verb_crm_flutter/screens/people/people_customers_screen.dart';
-import 'package:verb_crm_flutter/screens/people/people_contacts_screen.dart';
+import 'package:verb_crm_flutter/screens/people_contacts_screen.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
 
 class PeopleHomeScreen extends StatefulWidget {
@@ -77,34 +77,6 @@ class _PeopleHomeScreenState extends State<PeopleHomeScreen> {
 //                },
 //              ),
             ],
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Theme.of(context).cardColor,
-            ),
-            margin: EdgeInsets.all(10),
-            width: MediaQuery.of(context).size.width,
-            child: TextFormField(
-              keyboardType: TextInputType.text,
-              style: const TextStyle(
-                fontSize: 18.0,
-              ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                hintText: '',
-                hintStyle: TextStyle(
-                  fontSize: 18.0,
-                ),
-                prefixIcon: Icon(
-                  Icons.search,
-                ),
-              ),
-            ),
           ),
           Expanded(
             child: PageView.builder(
