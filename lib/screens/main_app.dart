@@ -49,7 +49,6 @@ class MainApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         AppHome.id: (context) => AppHome(),
         GoalPickerScreen.id: (context) => GoalPickerScreen(),
-        PeopleHomeScreen.id: (context) => PeopleHomeScreen(),
         LiveVideoScreen.id: (context) => LiveVideoScreen(),
         SolutionsScreen.id: (context) => SolutionsScreen(),
         WorkflowScreen.id: (context) => WorkflowScreen(),

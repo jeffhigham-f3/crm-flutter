@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/tray_io/tray_solution.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
-import 'package:verb_crm_flutter/service/tray_io/tray_io_user_service.dart';
-import 'package:provider/provider.dart';
 
 class SolutionWidget extends StatelessWidget {
   final TraySolution solution;
@@ -11,8 +8,8 @@ class SolutionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final solutionInstanceService = context.watch<TrayIOSolutionInstanceService>();
-    final trayUserService = context.watch<TrayIOUserService>();
+    // final solutionInstanceService = context.watch<TrayIOSolutionInstanceService>();
+    // final trayUserService = context.watch<TrayIOUserService>();
 
     return Card(
       child: Container(

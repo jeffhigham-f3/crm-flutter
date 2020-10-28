@@ -1,6 +1,4 @@
-export 'package:verb_crm_flutter/screens/people_contacts_screen.dart';
-export 'package:verb_crm_flutter/screens/people/people_customers_screen.dart';
-export 'package:verb_crm_flutter/screens/people/people_leads_screen.dart';
+export 'package:verb_crm_flutter/screens/people_screen.dart';
 export 'package:verb_crm_flutter/screens/app_home.dart';
 export 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
 export 'package:verb_crm_flutter/screens/glance_home_screen.dart';
@@ -8,7 +6,6 @@ export 'package:verb_crm_flutter/screens/glance_detail_screen.dart';
 export 'package:verb_crm_flutter/screens/goal_picker_screen.dart';
 export 'package:verb_crm_flutter/screens/live_video_screen.dart';
 export 'package:verb_crm_flutter/screens/login_screen.dart';
-export 'package:verb_crm_flutter/screens/people_home_screen.dart';
 export 'package:verb_crm_flutter/screens/profile_screen.dart';
 export 'package:verb_crm_flutter/screens/solution_screen.dart';
 export 'package:verb_crm_flutter/screens/workflow_screen.dart';

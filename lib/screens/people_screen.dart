@@ -4,33 +4,30 @@ import 'package:verb_crm_flutter/service/contact_service.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
 import 'package:provider/provider.dart';
 
-class PeopleContactsScreen extends StatefulWidget {
-  static const String id = 'glance_later_screen';
+class PeopleScreen extends StatefulWidget {
+  static const String id = 'people_screen';
 
   @override
-  _PeopleContactsScreenState createState() => _PeopleContactsScreenState();
+  _PeopleScreenState createState() => _PeopleScreenState();
 }
 
-class _PeopleContactsScreenState extends State<PeopleContactsScreen> {
+class _PeopleScreenState extends State<PeopleScreen> {
   @override
   void initState() {
     final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
     final contactService = context.read<ContactService>();
-
+    // TODO: - Refactor this logic, also duplicated in refresh.
     if (contactService.contacts.length == 0) {
       if (solutionInstanceService.activeInstances.length != 0 &&
           solutionInstanceService.activeInstances.first.workflows.length != 0) {
         final instance = solutionInstanceService.activeInstances.first;
         if (!instance.enabled) {
-          print('Solution Instance [${instance.id}] ${instance.name} is disabled');
           return;
         }
         final workflow = instance.workflows.first;
         if (workflow == null) {
-          print('${instance.name} does not have an active workflow.');
           return;
         }
-        print('Fetching contacts from triggerUrl: ${workflow.triggerUrl}');
         contactService.getAll(triggerUrl: workflow.triggerUrl);
       }
     } else {
@@ -42,6 +39,8 @@ class _PeopleContactsScreenState extends State<PeopleContactsScreen> {
   @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
+    final solutionInstanceService = context.watch<TrayIOSolutionInstanceService>();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,8 +69,20 @@ class _PeopleContactsScreenState extends State<PeopleContactsScreen> {
                   padding: const EdgeInsets.all(8),
                   children: widgets,
                 ),
-                onRefresh: () =>
-                    contactService.getAll(triggerUrl: 'https://dc39a91c-b45e-4b4c-b6d8-6c497eac9e57.trayapp.io'),
+                onRefresh: (() async {
+                  if (solutionInstanceService.activeInstances.length != 0 &&
+                      solutionInstanceService.activeInstances.first.workflows.length != 0) {
+                    final instance = solutionInstanceService.activeInstances.first;
+                    if (!instance.enabled) {
+                      return;
+                    }
+                    final workflow = instance.workflows.first;
+                    if (workflow == null) {
+                      return;
+                    }
+                    contactService.getAll(triggerUrl: workflow.triggerUrl);
+                  }
+                }),
               );
             },
           ),

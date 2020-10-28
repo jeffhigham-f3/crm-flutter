@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
-import 'package:verb_crm_flutter/screens/people_home_screen.dart';
+import 'package:verb_crm_flutter/screens/people_screen.dart';
 import 'package:verb_crm_flutter/screens/live_video_screen.dart';
 import 'package:verb_crm_flutter/screens/solution_screen.dart';
 import 'package:verb_crm_flutter/screens/profile_screen.dart';
@@ -20,7 +20,7 @@ class _AppHomeState extends State<AppHome> {
 
   static List<Widget> _widgetOptions = <Widget>[
     GlanceHomeScreen(),
-    PeopleHomeScreen(),
+    PeopleScreen(),
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,19 +151,19 @@ class _AppHomeState extends State<AppHome> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
-            title: Text('Glance'),
+            label: 'Glance',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
-            title: Text('People'),
+            label: 'People',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.movie),
-            title: Text('Media'),
+            label: 'Media',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            title: Text('Activity'),
+            label: 'Activity',
           ),
         ],
         currentIndex: _selectedIndex,

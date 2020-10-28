@@ -39,7 +39,7 @@ class _SolutionInstanceWidgetState extends State<SolutionInstanceWidget> {
                   itemCount: widget.instance.enabled ? widget.instance.workflows.length : 0,
                   itemBuilder: (BuildContext context, int index) {
                     return OutlineButton(
-                      child: Text('Workflow[${index}] - Preview'),
+                      child: Text('Workflow[$index] - Preview'),
                       onPressed: (() {
                         launch(widget.instance.workflows.elementAt(index).triggerUrl);
                       }),
