@@ -10,6 +10,7 @@ abstract class ContactServiceAbstract with ChangeNotifier {
   Comparator<Contact> lastNameComparator;
   Future<List<Contact>> getAll({@required String triggerUrl});
   Future<List<Contact>> searchAll({@required String searchText});
+  Future<List<Contact>> refreshAll();
 }
 
 class ContactService extends ContactServiceAbstract {
@@ -61,5 +62,12 @@ class ContactService extends ContactServiceAbstract {
     contactsFintered.sort(lastNameComparator);
     _controller.sink.add(contactsFintered);
     return contactsFintered;
+  }
+
+  @override
+  Future<List<Contact>> refreshAll() async {
+    await Future.delayed(const Duration(milliseconds: 5));
+    _controller.sink.add(_contacts);
+    return _contacts;
   }
 }

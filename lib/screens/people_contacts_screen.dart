@@ -17,21 +17,24 @@ class _PeopleContactsScreenState extends State<PeopleContactsScreen> {
     final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
     final contactService = context.read<ContactService>();
 
-    if (solutionInstanceService.activeInstances.length != 0 &&
-        solutionInstanceService.activeInstances.first.workflows.length != 0) {
-      final instance = solutionInstanceService.activeInstances.first;
-      if (!instance.enabled) {
-        print('Solution Instance [${instance.id}] ${instance.name} is disabled');
-        return;
+    if (contactService.contacts.length == 0) {
+      if (solutionInstanceService.activeInstances.length != 0 &&
+          solutionInstanceService.activeInstances.first.workflows.length != 0) {
+        final instance = solutionInstanceService.activeInstances.first;
+        if (!instance.enabled) {
+          print('Solution Instance [${instance.id}] ${instance.name} is disabled');
+          return;
+        }
+        final workflow = instance.workflows.first;
+        if (workflow == null) {
+          print('${instance.name} does not have an active workflow.');
+          return;
+        }
+        print('Fetching contacts from triggerUrl: ${workflow.triggerUrl}');
+        contactService.getAll(triggerUrl: workflow.triggerUrl);
       }
-
-      final workflow = instance.workflows.first;
-      if (workflow == null) {
-        print('${instance.name} does not have an active workflow.');
-        return;
-      }
-      print('Fetching contacts from triggerUrl: ${workflow.triggerUrl}');
-      contactService.getAll(triggerUrl: workflow.triggerUrl);
+    } else {
+      contactService.refreshAll();
     }
     super.initState();
   }
@@ -62,9 +65,13 @@ class _PeopleContactsScreenState extends State<PeopleContactsScreen> {
                   ContactListWidget(contact: contact),
                 );
               }
-              return ListView(
-                padding: const EdgeInsets.all(8),
-                children: widgets,
+              return RefreshIndicator(
+                child: ListView(
+                  padding: const EdgeInsets.all(8),
+                  children: widgets,
+                ),
+                onRefresh: () =>
+                    contactService.getAll(triggerUrl: 'https://dc39a91c-b45e-4b4c-b6d8-6c497eac9e57.trayapp.io'),
               );
             },
           ),
