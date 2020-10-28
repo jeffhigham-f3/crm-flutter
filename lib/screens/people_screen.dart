@@ -14,32 +14,25 @@ class PeopleScreen extends StatefulWidget {
 class _PeopleScreenState extends State<PeopleScreen> {
   @override
   void initState() {
+    loadContacts(context);
+    super.initState();
+  }
+
+  Future<void> loadContacts(BuildContext context) async {
     final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
     final contactService = context.read<ContactService>();
-    // TODO: - Refactor this logic, also duplicated in refresh.
-    if (contactService.contacts.length == 0) {
-      if (solutionInstanceService.activeInstances.length != 0 &&
-          solutionInstanceService.activeInstances.first.workflows.length != 0) {
-        final instance = solutionInstanceService.activeInstances.first;
-        if (!instance.enabled) {
-          return;
-        }
-        final workflow = instance.workflows.first;
-        if (workflow == null) {
-          return;
-        }
-        contactService.getAll(triggerUrl: workflow.triggerUrl);
-      }
-    } else {
+    if (contactService.hasContacts) {
       contactService.refreshAll();
+      return;
     }
-    super.initState();
+    await contactService.getAll(
+      triggerUrl: solutionInstanceService.firstWorkflowUrl(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
-    final solutionInstanceService = context.watch<TrayIOSolutionInstanceService>();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -70,18 +63,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
                   children: widgets,
                 ),
                 onRefresh: (() async {
-                  if (solutionInstanceService.activeInstances.length != 0 &&
-                      solutionInstanceService.activeInstances.first.workflows.length != 0) {
-                    final instance = solutionInstanceService.activeInstances.first;
-                    if (!instance.enabled) {
-                      return;
-                    }
-                    final workflow = instance.workflows.first;
-                    if (workflow == null) {
-                      return;
-                    }
-                    contactService.getAll(triggerUrl: workflow.triggerUrl);
-                  }
+                  await loadContacts(context);
                 }),
               );
             },

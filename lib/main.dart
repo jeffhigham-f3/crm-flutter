@@ -22,20 +22,20 @@ void main() {
         ChangeNotifierProvider(
           create: (_) => ContactService(),
         ),
-        ChangeNotifierProvider<AuthService>.value(
-          value: AuthService(),
+        ChangeNotifierProvider(
+          create: (_) => AuthService(),
         ),
-        ChangeNotifierProvider<TrayIOSolutionService>.value(
-          value: TrayIOSolutionService(),
+        ChangeNotifierProvider(
+          create: (_) => TrayIOSolutionService(),
         ),
-        ChangeNotifierProvider<TrayIOSolutionInstanceService>.value(
-          value: TrayIOSolutionInstanceService(),
+        ChangeNotifierProvider(
+          create: (_) => TrayIOSolutionInstanceService(),
         ),
-        ChangeNotifierProvider<TrayIOUserService>.value(
-          value: TrayIOUserService(),
+        ChangeNotifierProvider(
+          create: (_) => TrayIOUserService(),
         ),
-        ChangeNotifierProvider<TrayIOWorkflowService>.value(
-          value: TrayIOWorkflowService(),
+        ChangeNotifierProvider(
+          create: (_) => TrayIOWorkflowService(),
         ),
       ],
       child: MainApp(),

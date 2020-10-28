@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 abstract class ContactServiceAbstract with ChangeNotifier {
   List<Contact> get contacts;
+  bool get hasContacts;
   Stream get stream;
   Comparator<Contact> lastNameComparator;
   Future<List<Contact>> getAll({@required String triggerUrl});
@@ -21,6 +22,9 @@ class ContactService extends ContactServiceAbstract {
   List<Contact> get contacts => _contacts;
 
   @override
+  bool get hasContacts => contacts.length > 0;
+
+  @override
   Stream get stream => _controller.stream;
 
   @override
@@ -28,6 +32,10 @@ class ContactService extends ContactServiceAbstract {
 
   @override
   Future<List<Contact>> getAll({@required String triggerUrl}) async {
+    if (triggerUrl == null) {
+      _controller.sink.add([]);
+      return [];
+    }
     var response = await http.get(triggerUrl);
     _contacts.removeRange(0, _contacts.length);
     switch (response.statusCode) {
@@ -52,16 +60,20 @@ class ContactService extends ContactServiceAbstract {
 
   @override
   Future<List<Contact>> searchAll({@required String searchText}) async {
-    final List<Contact> contactsFintered = [];
+    final List<Contact> contactsFiltered = [];
     for (var c in _contacts) {
-      if (c.lastName.toLowerCase().startsWith(searchText.toLowerCase()) ||
-          c.firstName.toLowerCase().startsWith(searchText.toLowerCase())) {
-        contactsFintered.add(c);
+      if (c.lastName.toLowerCase().startsWith(
+                searchText.toLowerCase(),
+              ) ||
+          c.firstName.toLowerCase().startsWith(
+                searchText.toLowerCase(),
+              )) {
+        contactsFiltered.add(c);
       }
     }
-    contactsFintered.sort(lastNameComparator);
-    _controller.sink.add(contactsFintered);
-    return contactsFintered;
+    contactsFiltered.sort(lastNameComparator);
+    _controller.sink.add(contactsFiltered);
+    return contactsFiltered;
   }
 
   @override

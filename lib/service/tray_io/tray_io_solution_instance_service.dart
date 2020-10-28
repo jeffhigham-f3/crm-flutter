@@ -28,6 +28,10 @@ abstract class TrayIOSolutionInstanceServiceAbstract extends TrayIOService {
   /// Future<void> deleteSolutionInstance({@required String accessToken});
   /// Disable the Solution Instances associated with the user.
   Future<void> deleteSolutionInstance({@required String accessToken, @required TraySolutionInstance instance});
+
+  /// String firstWorkflowUrl()
+  /// Temporary function to help with POC
+  String firstWorkflowUrl();
 }
 
 class TrayIOSolutionInstanceService extends TrayIOSolutionInstanceServiceAbstract {
@@ -132,5 +136,16 @@ class TrayIOSolutionInstanceService extends TrayIOSolutionInstanceServiceAbstrac
         result.exception.toString(),
       );
     }
+  }
+
+  @override
+  String firstWorkflowUrl() {
+    if (activeInstances.length == 0 || activeInstances.first.workflows.length == 0) {
+      return null;
+    }
+    if (!activeInstances.first.enabled) {
+      return null;
+    }
+    return activeInstances.first.workflows.first.triggerUrl;
   }
 }
