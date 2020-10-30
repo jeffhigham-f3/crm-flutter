@@ -9,3 +9,4 @@ export 'package:verb_crm_flutter/screens/login_screen.dart';
 export 'package:verb_crm_flutter/screens/profile_screen.dart';
 export 'package:verb_crm_flutter/screens/solution_screen.dart';
 export 'package:verb_crm_flutter/screens/workflow_screen.dart';
+export 'package:verb_crm_flutter/screens/firestore_screen.dart';

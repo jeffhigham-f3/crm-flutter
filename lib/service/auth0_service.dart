@@ -9,39 +9,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 abstract class Auth0ServiceAbstract {}
 
 class Auth0Service extends Auth0ServiceAbstract {
+  static Auth0Service _instance = Auth0Service();
   final FlutterAppAuth appAuth = FlutterAppAuth();
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
-
-  Future<Object> currentUser() async {
-    final String storedRefreshToken =
-        await secureStorage.read(key: 'refresh_token');
-    if (storedRefreshToken == null) {
-      return null;
-    }
-
-    final TokenResponse response = await appAuth.token(
-      TokenRequest(
-        kAuth0ClientId,
-        kAuth0RedirectUri,
-        issuer: 'https://$kAuth0Domain',
-        refreshToken: storedRefreshToken,
-      ),
-    );
-
-//    final Map<String, dynamic> idToken = _parseIdToken(response.idToken);
-    final Map<String, dynamic> userDetails =
-        await _getUserDetails(response.accessToken);
-    final Map<String, dynamic> privateUserDetails =
-        await _getUserPrivateDetails(sub: userDetails['sub']);
-    print(privateUserDetails);
-    await secureStorage.write(
-        key: 'refresh_token', value: response.refreshToken);
-    return userDetails;
-  }
+  static Auth0Service get instance => _instance;
 
   Future<Object> loginAction() async {
-    final AuthorizationTokenResponse response =
-        await appAuth.authorizeAndExchangeCode(
+    final AuthorizationTokenResponse response = await appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
         kAuth0ClientId,
         kAuth0RedirectUri,
@@ -55,24 +29,39 @@ class Auth0Service extends Auth0ServiceAbstract {
         ],
       ),
     );
-//    final Map<String, Object> idToken = _parseIdToken(response.idToken);
-    final Map<String, Object> userDetails =
-        await _getUserDetails(response.accessToken);
-    final Map<String, dynamic> privateUserDetails =
-        await _getUserPrivateDetails(sub: userDetails['sub']);
-    print(privateUserDetails);
-    await secureStorage.write(
-        key: 'refresh_token', value: response.refreshToken);
+    return await _handleResponse(response);
+  }
+
+  Future<Object> currentUser() async {
+    final String storedRefreshToken = await secureStorage.read(key: 'refresh_token');
+    if (storedRefreshToken == null) {
+      return null;
+    }
+
+    final TokenResponse response = await appAuth.token(
+      TokenRequest(
+        kAuth0ClientId,
+        kAuth0RedirectUri,
+        issuer: 'https://$kAuth0Domain',
+        refreshToken: storedRefreshToken,
+      ),
+    );
+    return await _handleResponse(response);
+  }
+
+  Future<Object> _handleResponse(TokenResponse response) async {
+    final Map<String, dynamic> userDetails = await _getUserDetails(response.accessToken);
+    // final Map<String, dynamic> privateUserDetails = await _getUserPrivateDetails(sub: userDetails['sub']);
+    // final Map<String, dynamic> idToken = _parseIdToken(response.idToken);
+    await secureStorage.write(key: 'refresh_token', value: response.refreshToken);
     return userDetails;
   }
 
-//  Map<String, Object> _parseIdToken(String idToken) {
-//    final List<String> parts = idToken.split('.');
-//    assert(parts.length == 3);
-//
-//    return jsonDecode(
-//        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))));
-//  }
+  Map<String, Object> _parseIdToken(String idToken) {
+    final List<String> parts = idToken.split('.');
+    assert(parts.length == 3);
+    return jsonDecode(utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))));
+  }
 
   Future<Map<String, Object>> _getUserDetails(String accessToken) async {
     final String url = 'https://$kAuth0Domain/userinfo';
@@ -89,8 +78,7 @@ class Auth0Service extends Auth0ServiceAbstract {
     }
   }
 
-  Future<Map<String, Object>> _getUserPrivateDetails(
-      {String accessToken, String sub}) async {
+  Future<Map<String, Object>> _getUserPrivateDetails({String accessToken, String sub}) async {
     final String tokenUrl = 'https://$kAuth0BackEndDomain/oauth/token';
     final http.Response tokenResponse = await http.post(
       tokenUrl,

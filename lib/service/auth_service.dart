@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:verb_crm_flutter/models/user.dart';
 import 'package:verb_crm_flutter/service/auth0_service.dart';
 
@@ -7,17 +7,17 @@ abstract class AuthServiceAbstract extends ChangeNotifier {
   User get currentUser;
   bool get isSignedIn;
   Future<User> loadCurrentUser();
-  Future<AuthResult> firebaseAnonymous({@required String name, @required String email});
-  Future<AuthResult> firebaseSignUp({@required String email, @required String password});
-  Future<AuthResult> firebaseLogin({@required String email, @required String password});
+  Future<auth.UserCredential> firebaseAnonymous({@required String name, @required String email});
+  Future<auth.UserCredential> firebaseSignUp({@required String email, @required String password});
+  Future<auth.UserCredential> firebaseLogin({@required String email, @required String password});
   Future<void> auth0Login();
   Future<void> signOut();
   String decodeError({@required exception});
 }
 
 class AuthService extends AuthServiceAbstract {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final Auth0Service _auth0 = Auth0Service();
+  final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
+  final Auth0Service _auth0 = Auth0Service.instance;
   User _currentUser;
 
   @override
@@ -27,7 +27,7 @@ class AuthService extends AuthServiceAbstract {
   bool get isSignedIn => _currentUser != null;
 
   Future<User> loadCurrentUser() async {
-    final FirebaseUser firebaseUser = await _firebaseAuth.currentUser();
+    final auth.User firebaseUser = await _firebaseAuth.currentUser;
     final Object auth0User = await _auth0.currentUser();
     if (firebaseUser != null) {
       print("User is from Firebase");
@@ -43,8 +43,8 @@ class AuthService extends AuthServiceAbstract {
   }
 
   @override
-  Future<AuthResult> firebaseAnonymous({@required String name, @required String email}) async {
-    final AuthResult result = await _firebaseAuth.signInAnonymously();
+  Future<auth.UserCredential> firebaseAnonymous({@required String name, @required String email}) async {
+    final auth.UserCredential result = await _firebaseAuth.signInAnonymously();
     if (result?.user != null) {
       _currentUser = User.fromFirebase(result.user);
       notifyListeners();
@@ -53,8 +53,9 @@ class AuthService extends AuthServiceAbstract {
   }
 
   @override
-  Future<AuthResult> firebaseSignUp({@required String email, @required String password}) async {
-    final AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+  Future<auth.UserCredential> firebaseSignUp({@required String email, @required String password}) async {
+    final auth.UserCredential result =
+        await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     if (result?.user != null) {
       print("Firebase User");
       print(result.user);
@@ -65,8 +66,8 @@ class AuthService extends AuthServiceAbstract {
   }
 
   @override
-  Future<AuthResult> firebaseLogin({@required String email, @required String password}) async {
-    final AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+  Future<auth.UserCredential> firebaseLogin({@required String email, @required String password}) async {
+    final auth.UserCredential result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     if (result?.user != null) {
       _currentUser = User.fromFirebase(result.user);
       notifyListeners();

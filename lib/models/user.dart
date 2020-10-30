@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as FirebaseAuth;
 import 'package:meta/meta.dart';
 
 class User {
@@ -44,7 +44,7 @@ class User {
     );
   }
 
-  factory User.fromFirebase(FirebaseUser user) {
+  factory User.fromFirebase(FirebaseAuth.User user) {
     final String name = (user.displayName?.isNotEmpty == true) ? user.displayName : user.email;
     final int index = name.indexOf(RegExp(r'\s'));
     final String firstName = index < 0 ? name : name.substring(0, index);
@@ -54,7 +54,7 @@ class User {
       id: user.uid,
       name: name,
       email: user.email,
-      photoUrl: user.photoUrl,
+      photoUrl: user.photoURL,
       firstName: firstName,
       lastName: lastName,
       locale: 'en',

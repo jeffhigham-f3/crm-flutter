@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth_service.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_user_service.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class AccountFormForm extends StatefulWidget {
   final LoginType loginType;
@@ -38,6 +39,10 @@ class _AccountFormFormState extends State<AccountFormForm> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
+    final trayUserService = context.watch<TrayIOUserService>();
+
+    print(authService);
+    print(trayUserService);
 
     return Form(
       key: _formKey,
@@ -83,7 +88,7 @@ class _AccountFormFormState extends State<AccountFormForm> {
               height: 20.0,
             ),
             _FormButton(
-              text: (widget.loginType == LoginType.firebaseLogin) ? "LOGIN" : "SIGNUP",
+              text: (widget.loginType == LoginType.firebaseLogin) ? "Login" : "Sign Up",
               onPressed: () {
                 final email = _emailController.text;
                 final password = _passwordController.text;
@@ -101,25 +106,6 @@ class _AccountFormFormState extends State<AccountFormForm> {
                       .catchError((e) => _onLoginError(e));
                 }
               },
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Text(
-              '- OR -',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              'Sign in with',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'OpenSans',
-              ),
             ),
             SizedBox(
               height: 20.0,
@@ -289,29 +275,6 @@ class _AccountFormFormState extends State<AccountFormForm> {
   }
 }
 
-//class _SecondaryButton extends StatelessWidget {
-//  final Function onPressed;
-//  final String text;
-//
-//  const _SecondaryButton({Key key, this.onPressed, this.text})
-//      : super(key: key);
-//  @override
-//  Widget build(BuildContext context) {
-//    return Container(
-//      child: FlatButton(
-//        onPressed: this.onPressed,
-//        child: Text(
-//          this.text,
-//          style: TextStyle(
-//            color: Colors.white,
-//            fontSize: 14.0,
-//          ),
-//        ),
-//      ),
-//    );
-//  }
-//}
-
 class _FormButton extends StatelessWidget {
   final Function onPressed;
   final String text;
@@ -324,20 +287,21 @@ class _FormButton extends StatelessWidget {
         maxWidth: 500,
         minHeight: 40,
       ),
-      width: MediaQuery.of(context).size.width * .65,
+      width: MediaQuery.of(context).size.width * .80,
+      height: 50.0,
       child: RaisedButton(
-        elevation: 5.0,
+        elevation: 2.0,
         onPressed: this.onPressed,
         padding: EdgeInsets.all(10.0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         color: Colors.white,
         child: Text(
           this.text,
           style: TextStyle(
             color: Theme.of(context).accentColor,
-            letterSpacing: 1.5,
+            // letterSpacing: 1.0,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
           ),
@@ -367,7 +331,7 @@ class _FormInput extends StatelessWidget {
       constraints: BoxConstraints(
         maxWidth: 500,
       ),
-      width: MediaQuery.of(context).size.width * .65,
+      width: MediaQuery.of(context).size.width * .75,
       child: TextFormField(
         controller: this.controller,
         obscureText: (this.obscureText != null) ? this.obscureText : false,
@@ -375,7 +339,7 @@ class _FormInput extends StatelessWidget {
         keyboardType: TextInputType.text,
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 22.0,
+          fontSize: 20.0,
         ),
         decoration: InputDecoration(
           hintText: this.hintText,
@@ -386,7 +350,7 @@ class _FormInput extends StatelessWidget {
           disabledBorder: InputBorder.none,
           hintStyle: TextStyle(
             color: Colors.white54,
-            fontSize: 22.0,
+            fontSize: 20.0,
           ),
           prefixIcon: this.icon,
         ),

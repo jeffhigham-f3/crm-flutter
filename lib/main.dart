@@ -4,9 +4,11 @@ import 'package:verb_crm_flutter/models/goal_manager.dart';
 import 'package:verb_crm_flutter/models/crm_manager.dart';
 import 'package:verb_crm_flutter/screens/main_app.dart';
 import 'package:verb_crm_flutter/service/import.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [

@@ -20,7 +20,7 @@ class _ContactFollowUpWidgetState extends State<ContactFollowUpWidget> {
   @override
   Widget build(BuildContext context) {
     return Bounce(
-      delay: Duration(seconds: 3),
+      // delay: Duration(seconds: 1),
       duration: Duration(milliseconds: 500),
       child: Card(
         child: Container(
@@ -66,24 +66,13 @@ class __ContactRowSliderState extends State<_ContactRowSlider> {
   void initState() {
     final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
     final contactService = context.read<ContactService>();
-
-    // TODO: Replace the workflow request with
-    if (solutionInstanceService.activeInstances.length != 0 &&
-        solutionInstanceService.activeInstances.first.workflows.length != 0) {
-      final instance = solutionInstanceService.activeInstances.first;
-      if (!instance.enabled) {
-        print('Solution Instance [${instance.id}] ${instance.name} is disabled');
-        return;
-      }
-
-      final workflow = instance.workflows.first;
-      if (workflow == null) {
-        print('${instance.name} does not have an active workflow.');
-        return;
-      }
-      print('Fetching contacts from triggerUrl: ${workflow.triggerUrl}');
-      contactService.getAll(triggerUrl: workflow.triggerUrl);
+    if (contactService.hasContacts) {
+      contactService.refreshAll();
+      return;
     }
+    contactService.getAll(
+      triggerUrl: solutionInstanceService.firstWorkflowUrl(),
+    );
     super.initState();
   }
 

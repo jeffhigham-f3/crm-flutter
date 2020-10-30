@@ -5,7 +5,7 @@ import 'package:verb_crm_flutter/widgets/import.dart';
 import 'package:verb_crm_flutter/widgets/contact_followup_widget.dart';
 
 class GlanceHomeScreen extends StatefulWidget {
-  static const String id = 'goal_picker_screen';
+  static const String id = 'glance_hom_screen';
 
   @override
   _GlanceHomeScreenState createState() => _GlanceHomeScreenState();

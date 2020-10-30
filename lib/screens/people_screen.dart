@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/widgets/contact_list_widget.dart';
+import 'package:verb_crm_flutter/widgets/search_box_widget.dart';
 import 'package:verb_crm_flutter/service/contact_service.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,9 @@ class _PeopleScreenState extends State<PeopleScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SearchBoxWidget(),
+        SearchBoxWidget(
+          onChanged: (String text) => contactService.searchAll(searchText: text),
+        ),
         Expanded(
           child: StreamBuilder(
             stream: contactService.stream,
@@ -70,48 +73,6 @@ class _PeopleScreenState extends State<PeopleScreen> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class SearchBoxWidget extends StatefulWidget {
-  @override
-  _SearchBoxWidgetState createState() => _SearchBoxWidgetState();
-}
-
-class _SearchBoxWidgetState extends State<SearchBoxWidget> {
-  @override
-  Widget build(BuildContext context) {
-    final contactService = context.watch<ContactService>();
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).cardColor,
-      ),
-      margin: EdgeInsets.all(10),
-      width: MediaQuery.of(context).size.width,
-      child: TextField(
-          onChanged: (String text) => contactService.searchAll(searchText: text),
-          autofocus: true,
-          keyboardType: TextInputType.text,
-          style: const TextStyle(
-            fontSize: 18.0,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            hintText: '',
-            hintStyle: TextStyle(
-              fontSize: 18.0,
-            ),
-            prefixIcon: Icon(
-              Icons.search,
-            ),
-          )),
     );
   }
 }
