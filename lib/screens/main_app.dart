@@ -52,7 +52,7 @@ class MainApp extends StatelessWidget {
         LiveVideoScreen.id: (context) => LiveVideoScreen(),
         SolutionsScreen.id: (context) => SolutionsScreen(),
         WorkflowScreen.id: (context) => WorkflowScreen(),
-        FirestoreScreen.id: (context) => FirestoreScreen(),
+        CrmScreen.id: (context) => CrmScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

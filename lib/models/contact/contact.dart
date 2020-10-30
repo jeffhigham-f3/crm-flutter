@@ -35,7 +35,6 @@ class Contact {
   factory Contact.fromJson(Map<String, dynamic> json) {
     final RandomColor _randomColor = RandomColor();
 
-    print(json);
     final contact = Contact(
       id: json['AccountId'] ??= '',
       name: '${json['FirstName']} ${json['LastName']}',
@@ -49,7 +48,6 @@ class Contact {
       online: faker.randomGenerator.boolean(),
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
     );
-    print(contact);
     return contact;
   }
 

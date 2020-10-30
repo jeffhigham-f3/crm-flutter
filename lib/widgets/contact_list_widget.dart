@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
-import 'package:verb_crm_flutter/models/contact.dart';
+import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 
 class ContactListWidget extends StatefulWidget {

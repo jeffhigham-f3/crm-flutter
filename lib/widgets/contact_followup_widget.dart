@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/glance_task.dart';
-import 'package:verb_crm_flutter/models/contact.dart';
+import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/service/contact_service.dart';
+import 'package:verb_crm_flutter/service/contact/contact_service.dart';
 import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
 

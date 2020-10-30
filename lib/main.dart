@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/models/goal_manager.dart';
-import 'package:verb_crm_flutter/models/crm_manager.dart';
+import 'package:verb_crm_flutter/models/crm/crm_manager.dart';
 import 'package:verb_crm_flutter/screens/main_app.dart';
 import 'package:verb_crm_flutter/service/import.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,6 +38,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => TrayIOWorkflowService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CrmService(),
         ),
       ],
       child: MainApp(),

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/service/auth_service.dart';
-import 'package:verb_crm_flutter/screens/people_screen.dart';
-import 'package:verb_crm_flutter/screens/live_video_screen.dart';
-import 'package:verb_crm_flutter/screens/solution_screen.dart';
-import 'package:verb_crm_flutter/screens/profile_screen.dart';
-import 'package:verb_crm_flutter/screens/glance_home_screen.dart';
+import 'package:verb_crm_flutter/service/authentication/import.dart';
+import 'package:verb_crm_flutter/screens/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 
 class AppHome extends StatefulWidget {
@@ -39,24 +35,7 @@ class _AppHomeState extends State<AppHome> {
         ),
       ],
     ),
-    Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Activity',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
-            'Real-time activity and reporting',
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ),
-        ),
-      ],
-    ),
+    CrmScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -163,7 +142,7 @@ class _AppHomeState extends State<AppHome> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'Activity',
+            label: 'CRM',
           ),
         ],
         currentIndex: _selectedIndex,

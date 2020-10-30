@@ -8,9 +8,11 @@ class Crm with ChangeNotifier {
   String refreshToken;
   bool enabled;
 
-  Crm({this.name, this.logo}) {
-    this.enabled = false;
-    this.icon = Icon(Icons.business_center);
+  Crm({this.name, this.logo}) {}
+
+  factory Crm.fromJson(Map<String, dynamic> json) {
+    final crm = Crm(name: json['name']);
+    return crm;
   }
 
   toggleEnabled() {

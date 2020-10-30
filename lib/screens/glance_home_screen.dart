@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/service/glance_service.dart';
+import 'package:verb_crm_flutter/service/glance/glance_service.dart';
 import 'package:verb_crm_flutter/widgets/import.dart';
 import 'package:verb_crm_flutter/widgets/contact_followup_widget.dart';
 

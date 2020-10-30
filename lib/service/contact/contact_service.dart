@@ -1,4 +1,4 @@
-import 'package:verb_crm_flutter/models/contact.dart';
+import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:convert' as convert;
@@ -78,8 +78,12 @@ class ContactService extends ContactServiceAbstract {
 
   @override
   Future<List<Contact>> refreshAll() async {
+    if (_contacts.isEmpty) {
+      return null;
+    }
     await Future.delayed(const Duration(milliseconds: 5));
     _controller.sink.add(_contacts);
+    notifyListeners();
     return _contacts;
   }
 }

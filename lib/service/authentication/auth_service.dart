@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:verb_crm_flutter/models/user.dart';
-import 'package:verb_crm_flutter/service/auth0_service.dart';
+import 'package:verb_crm_flutter/models/user/user.dart';
+import 'package:verb_crm_flutter/service/authentication/auth0_service.dart';
 
 abstract class AuthServiceAbstract extends ChangeNotifier {
   User get currentUser;

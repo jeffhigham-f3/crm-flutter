@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/service/auth_service.dart';
+import 'package:verb_crm_flutter/service/authentication/auth_service.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_user_service.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
 import 'package:firebase_core/firebase_core.dart';

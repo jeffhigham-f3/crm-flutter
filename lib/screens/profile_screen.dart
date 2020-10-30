@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/service/auth_service.dart';
+import 'package:verb_crm_flutter/service/authentication/auth_service.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_user_service.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
 import 'package:verb_crm_flutter/widgets/gradient_container.dart';
