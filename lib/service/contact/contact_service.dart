@@ -12,6 +12,7 @@ abstract class ContactServiceAbstract with ChangeNotifier {
   Future<List<Contact>> getAll({@required String triggerUrl});
   Future<List<Contact>> searchAll({@required String searchText});
   Future<List<Contact>> refreshAll();
+  Future<void> primeContacts();
 }
 
 class ContactService extends ContactServiceAbstract {
@@ -78,12 +79,23 @@ class ContactService extends ContactServiceAbstract {
 
   @override
   Future<List<Contact>> refreshAll() async {
+    await Future.delayed(const Duration(milliseconds: 10));
     if (_contacts.isEmpty) {
+      await primeContacts();
       return null;
     }
-    await Future.delayed(const Duration(milliseconds: 5));
     _controller.sink.add(_contacts);
     notifyListeners();
     return _contacts;
+  }
+
+  @override
+  Future<void> primeContacts() async {
+    Iterable<int>.generate(100).toList().forEach(
+      (_) {
+        _contacts.add(Contact.generate());
+      },
+    );
+    notifyListeners();
   }
 }

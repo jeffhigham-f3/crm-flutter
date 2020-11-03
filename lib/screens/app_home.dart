@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/authentication/import.dart';
 import 'package:verb_crm_flutter/screens/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
+import 'package:verb_crm_flutter/config/palette.dart';
 
 class AppHome extends StatefulWidget {
   static const String id = 'crm_app_home';
@@ -97,6 +98,7 @@ class _AppHomeState extends State<AppHome> {
             },
           )
         ],
+        flexibleSpace: Palette.flexSpaceNavGradient,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

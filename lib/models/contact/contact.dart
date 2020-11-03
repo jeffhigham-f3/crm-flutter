@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 import 'package:faker/faker.dart';
+import 'dart:math';
 
 class Contact {
   final String id;
@@ -48,6 +49,32 @@ class Contact {
       online: faker.randomGenerator.boolean(),
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
     );
+    return contact;
+  }
+
+  factory Contact.generate() {
+    final RandomColor _randomColor = RandomColor();
+    final firstName = faker.person.firstName();
+    final lastName = faker.person.lastName();
+    final numbers = faker.randomGenerator.numbers(9, 10);
+    final phone =
+        '(${numbers[0]}${numbers[1]}${numbers[2]}) ${numbers[3]}${numbers[4]}${numbers[5]}-${numbers[6]}${numbers[7]}${numbers[8]}${numbers[8]}';
+    final uuid = faker.guid.guid();
+    final contact = Contact(
+      id: uuid,
+      name: '$firstName $lastName',
+      email: faker.internet.email(),
+      phone: phone,
+      photoUrl: 'https://i.pravatar.cc/300?u=$uuid',
+      firstName: firstName,
+      lastName: lastName,
+      lead: faker.randomGenerator.boolean(),
+      customer: faker.randomGenerator.boolean(),
+      followUp: faker.randomGenerator.boolean(),
+      online: faker.randomGenerator.boolean(),
+      accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
+    );
+
     return contact;
   }
 

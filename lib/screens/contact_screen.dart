@@ -14,22 +14,22 @@ class PeopleScreen extends StatefulWidget {
 
 class _PeopleScreenState extends State<PeopleScreen> {
   @override
-  void initState() {
-    loadContacts(context);
-    super.initState();
-  }
+  // void initState() {
+  // loadContacts(context);
+  // super.initState();
+  // }
 
-  Future<void> loadContacts(BuildContext context) async {
-    final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
-    final contactService = context.read<ContactService>();
-    if (contactService.hasContacts) {
-      contactService.refreshAll();
-      return;
-    }
-    await contactService.getAll(
-      triggerUrl: solutionInstanceService.firstWorkflowUrl(),
-    );
-  }
+  // Future<void> loadContacts(BuildContext context) async {
+  // final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
+  // final contactService = context.read<ContactService>();
+  // if (contactService.hasContacts) {
+  //   contactService.refreshAll();
+  //   return;
+  // }
+  // await contactService.getAll(
+  //   triggerUrl: solutionInstanceService.firstWorkflowUrl(),
+  // );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +48,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
             builder: (context, snapshot) {
               List<ContactListWidget> widgets = [];
               if (!snapshot.hasData) {
+                contactService.refreshAll();
                 return Center(
                   child: CircularProgressIndicator(),
                 );
@@ -66,7 +67,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
                   children: widgets,
                 ),
                 onRefresh: (() async {
-                  await loadContacts(context);
+                  await contactService.refreshAll();
                 }),
               );
             },

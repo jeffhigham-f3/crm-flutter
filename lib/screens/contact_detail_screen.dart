@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/contact/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
+import 'package:verb_crm_flutter/config/palette.dart';
 
 class ContactDetailScreen extends StatelessWidget {
   final Contact contact;
@@ -20,13 +21,11 @@ class ContactDetailScreen extends StatelessWidget {
             snap: true,
             collapsedHeight: 150,
             expandedHeight: 150,
-            flexibleSpace: FlexibleSpaceBar(
-              stretchModes: <StretchMode>[
-                StretchMode.zoomBackground,
-                StretchMode.blurBackground,
-                StretchMode.fadeTitle,
-              ],
-              title: _ContactAvatar(contact: contact),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: Palette.navGradient,
+              ),
+              child: _ContactAvatar(contact: contact),
             ),
           ),
           SliverToBoxAdapter(
