@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/models/contact/contact.dart';
+import 'package:verb_crm_flutter/contact/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 
 class ContactDetailScreen extends StatelessWidget {
