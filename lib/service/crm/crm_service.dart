@@ -43,7 +43,7 @@ class CrmService extends CrmServiceAbstract {
     if (_crms.isEmpty) {
       return null;
     }
-    // await Future.delayed(const Duration(milliseconds: 5));
+    await Future.delayed(const Duration(milliseconds: 100));
     print(_crms);
     _controller.sink.add(_crms);
     notifyListeners();
