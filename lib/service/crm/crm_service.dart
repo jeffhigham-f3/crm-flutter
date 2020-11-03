@@ -21,7 +21,11 @@ class CrmService extends CrmServiceAbstract {
     _firebaseStream.map((snapshot) => snapshot.docs).listen((crmData) {
       _crms.removeRange(0, _crms.length);
       for (var crm in crmData) {
-        _crms.add(Crm.fromJson(crm.data()));
+        _crms.add(
+          Crm.fromJson(
+            crm.data(),
+          ),
+        );
       }
       _crms.sort(_byName);
       _controller.sink.add(_crms);
@@ -32,16 +36,22 @@ class CrmService extends CrmServiceAbstract {
     });
   }
 
+  @override
+  Stream get stream => _controller.stream;
+
   Future<List<Crm>> refreshAll() async {
     if (_crms.isEmpty) {
       return null;
     }
-    await Future.delayed(const Duration(milliseconds: 500));
+    // await Future.delayed(const Duration(milliseconds: 5));
+    print(_crms);
     _controller.sink.add(_crms);
     notifyListeners();
     return _crms;
   }
 
-  @override
-  Stream get stream => _controller.stream;
+  Future<void> toggleState({@required Crm crm}) {
+    crm.enabled = !crm.enabled;
+    refreshAll();
+  }
 }

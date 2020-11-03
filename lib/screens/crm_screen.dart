@@ -44,11 +44,78 @@ class _CrmScreenState extends State<CrmScreen> {
   }
 }
 
-class CrmWidget extends StatelessWidget {
+class CrmWidget extends StatefulWidget {
   final Crm crm;
   const CrmWidget({Key key, this.crm}) : super(key: key);
+
+  @override
+  _CrmWidgetState createState() => _CrmWidgetState();
+}
+
+class _CrmWidgetState extends State<CrmWidget> {
   @override
   Widget build(BuildContext context) {
-    return Text(crm.name);
+    final crmService = context.watch<CrmService>();
+    return Card(
+      shadowColor: widget.crm.enabled ? Colors.green : null,
+      elevation: widget.crm.enabled ? 2.0 : 0.5,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.only(left: 8, right: 12),
+            width: MediaQuery.of(context).size.width * .25,
+            child: Image.asset('assets/${widget.crm.slug}.png'),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 18),
+                  child: Text(
+                    widget.crm.name,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(
+                    top: 8,
+                    bottom: 0,
+                  ),
+                  child: Text(widget.crm.description, style: Theme.of(context).textTheme.bodyText1),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    widget.crm.enabled
+                        ? FlatButton(
+                            child: Row(children: [
+                              Icon(
+                                Icons.check,
+                                color: Colors.green,
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                'Active',
+                                style: TextStyle(color: Colors.green),
+                              )
+                            ]),
+                            onPressed: () => {crmService.toggleState(crm: widget.crm)},
+                          )
+                        : FlatButton(
+                            child: Text('Inactive'), onPressed: () => {crmService.toggleState(crm: widget.crm)}),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
