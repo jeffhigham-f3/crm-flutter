@@ -1,30 +1,58 @@
 import 'package:flutter/material.dart';
 
 class Palette {
-  // static const Color scaffold = Color(0xFFF0F2F5);
+  static const Color scaffold = const Color(0xFFF0F2F5);
 
-  // static const Color facebookBlue = Color(0xFF1777F2);
+  // Theme 1
+  static const Color purpleAccent = const Color(0xFF6B3EFF);
+  static const Color purpleBlueAccent = const Color(0xFF5058FF);
+  static const Color blueAccent = const Color(0xFF00A2FF);
 
-  // static const LinearGradient createRoomGradient = LinearGradient(
-  //   colors: [Color(0xFF496AE1), Color(0xFFCE48B1)],
-  // );
+  // Theme 2
+  static const Color turquoiseAccent = const Color(0xFF21C6B9);
+  static const Color turquoisBlueAccent = const Color(0xFF23ACCB);
+  static const Color turquoisBlue = const Color(0xFF2490DB);
 
-  static final Color online = Colors.lightGreen[300]; // Color(0xFF4BCB1F);
+  // Theme 3
+  static const Color redAccent = const Color(0xFFE3705D);
+  static const Color redPurpleAccent = const Color(0xFFD17486);
+  static const Color redPurple = const Color(0xFFB26FB3);
 
-  // static const LinearGradient storyGradient = LinearGradient(
-  //   begin: Alignment.topCenter,
-  //   end: Alignment.bottomCenter,
-  //   colors: [Colors.transparent, Colors.black26],
-  // );
+  static const List<Color> theme1 = [purpleBlueAccent, purpleBlueAccent, blueAccent];
+  static const List<Color> theme2 = [turquoiseAccent, turquoisBlueAccent, turquoisBlue];
+  static const List<Color> theme3 = [redAccent, redPurpleAccent, redPurple];
 
-  static const LinearGradient navGradient = LinearGradient(
+  // Theme Gradient Config
+  static final theme = theme2;
+  static final gradientColor1 = theme[0];
+  static final gradientColor2 = theme[1];
+  static final gradientColor3 = theme[2];
+  static final online = theme[2];
+
+  // AppBar Gradient
+  static final LinearGradient appBarGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [const Color(0xFF6B3EFF), const Color(0xFF5058FF), const Color(0xFF00A2FF)],
+    colors: [gradientColor1, gradientColor3],
   );
-  static Container flexSpaceNavGradient = Container(
-    decoration: BoxDecoration(
-      gradient: navGradient,
-    ),
+  static final BoxDecoration appBarGradientDecoration = BoxDecoration(
+    gradient: appBarGradient,
+  );
+  static final Container flexSpaceNavGradient = Container(
+    decoration: appBarGradientDecoration,
+  );
+
+  // Login Screen Gradient
+  static final LinearGradient loginGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [gradientColor1, gradientColor2, gradientColor3],
+    tileMode: TileMode.clamp,
+  );
+  static final BoxDecoration loginGradientDecoration = BoxDecoration(
+    gradient: loginGradient,
+  );
+  static final Container loginvGradientContainer = Container(
+    decoration: loginGradientDecoration,
   );
 }

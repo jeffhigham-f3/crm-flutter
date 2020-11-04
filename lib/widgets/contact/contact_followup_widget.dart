@@ -142,14 +142,17 @@ class _ContactContainer extends StatelessWidget {
                 Container(
                   height: 45,
                   margin: EdgeInsets.only(right: 10.0),
-                  child: ProfileAvatar(
-                    imageUrl: contact.photoUrl,
-                    radius: 30.0,
-                    backgroundColor: contact.accentColor,
-                    borderColor: Colors.white,
-                    isActive: contact.online,
-                    initials: contact.initials,
-                    hasBorder: true,
+                  child: Hero(
+                    tag: 'profile-${contact.id}',
+                    child: ProfileAvatar(
+                      imageUrl: contact.photoUrl,
+                      radius: 30.0,
+                      backgroundColor: contact.accentColor,
+                      borderColor: Colors.white,
+                      isActive: contact.online,
+                      initials: contact.initials,
+                      hasBorder: true,
+                    ),
                   ),
                 ),
                 Padding(

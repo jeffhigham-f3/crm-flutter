@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/import.dart';
+import 'package:verb_crm_flutter/config/palette.dart';
 
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //https://api.flutter.dev/flutter/material/ThemeData-class.html
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-//        primaryColor: Color(0xFF6B3EFF),
-//        accentColor: Color(0xFF6B3EFF),
-//        canvasColor: Colors.white,
-        // https://api.flutter.dev/flutter/widgets/Text-class.html
+        primaryColor: Palette.theme[0],
+        accentColor: Palette.theme[2],
+        canvasColor: Palette.scaffold,
         textTheme: TextTheme(
           bodyText1: const TextStyle(),
           bodyText2: const TextStyle(),

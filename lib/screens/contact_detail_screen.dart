@@ -22,9 +22,7 @@ class ContactDetailScreen extends StatelessWidget {
             collapsedHeight: 150,
             expandedHeight: 150,
             flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: Palette.navGradient,
-              ),
+              decoration: Palette.appBarGradientDecoration,
               child: _ContactAvatar(contact: contact),
             ),
           ),
@@ -99,17 +97,20 @@ class _ContactAvatar extends StatelessWidget {
           margin: EdgeInsets.only(
             top: 40,
           ),
-          child: ProfileAvatar(
-            imageUrl: contact.photoUrl,
-            radius: 40.0,
-            backgroundColor: contact.accentColor,
-            borderColor: Colors.white,
-            hasBorder: true,
-            isActive: contact.online,
-            initials: contact.initials,
+          child: Hero(
+            tag: 'profile-${contact.id}',
+            child: ProfileAvatar(
+              imageUrl: contact.photoUrl,
+              radius: 40.0,
+              backgroundColor: contact.accentColor,
+              borderColor: Colors.white,
+              hasBorder: true,
+              isActive: contact.online,
+              initials: contact.initials,
+            ),
           ),
         ),
-        Text('${this.contact.firstName} ${this.contact.lastName}'),
+        Text('${contact.firstName} ${contact.lastName}'),
       ],
     );
   }

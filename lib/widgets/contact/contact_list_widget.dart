@@ -46,31 +46,20 @@ class _ContactListWidgetState extends State<ContactListWidget> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          ProfileAvatar(
-                            imageUrl: widget.contact.photoUrl,
-                            radius: 25.0,
-                            backgroundColor: widget.contact.accentColor,
-                            borderColor: Colors.white,
-                            hasBorder: true,
-                            isActive: widget.contact.online,
-                            initials: widget.contact.initials,
+                          Hero(
+                            tag: 'profile-${widget.contact.id}',
+                            child: ProfileAvatar(
+                              imageUrl: widget.contact.photoUrl,
+                              radius: 25.0,
+                              backgroundColor: widget.contact.accentColor,
+                              borderColor: Colors.white,
+                              hasBorder: true,
+                              isActive: widget.contact.online,
+                              initials: widget.contact.initials,
+                            ),
                           ),
                           SizedBox(width: 20),
-                          Text(
-                            widget.contact.firstName,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            widget.contact.lastName,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                          Text('${widget.contact.firstName} ${widget.contact.lastName}'),
                         ],
                       ),
                     )

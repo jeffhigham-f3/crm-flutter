@@ -109,25 +109,26 @@ class _AppHomeState extends State<AppHome> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 0.5,
-        highlightElevation: 0.4,
-        mini: true,
-        child: Icon(
-          Icons.video_call,
-        ),
-        onPressed: (() {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LiveVideoScreen(),
-              fullscreenDialog: true,
-            ),
-          );
-        }),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   elevation: 0.5,
+      //   highlightElevation: 0.4,
+      //   mini: true,
+      //   child: Icon(
+      //     Icons.video_call,
+      //   ),
+      //   onPressed: (() {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => LiveVideoScreen(),
+      //         fullscreenDialog: true,
+      //       ),
+      //     );
+      //   }),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Palette.scaffold,
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
