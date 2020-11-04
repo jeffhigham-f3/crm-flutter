@@ -80,24 +80,24 @@ class _AppHomeState extends State<AppHome> {
             ),
           ),
         ),
-        actions: [
-          IconButton(
-            tooltip: "Connectors",
-            icon: const Icon(
-              Icons.add,
-            ),
-            onPressed: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SolutionsScreen(
-                      modal: true,
-                    ),
-                    fullscreenDialog: true,
-                  ))
-            },
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     tooltip: "Connectors",
+        //     icon: const Icon(
+        //       Icons.add,
+        //     ),
+        //     onPressed: () => {
+        //       Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //             builder: (context) => SolutionsScreen(
+        //               modal: true,
+        //             ),
+        //             fullscreenDialog: true,
+        //           ))
+        //     },
+        //   )
+        // ],
         flexibleSpace: Palette.flexSpaceNavGradient,
       ),
       body: Column(
@@ -132,8 +132,8 @@ class _AppHomeState extends State<AppHome> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Glance',
+            icon: Icon(Icons.dynamic_feed),
+            label: 'Verb',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
@@ -144,8 +144,8 @@ class _AppHomeState extends State<AppHome> {
             label: 'Media',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'CRM',
+            icon: Icon(Icons.apps),
+            label: 'Apps',
           ),
         ],
         currentIndex: _selectedIndex,

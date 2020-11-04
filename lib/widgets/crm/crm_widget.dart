@@ -30,78 +30,105 @@ class _CrmWidgetState extends State<CrmWidget> with SingleTickerProviderStateMix
       vsync: this,
       duration: Duration(milliseconds: 300),
       curve: Curves.fastOutSlowIn,
-      child: Card(
-        shadowColor: widget.crm.enabled ? Colors.green : null,
-        elevation: widget.crm.enabled ? 2.0 : 0.5,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.all(8),
-              margin: EdgeInsets.only(left: 8, right: 12),
-              width: MediaQuery.of(context).size.width * .25,
-              child: Image.asset('assets/${widget.crm.slug}.png'),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+      child: GestureDetector(
+        onTap: () => {crmService.toggleState(crm: widget.crm)},
+        child: Card(
+            shadowColor: widget.crm.enabled ? Theme.of(context).primaryColor : null,
+            elevation: widget.crm.enabled ? 2.0 : 0.5,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 18),
-                    child: Text(
-                      widget.crm.name,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                      top: 8,
-                      bottom: 0,
-                    ),
-                    child: Text(widget.crm.description, style: Theme.of(context).textTheme.bodyText1),
-                  ),
-                  widget.crm.enabled
-                      ? Container(
-                          padding: EdgeInsets.only(
-                            top: 8,
-                            bottom: 0,
-                          ),
-                          child: Wrap(
-                            spacing: 3.0,
-                            children: features,
-                          ),
-                        )
-                      : SizedBox.shrink(),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      widget.crm.enabled
-                          ? FlatButton(
-                              child: Row(children: [
-                                Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  'Active',
-                                  style: TextStyle(color: Colors.green),
-                                )
-                              ]),
-                              onPressed: () => {crmService.toggleState(crm: widget.crm)},
-                            )
-                          : FlatButton(
-                              child: Text('Inactive'), onPressed: () => {crmService.toggleState(crm: widget.crm)}),
+                      Hero(
+                        tag: 'crm-${widget.crm.id}',
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          margin: EdgeInsets.only(left: 8, right: 12),
+                          width: MediaQuery.of(context).size.width * .25,
+                          child: Image.asset('assets/${widget.crm.slug}.png'),
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(top: 18),
+                              child: Text(
+                                widget.crm.name,
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(
+                                top: 8,
+                                bottom: 0,
+                              ),
+                              child: Text(widget.crm.description, style: Theme.of(context).textTheme.bodyText1),
+                            ),
+                            widget.crm.enabled
+                                ? Container(
+                                    padding: EdgeInsets.only(
+                                      top: 8,
+                                      bottom: 0,
+                                    ),
+                                    child: Wrap(
+                                      spacing: 3.0,
+                                      children: features,
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            widget.crm.enabled
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      FlatButton(
+                                        child: Row(children: [
+                                          Text(
+                                            'Configure',
+                                            style: TextStyle(color: Theme.of(context).primaryColor),
+                                          )
+                                        ]),
+                                        onPressed: () => {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => CrmConfigureScreen(
+                                                crm: widget.crm,
+                                              ),
+                                              fullscreenDialog: true,
+                                            ),
+                                          )
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox(height: 28),
+                          ],
+                        ),
+                      ),
                     ],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
+                  ),
+                  widget.crm.enabled
+                      ? SizedBox.shrink()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.expand_more,
+                              color: Colors.grey[400],
+                              size: 36,
+                            ),
+                          ],
+                        )
+                ])),
       ),
     );
   }

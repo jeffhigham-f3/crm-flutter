@@ -26,7 +26,7 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
             flex: 1,
             child: Center(
               child: Text(
-                "Here are your Glance ™ tasks.",
+                "Your tasks for today!",
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),

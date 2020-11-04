@@ -23,7 +23,7 @@ class Palette {
   static const List<Color> theme3 = [redAccent, redPurpleAccent, redPurple];
 
   // Theme Gradient Config
-  static final theme = theme2;
+  static final theme = theme3;
   static final gradientColor1 = theme[0];
   static final gradientColor2 = theme[1];
   static final gradientColor3 = theme[2];

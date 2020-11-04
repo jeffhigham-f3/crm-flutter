@@ -14,24 +14,6 @@ class PeopleScreen extends StatefulWidget {
 
 class _PeopleScreenState extends State<PeopleScreen> {
   @override
-  // void initState() {
-  // loadContacts(context);
-  // super.initState();
-  // }
-
-  // Future<void> loadContacts(BuildContext context) async {
-  // final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
-  // final contactService = context.read<ContactService>();
-  // if (contactService.hasContacts) {
-  //   contactService.refreshAll();
-  //   return;
-  // }
-  // await contactService.getAll(
-  //   triggerUrl: solutionInstanceService.firstWorkflowUrl(),
-  // );
-  // }
-
-  @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
 

@@ -11,31 +11,26 @@ class CrmFeatureWidget extends StatefulWidget {
 }
 
 class _CrmFeatureWidgetState extends State<CrmFeatureWidget> {
+  List<String> _filters = <String>[];
+
   @override
   Widget build(BuildContext context) {
-    return ActionChip(
-      backgroundColor: Theme.of(context).primaryColorLight,
-      avatar: widget.feature.enabled
-          ? Icon(
-              Icons.check,
-              size: 12,
-              color: Colors.green,
-            )
-          : Icon(
-              Icons.add,
-              size: 12,
-              color: Theme.of(context).accentColor,
-            ),
-      label: Text(
-        widget.feature.name,
-        style: TextStyle(
-          color: widget.feature.enabled ? Colors.green : Theme.of(context).accentColor,
-        ),
-      ),
-      onPressed: () {
+    return FilterChip(
+      backgroundColor: Theme.of(context).buttonColor,
+      labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+      selectedColor: Theme.of(context).buttonColor,
+      checkmarkColor: Theme.of(context).primaryColor,
+      label: Text(widget.feature.name),
+      selected: _filters.contains(widget.feature.name) && false, // disable for now.
+      onSelected: (bool value) {
         setState(() {
-          widget.feature.enabled = !widget.feature.enabled;
-          print("Widget enabled = ${widget.feature.enabled}");
+          if (value) {
+            _filters.add(widget.feature.name);
+          } else {
+            _filters.removeWhere((String name) {
+              return name == widget.feature.name;
+            });
+          }
         });
       },
     );
