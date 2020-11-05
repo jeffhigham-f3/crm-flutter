@@ -20,6 +20,8 @@ class _ContactListWidgetState extends State<ContactListWidget> {
       ),
       child: Card(
         child: InkWell(
+          splashColor: Theme.of(context).accentColor.withOpacity(0.1),
+          highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
           onTap: () => {
             Navigator.push(
               context,

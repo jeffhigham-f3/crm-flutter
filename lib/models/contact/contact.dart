@@ -18,20 +18,21 @@ class Contact {
   bool followUp;
   Color accentColor;
 
-  Contact(
-      {this.id,
-      this.name,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.phone,
-      this.photoUrl,
-      this.locale,
-      this.lead,
-      this.customer,
-      this.followUp,
-      this.online,
-      this.accentColor});
+  Contact({
+    this.id,
+    this.name,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phone,
+    this.photoUrl,
+    this.locale,
+    this.lead,
+    this.customer,
+    this.followUp,
+    this.online,
+    this.accentColor,
+  });
 
   factory Contact.fromJson(Map<String, dynamic> json) {
     final RandomColor _randomColor = RandomColor();

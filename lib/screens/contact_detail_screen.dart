@@ -15,12 +15,8 @@ class ContactDetailScreen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         slivers: [
           SliverAppBar(
-            leading: null,
-            floating: true,
-            pinned: false,
-            snap: true,
-            collapsedHeight: 150,
-            expandedHeight: 150,
+            collapsedHeight: 200,
+            expandedHeight: 200,
             flexibleSpace: Container(
               decoration: Palette.appBarGradientDecoration,
               child: _ContactAvatar(contact: contact),
@@ -28,52 +24,121 @@ class ContactDetailScreen extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(22.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 20),
-                  Text(
-                    'Status',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Text(
-                    (contact.online) ? 'Online' : 'Offline',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Account ID',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Text(
-                    contact.id,
-                    style: Theme.of(context).textTheme.subtitle1,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ContactActionWidget(title: 'message', icon: Icons.message),
+                      ContactActionWidget(title: 'phone', icon: Icons.phone),
+                      ContactActionWidget(title: 'live', icon: Icons.video_call),
+                      ContactActionWidget(title: 'mail', icon: Icons.mail),
+                    ],
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    'Email',
-                    style: Theme.of(context).textTheme.headline6,
+                  ContactPropertyWidget(
+                    title: 'Account',
+                    content: Text(contact.id),
                   ),
-                  Text(
-                    contact.email,
-                    style: Theme.of(context).textTheme.subtitle1,
+                  ContactPropertyWidget(
+                    title: 'Email',
+                    content: Text(contact.email),
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Phone',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Text(
-                    contact.phone,
-                    style: Theme.of(context).textTheme.subtitle1,
+                  ContactPropertyWidget(
+                    title: 'Phone',
+                    content: Text(contact.phone),
                   ),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ContactActionWidget extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const ContactActionWidget({
+    Key key,
+    this.title,
+    this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        splashColor: Theme.of(context).accentColor.withOpacity(0.1),
+        highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
+        onTap: () => {print('$title action')},
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  color: Theme.of(context).accentColor,
+                ),
+                SizedBox(
+                  height: 4,
+                  width: 50,
+                ),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).accentColor,
+                  ),
+                ),
+              ]),
+        ),
+      ),
+    );
+  }
+}
+
+class ContactPropertyWidget extends StatelessWidget {
+  final String title;
+  final Widget content;
+
+  const ContactPropertyWidget({
+    Key key,
+    @required this.title,
+    @required this.content,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        onTap: () => {print("doing stuff")},
+        splashColor: Theme.of(context).accentColor.withOpacity(0.1),
+        highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              content,
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -101,7 +166,7 @@ class _ContactAvatar extends StatelessWidget {
             tag: 'profile-${contact.id}',
             child: ProfileAvatar(
               imageUrl: contact.photoUrl,
-              radius: 40.0,
+              radius: 60.0,
               backgroundColor: contact.accentColor,
               borderColor: Colors.white,
               hasBorder: true,
@@ -110,7 +175,14 @@ class _ContactAvatar extends StatelessWidget {
             ),
           ),
         ),
-        Text('${contact.firstName} ${contact.lastName}'),
+        Text(
+          '${contact.firstName} ${contact.lastName}',
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.headline6.fontSize,
+            fontWeight: Theme.of(context).textTheme.headline6.fontWeight,
+            color: Colors.white,
+          ),
+        ),
       ],
     );
   }

@@ -47,9 +47,6 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
                     task: snapshot.data[0],
                   ),
                 );
-                for (var task in snapshot.data) {
-                  widgets.add(GlanceTaskWidget(task: task));
-                }
                 return ListView(
                   padding: const EdgeInsets.all(8),
                   children: widgets,
