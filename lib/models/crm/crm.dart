@@ -19,7 +19,7 @@ class Crm with ChangeNotifier {
         enabled: json['enabled'],
         slug: json['slug'],
         features: [
-          CrmFeature(id: '123', name: 'Contacts', description: '', enabled: false, slug: 'contacts'),
+          CrmFeature(id: '123', name: 'People', description: '', enabled: false, slug: 'people'),
           CrmFeature(id: '456', name: 'Media', description: '', enabled: false, slug: 'media'),
           CrmFeature(id: '789', name: 'Verb AI', description: '', enabled: false, slug: 'ai'),
         ]);

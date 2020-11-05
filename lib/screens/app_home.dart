@@ -136,7 +136,7 @@ class _AppHomeState extends State<AppHome> {
             label: 'Verb',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.people),
+            icon: Icon(Icons.contacts),
             label: 'People',
           ),
           BottomNavigationBarItem(

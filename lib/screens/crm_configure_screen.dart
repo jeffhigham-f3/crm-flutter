@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/crm/import.dart';
 
-class CrmConfigureScreen extends StatelessWidget {
+class CrmConfigureScreen extends StatefulWidget {
   final Crm crm;
 
   const CrmConfigureScreen({Key key, this.crm}) : super(key: key);
+  @override
+  _CrmConfigureScreenState createState() => _CrmConfigureScreenState();
+}
 
+class _CrmConfigureScreenState extends State<CrmConfigureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,24 +17,24 @@ class CrmConfigureScreen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         slivers: [
           SliverAppBar(
-            leading: null,
-            floating: true,
-            pinned: false,
-            snap: true,
             collapsedHeight: 150,
             expandedHeight: 150,
-            flexibleSpace: Hero(
-              tag: 'crm-${crm.id}',
-              child: Container(
+            flexibleSpace: Container(
                 decoration: Palette.appBarGradientDecoration,
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  margin: EdgeInsets.all(12),
-                  width: MediaQuery.of(context).size.width * .25,
-                  child: Image.asset('assets/${crm.slug}.png'),
-                ),
-              ),
-            ),
+                child: Column(children: [
+                  Container(
+                    padding: EdgeInsets.all(0),
+                    margin: EdgeInsets.only(top: 55),
+                    width: 120,
+                    height: 120,
+                    child: Hero(
+                      tag: 'crm-${widget.crm.id}',
+                      child: Image.asset(
+                        'assets/${widget.crm.slug}.png',
+                      ),
+                    ),
+                  ),
+                ])),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -39,20 +43,77 @@ class CrmConfigureScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Card(
-                    child: Text('Contacts'),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Please login to ${widget.crm.name} so you can begin configuring this integration!',
+                        style: Theme.of(context).textTheme.headline6,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
+                      OutlineButton(
+                        child: Text(
+                          'Authenticate',
+                          style: TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                        onPressed: () => {
+                          print("authenticating with ${widget.crm.name}"),
+                        },
+                      ),
+                      SizedBox(height: 20),
+                    ],
                   ),
-                  Card(
-                    child: Text('Media'),
+                  CrmConfigOption(
+                    title: 'People',
+                    icon: Icons.contacts,
                   ),
-                  Card(
-                    child: Text('Verb AI'),
+                  CrmConfigOption(
+                    title: 'Media',
+                    icon: Icons.movie,
+                  ),
+                  CrmConfigOption(
+                    title: 'Verb AI',
+                    icon: Icons.dynamic_feed,
                   ),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CrmConfigOption extends StatefulWidget {
+  final String title;
+  final IconData icon;
+
+  const CrmConfigOption({Key key, this.title, this.icon}) : super(key: key);
+
+  @override
+  _CrmConfigOptionState createState() => _CrmConfigOptionState();
+}
+
+class _CrmConfigOptionState extends State<CrmConfigOption> {
+  bool _enabled = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: SwitchListTile(
+        title: Text(widget.title),
+        activeColor: Theme.of(context).accentColor,
+        inactiveTrackColor: Theme.of(context).primaryColor.withOpacity(0.2),
+        value: _enabled,
+        onChanged: (bool value) {
+          setState(() {
+            _enabled = value;
+          });
+        },
+        secondary: Icon(widget.icon),
       ),
     );
   }

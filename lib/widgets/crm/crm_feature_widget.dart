@@ -16,7 +16,7 @@ class _CrmFeatureWidgetState extends State<CrmFeatureWidget> {
   @override
   Widget build(BuildContext context) {
     return FilterChip(
-      backgroundColor: Theme.of(context).buttonColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       labelStyle: TextStyle(color: Theme.of(context).primaryColor),
       selectedColor: Theme.of(context).buttonColor,
       checkmarkColor: Theme.of(context).primaryColor,
