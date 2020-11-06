@@ -7,23 +7,29 @@ import 'package:http/http.dart' as http;
 abstract class ContactServiceAbstract with ChangeNotifier {
   List<Contact> get contacts;
   bool get hasContacts;
+  bool get filterActive;
   Stream get stream;
   Comparator<Contact> lastNameComparator;
   Future<List<Contact>> getAll({@required String triggerUrl});
   Future<List<Contact>> searchAll({@required String searchText});
   Future<List<Contact>> refreshAll();
   Future<void> primeContacts();
+  void toggleFilter();
 }
 
 class ContactService extends ContactServiceAbstract {
   final _controller = StreamController.broadcast();
   final List<Contact> _contacts = [];
+  bool _filterActive = false;
 
   @override
   List<Contact> get contacts => _contacts;
 
   @override
   bool get hasContacts => contacts.length > 0;
+
+  @override
+  bool get filterActive => _filterActive;
 
   @override
   Stream get stream => _controller.stream;
@@ -96,6 +102,12 @@ class ContactService extends ContactServiceAbstract {
         _contacts.add(Contact.generate());
       },
     );
+    notifyListeners();
+  }
+
+  @override
+  void toggleFilter() {
+    _filterActive = !_filterActive;
     notifyListeners();
   }
 }

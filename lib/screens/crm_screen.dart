@@ -10,6 +10,21 @@ class CrmScreen extends StatefulWidget {
 
 class _CrmScreenState extends State<CrmScreen> {
   @override
+  void initState() {
+    final actionService = context.read<ActionsService>();
+    final List<Widget> actions = [];
+
+    actionService.setTitle(
+        title: Text(
+      'Apps',
+      style: TextStyle(color: Colors.white),
+    ));
+    actionService.setActions(actions: actions);
+    actionService.notify();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final crmService = context.watch<CrmService>();
     return Scaffold(

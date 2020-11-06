@@ -42,6 +42,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => CrmService(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ActionsService(),
+        ),
       ],
       child: MainApp(),
     ),

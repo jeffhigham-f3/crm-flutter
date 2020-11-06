@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/service/authentication/import.dart';
+import 'package:verb_crm_flutter/service/import.dart';
 import 'package:verb_crm_flutter/screens/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 import 'package:verb_crm_flutter/config/palette.dart';
@@ -18,40 +18,35 @@ class _AppHomeState extends State<AppHome> {
   static List<Widget> _widgetOptions = <Widget>[
     GlanceHomeScreen(),
     PeopleScreen(),
-    Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Media',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
-            'All of the digital content you need to share and grow your business!',
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ),
-        ),
-      ],
-    ),
+    // Column(
+    //   mainAxisAlignment: MainAxisAlignment.center,
+    //   crossAxisAlignment: CrossAxisAlignment.center,
+    //   children: [
+    //     Text(
+    //       'Media',
+    //       style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    //     ),
+    //     Padding(
+    //       padding: const EdgeInsets.all(20.0),
+    //       child: Text(
+    //         'All of the digital content you need to share and grow your business!',
+    //         textAlign: TextAlign.center,
+    //         softWrap: true,
+    //       ),
+    //     ),
+    //   ],
+    // ),
     CrmScreen(),
   ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
+    final actionService = context.watch<ActionsService>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Verb'),
+        title: actionService.title,
         leading: GestureDetector(
           onTap: () => {
             Navigator.push(
@@ -80,24 +75,7 @@ class _AppHomeState extends State<AppHome> {
             ),
           ),
         ),
-        // actions: [
-        //   IconButton(
-        //     tooltip: "Connectors",
-        //     icon: const Icon(
-        //       Icons.add,
-        //     ),
-        //     onPressed: () => {
-        //       Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //             builder: (context) => SolutionsScreen(
-        //               modal: true,
-        //             ),
-        //             fullscreenDialog: true,
-        //           ))
-        //     },
-        //   )
-        // ],
+        actions: actionService.actions,
         flexibleSpace: Palette.flexSpaceNavGradient,
       ),
       body: Column(
@@ -139,10 +117,10 @@ class _AppHomeState extends State<AppHome> {
             icon: Icon(Icons.contacts),
             label: 'People',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.movie),
-            label: 'Media',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.movie),
+          //   label: 'Media',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.apps),
             label: 'Apps',
@@ -152,5 +130,11 @@ class _AppHomeState extends State<AppHome> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/glance/glance_service.dart';
-import 'package:verb_crm_flutter/widgets/import.dart';
 import 'package:verb_crm_flutter/widgets/contact/contact_followup_widget.dart';
+import 'package:verb_crm_flutter/service/actions_service.dart';
 
 class GlanceHomeScreen extends StatefulWidget {
   static const String id = 'glance_hom_screen';
@@ -12,6 +12,20 @@ class GlanceHomeScreen extends StatefulWidget {
 }
 
 class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
+  @override
+  void initState() {
+    final actionService = context.read<ActionsService>();
+    final List<Widget> actions = [];
+    actionService.setTitle(
+        title: Text(
+      'Verb',
+      style: TextStyle(color: Colors.white),
+    ));
+    actionService.setActions(actions: actions);
+    actionService.notify();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final glanceService = context.watch<GlanceService>();

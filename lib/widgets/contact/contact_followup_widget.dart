@@ -87,6 +87,7 @@ class __ContactRowSliderState extends State<_ContactRowSlider> {
         builder: (context, snapshot) {
           List<Widget> widgets = [];
           if (!snapshot.hasData || snapshot.data.length == 0) {
+            contactService.refreshAll();
             return Center(
               child: CircularProgressIndicator(),
             );
