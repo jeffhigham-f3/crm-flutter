@@ -1,6 +1,6 @@
 export 'package:verb_crm_flutter/screens/contact_screen.dart';
 export 'package:verb_crm_flutter/screens/app_home.dart';
-export 'package:verb_crm_flutter/screens/person_detail_screen.dart';
+export 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
 export 'package:verb_crm_flutter/screens/glance_home_screen.dart';
 export 'package:verb_crm_flutter/screens/glance_detail_screen.dart';
 export 'package:verb_crm_flutter/screens/goal_picker_screen.dart';

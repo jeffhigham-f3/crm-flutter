@@ -28,17 +28,10 @@ class PersonDetailScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ContactActionWidget(title: 'message', icon: Icons.message),
-                      ContactActionWidget(title: 'phone', icon: Icons.phone),
-                      ContactActionWidget(title: 'live', icon: Icons.video_call),
-                      ContactActionWidget(title: 'mail', icon: Icons.mail),
-                    ],
-                  ),
+                  SizedBox(height: 22),
+                  ContactActions(),
+                  SizedBox(height: 22),
+                  ContactTags(tags: contact.tags),
                   SizedBox(height: 20),
                   ContactPropertyWidget(
                     title: 'Account',
@@ -58,6 +51,53 @@ class PersonDetailScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ContactTags extends StatelessWidget {
+  final List<String> tags;
+  const ContactTags({Key key, this.tags}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final tagWidgets = tags
+        .map((t) => Chip(
+            backgroundColor: Theme.of(context).primaryColor,
+            label: Text(
+              t,
+              style: TextStyle(
+                color: Colors.grey[200],
+              ),
+            )))
+        .toList();
+    return Center(
+      child: Wrap(
+        direction: Axis.horizontal,
+        alignment: WrapAlignment.center,
+        spacing: 4,
+        children: tagWidgets,
+      ),
+    );
+  }
+}
+
+class ContactActions extends StatelessWidget {
+  const ContactActions({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ContactActionWidget(title: 'message', icon: Icons.message),
+        ContactActionWidget(title: 'phone', icon: Icons.phone),
+        ContactActionWidget(title: 'live', icon: Icons.video_call),
+        ContactActionWidget(title: 'mail', icon: Icons.mail),
+      ],
     );
   }
 }
@@ -165,7 +205,7 @@ class ContactPropertyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () => {print("doing stuff")},
+        onTap: () => print(title),
         splashColor: Theme.of(context).accentColor.withOpacity(0.1),
         highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
         child: Padding(

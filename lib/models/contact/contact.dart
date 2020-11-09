@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 import 'package:faker/faker.dart';
-import 'dart:math';
 
 class Contact {
   final String id;
@@ -12,11 +11,8 @@ class Contact {
   String phone;
   String photoUrl;
   String locale;
-  bool lead;
-  bool customer;
-  bool online;
-  bool followUp;
   Color accentColor;
+  List<String> tags;
 
   Contact({
     this.id,
@@ -27,11 +23,8 @@ class Contact {
     this.phone,
     this.photoUrl,
     this.locale,
-    this.lead,
-    this.customer,
-    this.followUp,
-    this.online,
     this.accentColor,
+    this.tags,
   });
 
   factory Contact.fromJson(Map<String, dynamic> json) {
@@ -44,11 +37,8 @@ class Contact {
       phone: json['MobilePhone'] ??= '',
       firstName: json['FirstName'] ??= '',
       lastName: json['LastName'] ??= '',
-      lead: false,
-      customer: true,
-      followUp: faker.randomGenerator.boolean(),
-      online: faker.randomGenerator.boolean(),
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
+      tags: [],
     );
     return contact;
   }
@@ -69,15 +59,22 @@ class Contact {
       photoUrl: 'https://i.pravatar.cc/300?u=$uuid',
       firstName: firstName,
       lastName: lastName,
-      lead: faker.randomGenerator.boolean(),
-      customer: faker.randomGenerator.boolean(),
-      followUp: faker.randomGenerator.boolean(),
-      online: faker.randomGenerator.boolean(),
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
+      tags: [],
     );
+
+    if (faker.randomGenerator.boolean()) contact.tags.add('Lead');
+    if (faker.randomGenerator.boolean() && !contact.lead) contact.tags.add('Customer');
+    if (faker.randomGenerator.boolean()) contact.tags.add('Follow up');
+    if (faker.randomGenerator.boolean()) contact.tags.add('Online');
 
     return contact;
   }
+
+  bool get lead => this.tags.contains('Lead');
+  bool get customer => this.tags.contains('Customer');
+  bool get followUp => this.tags.contains('Follow up');
+  bool get online => this.tags.contains('Online');
 
   String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)
       ? '${firstName.substring(0, 1).toUpperCase()}${lastName.substring(0, 1).toUpperCase()}'

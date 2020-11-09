@@ -5,7 +5,7 @@ import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/contact/contact_service.dart';
-import 'package:verb_crm_flutter/screens/person_detail_screen.dart';
+import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
 
 class ContactFollowUpWidget extends StatefulWidget {
