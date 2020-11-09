@@ -23,7 +23,7 @@ class Palette {
   static const List<Color> theme3 = [redAccent, redPurpleAccent, redPurple];
 
   // Theme Gradient Config
-  static final theme = theme3;
+  static final theme = theme1;
   static final gradientColor1 = theme[0];
   static final gradientColor2 = theme[1];
   static final gradientColor3 = theme[2];
@@ -34,6 +34,7 @@ class Palette {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [gradientColor1, gradientColor3],
+    stops: [0.40, 1.0],
   );
   static final BoxDecoration appBarGradientDecoration = BoxDecoration(
     gradient: appBarGradient,

@@ -3,10 +3,9 @@ import 'package:verb_crm_flutter/contact/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 import 'package:verb_crm_flutter/config/palette.dart';
 
-class ContactDetailScreen extends StatelessWidget {
+class PersonDetailScreen extends StatelessWidget {
   final Contact contact;
-
-  const ContactDetailScreen({Key key, this.contact}) : super(key: key);
+  const PersonDetailScreen({Key key, this.contact}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class ContactDetailScreen extends StatelessWidget {
             expandedHeight: 200,
             flexibleSpace: Container(
               decoration: Palette.appBarGradientDecoration,
-              child: _ContactAvatar(contact: contact),
+              child: _ContactNavAvatar(contact: contact),
             ),
           ),
           SliverToBoxAdapter(
@@ -63,6 +62,50 @@ class ContactDetailScreen extends StatelessWidget {
   }
 }
 
+class _ContactNavAvatar extends StatelessWidget {
+  const _ContactNavAvatar({
+    Key key,
+    @required this.contact,
+  }) : super(key: key);
+
+  final Contact contact;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            top: 40,
+          ),
+          child: Hero(
+            tag: 'profile-${contact.id}',
+            child: ProfileAvatar(
+              imageUrl: contact.photoUrl,
+              radius: 60.0,
+              backgroundColor: contact.accentColor,
+              borderColor: Colors.white,
+              hasBorder: true,
+              isActive: contact.online,
+              initials: contact.initials,
+            ),
+          ),
+        ),
+        Text(
+          '${contact.firstName} ${contact.lastName}',
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.headline6.fontSize,
+            fontWeight: Theme.of(context).textTheme.headline6.fontWeight,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class ContactActionWidget extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -79,7 +122,7 @@ class ContactActionWidget extends StatelessWidget {
       child: InkWell(
         splashColor: Theme.of(context).accentColor.withOpacity(0.1),
         highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
-        onTap: () => {print('$title action')},
+        onTap: () => print('$title action'),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -140,50 +183,6 @@ class ContactPropertyWidget extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _ContactAvatar extends StatelessWidget {
-  const _ContactAvatar({
-    Key key,
-    @required this.contact,
-  }) : super(key: key);
-
-  final Contact contact;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(
-            top: 40,
-          ),
-          child: Hero(
-            tag: 'profile-${contact.id}',
-            child: ProfileAvatar(
-              imageUrl: contact.photoUrl,
-              radius: 60.0,
-              backgroundColor: contact.accentColor,
-              borderColor: Colors.white,
-              hasBorder: true,
-              isActive: contact.online,
-              initials: contact.initials,
-            ),
-          ),
-        ),
-        Text(
-          '${contact.firstName} ${contact.lastName}',
-          style: TextStyle(
-            fontSize: Theme.of(context).textTheme.headline6.fontSize,
-            fontWeight: Theme.of(context).textTheme.headline6.fontWeight,
-            color: Colors.white,
-          ),
-        ),
-      ],
     );
   }
 }

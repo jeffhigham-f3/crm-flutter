@@ -3,15 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/authentication/auth_service.dart';
 import 'package:verb_crm_flutter/service/tray_io/tray_io_user_service.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
-import 'package:verb_crm_flutter/widgets/gradient_container.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
+import 'package:verb_crm_flutter/config/palette.dart';
 
-class ProfileScreen extends StatefulWidget {
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
+class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
@@ -23,30 +18,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
               scrollDirection: Axis.vertical,
               slivers: [
                 SliverAppBar(
-                  floating: true,
-                  title: Text(authService.currentUser.name),
+                  collapsedHeight: 200,
+                  expandedHeight: 200,
+                  flexibleSpace: Container(
+                    decoration: Palette.appBarGradientDecoration,
+                    child: _ProfileNavAvatar(),
+                  ),
                 ),
                 SliverToBoxAdapter(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(20),
-                        child: ProfileAvatar(
-                          imageUrl: authService.currentUser.photoUrl,
-                          radius: 60.0,
-                          backgroundColor: Theme.of(context).accentColor,
-                          borderColor: Theme.of(context).accentColor,
-                          initials: authService.currentUser.initials,
-                          hasBorder: true,
-                          isActive: false,
+                      SizedBox(height: 8),
+                      Card(
+                        child: InkWell(
+                          onTap: () => print("Authentication"),
+                          splashColor: Theme.of(context).accentColor.withOpacity(0.1),
+                          highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(
+                                  'Authentication',
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                Text(authService.currentUser.authProvider),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                      Text('Auth User:'),
-                      Text(authService.currentUser.toString()),
-                      Text('TrayIO User'),
-                      Text(trayUserService.currentUser.toString()),
                     ],
                   ),
                 ),
@@ -67,6 +72,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           )
-        : Scaffold(body: GradientContainer());
+        : SizedBox.shrink();
+  }
+}
+
+class _ProfileNavAvatar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final authService = context.watch<AuthService>();
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            top: 40,
+          ),
+          child: Hero(
+            tag: 'profile-${authService.currentUser.id}',
+            child: ProfileAvatar(
+              imageUrl: authService.currentUser.photoUrl,
+              radius: 60.0,
+              backgroundColor: Theme.of(context).accentColor,
+              borderColor: Colors.white,
+              hasBorder: true,
+              isActive: false,
+              initials: authService.currentUser.initials,
+            ),
+          ),
+        ),
+        Text(
+          '${authService.currentUser.firstName} ${authService.currentUser.lastName}',
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.headline6.fontSize,
+            fontWeight: Theme.of(context).textTheme.headline6.fontWeight,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
   }
 }

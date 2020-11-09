@@ -7,6 +7,8 @@ import 'package:verb_crm_flutter/service/actions_service.dart';
 class GlanceHomeScreen extends StatefulWidget {
   static const String id = 'glance_hom_screen';
 
+  GlanceHomeScreen({Key key}) : super(key: key);
+
   @override
   _GlanceHomeScreenState createState() => _GlanceHomeScreenState();
 }
@@ -62,6 +64,7 @@ class _GlanceHomeScreenState extends State<GlanceHomeScreen> {
                   ),
                 );
                 return ListView(
+                  key: PageStorageKey('follow-up'),
                   padding: const EdgeInsets.all(8),
                   children: widgets,
                 );

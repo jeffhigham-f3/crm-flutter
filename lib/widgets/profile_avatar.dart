@@ -25,19 +25,24 @@ class ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final borderThickness = hasBorder
+        ? radius < 20
+            ? 14.5
+            : radius - 2.5
+        : radius;
     return Stack(
       children: [
         CircleAvatar(
           radius: radius,
           backgroundColor: borderColor,
           child: CircleAvatar(
-            radius: hasBorder ? radius - 3 : radius,
+            radius: borderThickness,
             backgroundColor: backgroundColor,
             backgroundImage: imageUrl == null ? null : CachedNetworkImageProvider(imageUrl),
             child: imageUrl == null
                 ? Text(
                     (initials == null) ? '' : initials,
-                    style: TextStyle(color: borderColor),
+                    style: TextStyle(color: borderColor, fontSize: radius * .75),
                   )
                 : null,
           ),

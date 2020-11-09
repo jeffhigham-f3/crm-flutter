@@ -16,27 +16,15 @@ class _AppHomeState extends State<AppHome> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    GlanceHomeScreen(),
-    PeopleScreen(),
-    // Column(
-    //   mainAxisAlignment: MainAxisAlignment.center,
-    //   crossAxisAlignment: CrossAxisAlignment.center,
-    //   children: [
-    //     Text(
-    //       'Media',
-    //       style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-    //     ),
-    //     Padding(
-    //       padding: const EdgeInsets.all(20.0),
-    //       child: Text(
-    //         'All of the digital content you need to share and grow your business!',
-    //         textAlign: TextAlign.center,
-    //         softWrap: true,
-    //       ),
-    //     ),
-    //   ],
-    // ),
-    CrmScreen(),
+    GlanceHomeScreen(
+      key: PageStorageKey('home-screen'),
+    ),
+    PeopleScreen(
+      key: PageStorageKey('people-screen'),
+    ),
+    CrmScreen(
+      key: PageStorageKey('crm-screen'),
+    ),
   ];
 
   @override
@@ -59,19 +47,19 @@ class _AppHomeState extends State<AppHome> {
           },
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: CircleAvatar(
-              child: Center(
+            child: Center(
+              child: Hero(
+                tag: 'profile-${authService.currentUser.id}',
                 child: ProfileAvatar(
                   imageUrl: authService.currentUser.photoUrl,
                   radius: 16.0,
                   backgroundColor: Theme.of(context).accentColor,
                   borderColor: Colors.white,
                   initials: authService.currentUser.initials,
-                  hasBorder: false,
+                  hasBorder: true,
                   isActive: false,
                 ),
               ),
-              backgroundColor: Colors.white,
             ),
           ),
         ),

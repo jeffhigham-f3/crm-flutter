@@ -4,6 +4,9 @@ import 'package:verb_crm_flutter/crm/import.dart';
 
 class CrmScreen extends StatefulWidget {
   static const String id = 'crm_screen';
+
+  CrmScreen({Key key}) : super(key: key);
+
   @override
   _CrmScreenState createState() => _CrmScreenState();
 }

@@ -8,18 +8,20 @@ abstract class ContactServiceAbstract with ChangeNotifier {
   List<Contact> get contacts;
   bool get hasContacts;
   bool get filterActive;
+  List<String> get filters;
   Stream get stream;
   Comparator<Contact> lastNameComparator;
   Future<List<Contact>> getAll({@required String triggerUrl});
   Future<List<Contact>> searchAll({@required String searchText});
   Future<List<Contact>> refreshAll();
   Future<void> primeContacts();
-  void toggleFilter();
+  void toggleFilterActive();
 }
 
 class ContactService extends ContactServiceAbstract {
   final _controller = StreamController.broadcast();
   final List<Contact> _contacts = [];
+  final List<String> _filters = [];
   bool _filterActive = false;
 
   @override
@@ -30,6 +32,9 @@ class ContactService extends ContactServiceAbstract {
 
   @override
   bool get filterActive => _filterActive;
+
+  @override
+  List<String> get filters => _filters;
 
   @override
   Stream get stream => _controller.stream;
@@ -106,8 +111,37 @@ class ContactService extends ContactServiceAbstract {
   }
 
   @override
-  void toggleFilter() {
+  void toggleFilterActive() {
     _filterActive = !_filterActive;
     notifyListeners();
+  }
+
+  @override
+  void addFilter({String filter}) {
+    _filters.add(filter);
+    notifyListeners();
+  }
+
+  @override
+  Future<void> removeFilter({String filter}) async {
+    _filters.remove(filter);
+    notifyListeners();
+  }
+
+  @override
+  bool hasFilter({String filter}) {
+    return _filters.contains(filter);
+  }
+
+  @override
+  Future<void> toggleFilter({bool selected, String filter}) async {
+    if (selected != null && selected) {
+      addFilter(filter: filter);
+    } else {
+      removeFilter(filter: filter);
+    }
+    if (_filters.length == 0) {
+      toggleFilterActive();
+    }
   }
 }

@@ -7,6 +7,9 @@ import 'package:provider/provider.dart';
 
 class PeopleScreen extends StatefulWidget {
   static const String id = 'people_screen';
+
+  PeopleScreen({Key key}) : super(key: key);
+
   @override
   _PeopleScreenState createState() => _PeopleScreenState();
 }
@@ -25,7 +28,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
         icon: const Icon(
           Icons.filter_list,
         ),
-        onPressed: () => {contactService.toggleFilter()},
+        onPressed: () => {contactService.toggleFilterActive()},
       )
     ];
 
@@ -49,7 +52,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
         SearchBoxWidget(
           onChanged: (String text) => contactService.searchAll(searchText: text),
         ),
-        FilterActionsWidget(),
+        FilterOptionsWidget(),
         Expanded(
           child: StreamBuilder(
             stream: contactService.stream,
@@ -86,18 +89,18 @@ class _PeopleScreenState extends State<PeopleScreen> {
   }
 }
 
-class FilterActionsWidget extends StatefulWidget {
+class FilterOptionsWidget extends StatefulWidget {
   @override
-  _FilterActionsWidgetState createState() => _FilterActionsWidgetState();
+  _FilterOptionsWidgetState createState() => _FilterOptionsWidgetState();
 }
 
-class _FilterActionsWidgetState extends State<FilterActionsWidget> {
+class _FilterOptionsWidgetState extends State<FilterOptionsWidget> {
   @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
 
     return AnimatedContainer(
-      height: contactService.filterActive ? 55 : 0,
+      height: contactService.filterActive ? 48 : 0,
       duration: Duration(milliseconds: 500),
       curve: Curves.linearToEaseOut,
       child: AnimatedOpacity(
@@ -108,40 +111,37 @@ class _FilterActionsWidgetState extends State<FilterActionsWidget> {
           direction: Axis.horizontal,
           spacing: 4,
           children: [
-            FilterChip(
-              label: Text(
-                'Contact',
-                style: TextStyle(color: Colors.grey[200]),
-              ),
-              selected: true,
-              onSelected: (bool value) => {},
-              selectedColor: Theme.of(context).primaryColor,
-              checkmarkColor: Colors.grey[100],
-            ),
-            FilterChip(
-              label: Text(
-                'Lead',
-                style: TextStyle(color: Colors.grey[200]),
-              ),
-              onSelected: (bool value) => {},
-            ),
-            FilterChip(
-              label: Text(
-                'Online',
-                style: TextStyle(color: Colors.grey[200]),
-              ),
-              onSelected: (bool value) => {},
-            ),
-            FilterChip(
-              label: Text(
-                'Customer',
-                style: TextStyle(color: Colors.grey[200]),
-              ),
-              onSelected: (bool value) => {},
-            ),
+            FilterOptionWidget(filter: 'contact'),
+            FilterOptionWidget(filter: 'lead'),
+            FilterOptionWidget(filter: 'client'),
+            FilterOptionWidget(filter: 'online'),
           ],
         ),
       ),
+    );
+  }
+}
+
+class FilterOptionWidget extends StatelessWidget {
+  final String filter;
+
+  const FilterOptionWidget({Key key, this.filter}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final contactService = context.watch<ContactService>();
+
+    return FilterChip(
+      label: Text(
+        filter,
+        style: TextStyle(color: Colors.grey[200]),
+      ),
+      selected: contactService.hasFilter(filter: filter),
+      onSelected: (bool selected) {
+        contactService.toggleFilter(selected: selected, filter: filter);
+      },
+      selectedColor: Theme.of(context).primaryColor,
+      checkmarkColor: Colors.grey[100],
     );
   }
 }
