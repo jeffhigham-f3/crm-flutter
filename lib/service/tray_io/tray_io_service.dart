@@ -1,4 +1,4 @@
-import 'package:verb_crm_flutter/secure_constants.dart';
+import 'package:verb_crm_flutter/config/secure_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:graphql/client.dart';
 

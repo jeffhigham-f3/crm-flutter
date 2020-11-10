@@ -52,6 +52,27 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Card(
+                        child: InkWell(
+                          onTap: () => print("Email"),
+                          splashColor: Theme.of(context).accentColor.withOpacity(0.1),
+                          highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(
+                                  'Email',
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                Text(authService.currentUser.email),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -103,7 +124,7 @@ class _ProfileNavAvatar extends StatelessWidget {
           ),
         ),
         Text(
-          '${authService.currentUser.firstName} ${authService.currentUser.lastName}',
+          'Profile',
           style: TextStyle(
             fontSize: Theme.of(context).textTheme.headline6.fontSize,
             fontWeight: Theme.of(context).textTheme.headline6.fontWeight,

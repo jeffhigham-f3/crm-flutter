@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
+import 'package:verb_crm_flutter/config/import.dart';
 import 'package:faker/faker.dart';
 
 class Contact {
@@ -63,18 +64,20 @@ class Contact {
       tags: [],
     );
 
-    if (faker.randomGenerator.boolean()) contact.tags.add('Lead');
-    if (faker.randomGenerator.boolean() && !contact.lead) contact.tags.add('Customer');
-    if (faker.randomGenerator.boolean()) contact.tags.add('Follow up');
-    if (faker.randomGenerator.boolean()) contact.tags.add('Online');
+    // TODO: Refactor slugs into another class.
+
+    if (faker.randomGenerator.boolean()) contact.tags.add(kSlugLead);
+    if (faker.randomGenerator.boolean() && !contact.lead) contact.tags.add(kSlugCustomer);
+    if (faker.randomGenerator.boolean()) contact.tags.add(kSlugFollowUp);
+    if (faker.randomGenerator.boolean()) contact.tags.add(kSlugOnline);
 
     return contact;
   }
 
-  bool get lead => this.tags.contains('Lead');
-  bool get customer => this.tags.contains('Customer');
-  bool get followUp => this.tags.contains('Follow up');
-  bool get online => this.tags.contains('Online');
+  bool get lead => this.tags.contains(kSlugLead);
+  bool get customer => this.tags.contains(kSlugCustomer);
+  bool get followUp => this.tags.contains(kSlugFollowUp);
+  bool get online => this.tags.contains(kSlugOnline);
 
   String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)
       ? '${firstName.substring(0, 1).toUpperCase()}${lastName.substring(0, 1).toUpperCase()}'

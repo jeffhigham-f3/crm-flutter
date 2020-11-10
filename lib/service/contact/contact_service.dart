@@ -1,5 +1,6 @@
 import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:flutter/foundation.dart';
+import 'package:verb_crm_flutter/config/import.dart';
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -23,6 +24,7 @@ class ContactService extends ContactServiceAbstract {
   final List<Contact> _contacts = [];
   final List<String> _filters = [];
   bool _filterActive = false;
+  String _cachedSearchText = '';
 
   @override
   List<Contact> get contacts => _contacts;
@@ -72,17 +74,25 @@ class ContactService extends ContactServiceAbstract {
 
   @override
   Future<List<Contact>> searchAll({@required String searchText}) async {
+    _cachedSearchText = searchText;
     final List<Contact> contactsFiltered = [];
     for (var c in _contacts) {
-      if (c.lastName.toLowerCase().startsWith(
-                searchText.toLowerCase(),
-              ) ||
-          c.firstName.toLowerCase().startsWith(
-                searchText.toLowerCase(),
-              )) {
+      final bool matchFirst = c.firstName.toLowerCase().startsWith(searchText.toLowerCase());
+      final bool matchLast = c.lastName.toLowerCase().startsWith(searchText.toLowerCase());
+      final bool matchName = (matchFirst || matchLast);
+      bool matchFilters = true;
+      if (!matchName) continue;
+      if (filters.length == 0) {
         contactsFiltered.add(c);
+        continue;
       }
+
+      filters.forEach((filter) {
+        if (!c.tags.contains(filter)) matchFilters = false;
+      });
+      if (!contactsFiltered.contains(c) && matchFilters) contactsFiltered.add(c);
     }
+
     contactsFiltered.sort(lastNameComparator);
     _controller.sink.add(contactsFiltered);
     return contactsFiltered;
@@ -102,7 +112,7 @@ class ContactService extends ContactServiceAbstract {
 
   @override
   Future<void> primeContacts() async {
-    Iterable<int>.generate(100).toList().forEach(
+    Iterable<int>.generate(25).toList().forEach(
       (_) {
         _contacts.add(Contact.generate());
       },
@@ -140,8 +150,7 @@ class ContactService extends ContactServiceAbstract {
     } else {
       removeFilter(filter: filter);
     }
-    if (_filters.length == 0) {
-      toggleFilterActive();
-    }
+    if (_filters.length == 0) toggleFilterActive();
+    searchAll(searchText: _cachedSearchText);
   }
 }
