@@ -27,7 +27,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
         icon: const Icon(
           Icons.filter_list,
         ),
-        onPressed: () => {contactService.toggleFilterActive()},
+        onPressed: () => {contactService.toggleTagActive()},
       )
     ];
 
@@ -51,7 +51,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
         SearchBoxWidget(
           onChanged: (String text) => contactService.searchAll(searchText: text),
         ),
-        FilterOptionsWidget(),
+        TagsWidget(),
         Expanded(
           child: StreamBuilder(
             stream: contactService.stream,
@@ -88,32 +88,32 @@ class _PeopleScreenState extends State<PeopleScreen> {
   }
 }
 
-class FilterOptionsWidget extends StatefulWidget {
+class TagsWidget extends StatefulWidget {
   @override
-  _FilterOptionsWidgetState createState() => _FilterOptionsWidgetState();
+  _TagsWidgetState createState() => _TagsWidgetState();
 }
 
-class _FilterOptionsWidgetState extends State<FilterOptionsWidget> {
+class _TagsWidgetState extends State<TagsWidget> {
   @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
 
     return AnimatedContainer(
-      height: contactService.filterActive ? 48 : 0,
+      height: contactService.tagActive ? 48 : 0,
       duration: Duration(milliseconds: 500),
       curve: Curves.linearToEaseOut,
       child: AnimatedOpacity(
-        opacity: contactService.filterActive ? 1.0 : 0.0,
+        opacity: contactService.tagActive ? 1.0 : 0.0,
         duration: Duration(milliseconds: 250),
         curve: Curves.linearToEaseOut,
         child: Wrap(
           direction: Axis.horizontal,
           spacing: 4,
           children: [
-            FilterOptionWidget(filter: kSlugLead),
-            FilterOptionWidget(filter: kSlugCustomer),
-            FilterOptionWidget(filter: kSlugFollowUp),
-            FilterOptionWidget(filter: kSlugOnline),
+            TagWidget(tag: kSlugLead),
+            TagWidget(tag: kSlugCustomer),
+            TagWidget(tag: kSlugFollowUp),
+            TagWidget(tag: kSlugOnline),
           ],
         ),
       ),
@@ -121,10 +121,10 @@ class _FilterOptionsWidgetState extends State<FilterOptionsWidget> {
   }
 }
 
-class FilterOptionWidget extends StatelessWidget {
-  final String filter;
+class TagWidget extends StatelessWidget {
+  final String tag;
 
-  const FilterOptionWidget({Key key, this.filter}) : super(key: key);
+  const TagWidget({Key key, this.tag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +132,12 @@ class FilterOptionWidget extends StatelessWidget {
 
     return FilterChip(
       label: Text(
-        filter,
+        tag,
         style: TextStyle(color: Colors.grey[200]),
       ),
-      selected: contactService.hasFilter(filter: filter),
+      selected: contactService.hasTag(tag: tag),
       onSelected: (bool selected) {
-        contactService.toggleFilter(selected: selected, filter: filter);
+        contactService.toggleTag(selected: selected, tag: tag);
       },
       selectedColor: Theme.of(context).primaryColor,
       checkmarkColor: Colors.grey[100],

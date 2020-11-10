@@ -53,5 +53,6 @@ class CrmService extends CrmServiceAbstract {
   Future<void> toggleState({@required Crm crm}) {
     crm.enabled = !crm.enabled;
     refreshAll();
+    return null;
   }
 }

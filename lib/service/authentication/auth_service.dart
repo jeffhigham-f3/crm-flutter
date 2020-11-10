@@ -27,7 +27,7 @@ class AuthService extends AuthServiceAbstract {
   bool get isSignedIn => _currentUser != null;
 
   Future<User> loadCurrentUser() async {
-    final auth.User firebaseUser = await _firebaseAuth.currentUser;
+    final auth.User firebaseUser = _firebaseAuth.currentUser;
     final Object auth0User = await _auth0.currentUser();
     if (firebaseUser != null) {
       print("User is from Firebase");

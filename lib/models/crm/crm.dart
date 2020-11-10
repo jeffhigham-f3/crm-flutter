@@ -9,7 +9,7 @@ class Crm with ChangeNotifier {
   bool enabled;
   List<CrmFeature> features;
 
-  Crm({this.id, this.name, this.description, this.enabled, this.slug, this.features}) {}
+  Crm({this.id, this.name, this.description, this.enabled, this.slug, this.features});
 
   factory Crm.fromJson(Map<String, dynamic> json) {
     final crm = Crm(

@@ -7,7 +7,7 @@ class CrmFeature with ChangeNotifier {
   String slug;
   bool enabled;
 
-  CrmFeature({this.id, this.name, this.description, this.enabled, this.slug}) {}
+  CrmFeature({this.id, this.name, this.description, this.enabled, this.slug});
 
   factory CrmFeature.fromJson(Map<String, dynamic> json) {
     final feature = CrmFeature(

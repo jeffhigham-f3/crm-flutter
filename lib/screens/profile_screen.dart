@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/authentication/auth_service.dart';
-import 'package:verb_crm_flutter/service/tray_io/tray_io_user_service.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 import 'package:verb_crm_flutter/config/palette.dart';
@@ -10,7 +9,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
-    final trayUserService = context.watch<TrayIOUserService>();
 
     return (authService.isSignedIn)
         ? Scaffold(
