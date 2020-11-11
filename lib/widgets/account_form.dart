@@ -3,7 +3,6 @@ import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/auth/import.dart';
-import 'package:verb_crm_flutter/service/tray_io/import.dart';
 
 class AccountFormForm extends StatefulWidget {
   final LoginType loginType;
@@ -37,11 +36,6 @@ class _AccountFormFormState extends State<AccountFormForm> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
-    final trayUserService = context.watch<TrayIOUserService>();
-
-    print(authService);
-    print(trayUserService);
-
     return Form(
       key: _formKey,
       child: Container(
@@ -213,44 +207,13 @@ class _AccountFormFormState extends State<AccountFormForm> {
 
   Future<void> _loadState() async {
     final authService = context.read<AuthService>();
-    final trayUserService = context.read<TrayIOUserService>();
-    final traySolutionInstanceService = context.read<TrayIOSolutionInstanceService>();
 
-    authService.loadCurrentUser().then(
-      (user) {
-        if (user != null) {
-          trayUserService.loadCurrentUser(externalUserId: user.id).then(
-            (trayUser) {
-              if (trayUser == null) {
-                trayUserService.createUser(appUser: user).then((trayUser) {
-                  trayUserService.createUserToken().then(
-                    (accessToken) {
-                      traySolutionInstanceService
-                          .getSolutionInstances(accessToken: trayUser.accessToken, ownerId: trayUser.id)
-                          .catchError((e) => {print(e)});
-                      _onUserSuccess(user);
-                    },
-                  ).catchError((e) => {print(e)});
-                }).catchError((e) => _onLoginError(e));
-              } else {
-                trayUserService.createUserToken().then(
-                  (accessToken) {
-                    traySolutionInstanceService
-                        .getSolutionInstances(accessToken: trayUser.accessToken, ownerId: trayUser.id)
-                        .catchError((e) => {print(e)});
-                    _onUserSuccess(user);
-                  },
-                ).catchError((e) => {print(e)});
-              }
-            },
-          ).catchError((e) => _onLoginError(e));
-        }
-      },
-    ).catchError((e) => _onLoginError(e));
+    authService.loadCurrentUser().then((user) {
+      if (user != null) _onUserSuccess(user);
+    }).catchError((e) => _onLoginError(e));
   }
 
   void _onLoginError(dynamic error) {
-    print(error);
     final errorText = Provider.of<AuthService>(context, listen: false).decodeError(exception: error);
     Scaffold.of(context).showSnackBar(
       new SnackBar(

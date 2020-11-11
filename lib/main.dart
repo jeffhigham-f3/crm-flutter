@@ -23,18 +23,6 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => AppBarService(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => TrayIOSolutionService(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => TrayIOSolutionInstanceService(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => TrayIOUserService(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => TrayIOWorkflowService(),
-        ),
       ],
       child: _MainApp(),
     ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/contact/contact_service.dart';
 import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
@@ -11,33 +10,29 @@ class ContactFollowUpWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Bounce(
-      // delay: Duration(seconds: 1),
-      duration: Duration(milliseconds: 500),
-      child: Card(
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                child: Text(
-                  "Available Now",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child: Text(
+                "Available Now",
+                style: Theme.of(context).textTheme.headline6,
               ),
-              SizedBox(height: 10.0),
-              Container(
-                child: Text(
-                  "You need connect with these contacts today.\nNow is a good time!",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
+            ),
+            SizedBox(height: 10.0),
+            Container(
+              child: Text(
+                "You need connect with these contacts today.\nNow is a good time!",
+                style: Theme.of(context).textTheme.bodyText1,
               ),
-              SizedBox(height: 20.0),
-              _ContactRowSlider(),
-            ],
-          ),
+            ),
+            SizedBox(height: 20.0),
+            _ContactRowSlider(),
+          ],
         ),
       ),
     );

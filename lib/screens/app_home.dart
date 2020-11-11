@@ -75,24 +75,6 @@ class _AppHomeState extends State<AppHome> {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   elevation: 0.5,
-      //   highlightElevation: 0.4,
-      //   mini: true,
-      //   child: Icon(
-      //     Icons.video_call,
-      //   ),
-      //   onPressed: (() {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => LiveVideoScreen(),
-      //         fullscreenDialog: true,
-      //       ),
-      //     );
-      //   }),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Palette.scaffold,
         type: BottomNavigationBarType.fixed,
@@ -105,10 +87,6 @@ class _AppHomeState extends State<AppHome> {
             icon: Icon(Icons.contacts),
             label: 'People',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.movie),
-          //   label: 'Media',
-          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.apps),
             label: 'Apps',
