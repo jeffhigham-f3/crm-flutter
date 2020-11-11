@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/crm/import.dart';
 
-class CrmConfigureScreen extends StatefulWidget {
+class CrmConfigureScreen extends StatelessWidget {
   final Crm crm;
 
   const CrmConfigureScreen({Key key, this.crm}) : super(key: key);
-  @override
-  _CrmConfigureScreenState createState() => _CrmConfigureScreenState();
-}
-
-class _CrmConfigureScreenState extends State<CrmConfigureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +23,9 @@ class _CrmConfigureScreenState extends State<CrmConfigureScreen> {
                     width: 120,
                     height: 120,
                     child: Hero(
-                      tag: 'crm-${widget.crm.id}',
+                      tag: 'crm-${crm.id}',
                       child: Image.asset(
-                        'assets/${widget.crm.slug}.png',
+                        'assets/${crm.slug}.png',
                       ),
                     ),
                   ),
@@ -48,7 +43,7 @@ class _CrmConfigureScreenState extends State<CrmConfigureScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Please login to ${widget.crm.name} so you can begin configuring this integration!',
+                        'Please login to ${crm.name} so you can begin configuring this integration!',
                         style: Theme.of(context).textTheme.headline6,
                         textAlign: TextAlign.center,
                       ),
@@ -59,7 +54,7 @@ class _CrmConfigureScreenState extends State<CrmConfigureScreen> {
                           style: TextStyle(color: Theme.of(context).primaryColor),
                         ),
                         onPressed: () => {
-                          print("authenticating with ${widget.crm.name}"),
+                          print("authenticating with ${crm.name}"),
                         },
                       ),
                       SizedBox(height: 20),

@@ -14,16 +14,16 @@ class CrmScreen extends StatefulWidget {
 class _CrmScreenState extends State<CrmScreen> {
   @override
   void initState() {
-    final actionService = context.read<ActionsService>();
+    final appBarService = context.read<AppBarService>();
     final List<Widget> actions = [];
 
-    actionService.setTitle(
+    appBarService.setTitle(
         title: Text(
       'Apps',
       style: TextStyle(color: Colors.white),
     ));
-    actionService.setActions(actions: actions);
-    actionService.notify();
+    appBarService.setActions(actions: actions);
+    appBarService.notify();
     super.initState();
   }
 

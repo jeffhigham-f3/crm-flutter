@@ -16,7 +16,7 @@ class _AppHomeState extends State<AppHome> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    GlanceHomeScreen(
+    HomeScreen(
       key: PageStorageKey('home-screen'),
     ),
     PeopleScreen(
@@ -30,11 +30,11 @@ class _AppHomeState extends State<AppHome> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
-    final actionService = context.watch<ActionsService>();
+    final appBarService = context.watch<AppBarService>();
 
     return Scaffold(
       appBar: AppBar(
-        title: actionService.title,
+        title: appBarService.title,
         leading: GestureDetector(
           onTap: () => {
             Navigator.push(
@@ -63,7 +63,7 @@ class _AppHomeState extends State<AppHome> {
             ),
           ),
         ),
-        actions: actionService.actions,
+        actions: appBarService.actions,
         flexibleSpace: Palette.flexSpaceNavGradient,
       ),
       body: Column(

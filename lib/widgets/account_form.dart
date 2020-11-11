@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/screens/app_home.dart';
 import 'package:verb_crm_flutter/enums/import.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/service/authentication/auth_service.dart';
-import 'package:verb_crm_flutter/service/tray_io/tray_io_user_service.dart';
-import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
+import 'package:verb_crm_flutter/service/auth/import.dart';
+import 'package:verb_crm_flutter/service/tray_io/import.dart';
 
 class AccountFormForm extends StatefulWidget {
   final LoginType loginType;

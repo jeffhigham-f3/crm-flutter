@@ -70,8 +70,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
-class LoginScreenArguments {
-  final bool logout;
-  LoginScreenArguments({@required this.logout});
-}

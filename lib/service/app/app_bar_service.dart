@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class ActionsServiceAbstract with ChangeNotifier {
+abstract class AppBarServiceAbstract with ChangeNotifier {
   List<Widget> get actions;
   Widget get title;
   Future<void> setActions({List<Widget> actions});
@@ -8,7 +8,7 @@ abstract class ActionsServiceAbstract with ChangeNotifier {
   Future<void> notify();
 }
 
-class ActionsService extends ActionsServiceAbstract {
+class AppBarService extends AppBarServiceAbstract {
   List<Widget> _actions = [];
   Widget _title = Text('Verb');
   @override

@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/models/glance_task.dart';
 import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/service/contact/contact_service.dart';
 import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
-import 'package:verb_crm_flutter/service/tray_io/tray_io_solution_instance_service.dart';
 
-class ContactFollowUpWidget extends StatefulWidget {
-  final GlanceTask task;
-  const ContactFollowUpWidget({Key key, this.task}) : super(key: key);
+class ContactFollowUpWidget extends StatelessWidget {
+  const ContactFollowUpWidget({Key key}) : super(key: key);
 
-  @override
-  _ContactFollowUpWidgetState createState() => _ContactFollowUpWidgetState();
-}
-
-class _ContactFollowUpWidgetState extends State<ContactFollowUpWidget> {
   @override
   Widget build(BuildContext context) {
     return Bounce(
@@ -52,59 +44,22 @@ class _ContactFollowUpWidgetState extends State<ContactFollowUpWidget> {
   }
 }
 
-class _ContactRowSlider extends StatefulWidget {
+class _ContactRowSlider extends StatelessWidget {
   const _ContactRowSlider({
     Key key,
   }) : super(key: key);
 
   @override
-  __ContactRowSliderState createState() => __ContactRowSliderState();
-}
-
-class __ContactRowSliderState extends State<_ContactRowSlider> {
-  @override
-  void initState() {
-    final solutionInstanceService = context.read<TrayIOSolutionInstanceService>();
-    final contactService = context.read<ContactService>();
-    if (contactService.hasContacts) {
-      contactService.refreshAll();
-      return;
-    }
-    contactService.getAll(
-      triggerUrl: solutionInstanceService.firstWorkflowUrl(),
-    );
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
-
     return Container(
       height: 100.0,
-      child: StreamBuilder(
-        stream: contactService.stream,
-        builder: (context, snapshot) {
-          List<Widget> widgets = [];
-          if (!snapshot.hasData || snapshot.data.length == 0) {
-            contactService.refreshAll();
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          for (var contact in snapshot.data) {
-            if (contact.online && contact.followUp) {
-              widgets.add(
-                _ContactContainer(contact: contact),
-              );
-            }
-          }
-          return ListView(
-            scrollDirection: Axis.horizontal,
-            children: widgets,
-          );
-        },
-      ),
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: contactService.followUpContacts.length,
+          itemBuilder: (context, index) {
+            return _ContactContainer(contact: contactService.followUpContacts[index]);
+          }),
     );
   }
 }

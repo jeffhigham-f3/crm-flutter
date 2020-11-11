@@ -13,12 +13,10 @@ class PeopleScreen extends StatefulWidget {
   _PeopleScreenState createState() => _PeopleScreenState();
 }
 
-enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
-
 class _PeopleScreenState extends State<PeopleScreen> {
   @override
   void initState() {
-    final actionService = context.read<ActionsService>();
+    final appBarService = context.read<AppBarService>();
     final contactService = context.read<ContactService>();
 
     final actions = [
@@ -27,17 +25,17 @@ class _PeopleScreenState extends State<PeopleScreen> {
         icon: const Icon(
           Icons.filter_list,
         ),
-        onPressed: () => {contactService.toggleTagActive()},
+        onPressed: () => contactService.toggleTagActive(),
       )
     ];
 
-    actionService.setTitle(
+    appBarService.setTitle(
         title: Text(
       'People',
       style: TextStyle(color: Colors.white),
     ));
-    actionService.setActions(actions: actions);
-    actionService.notify();
+    appBarService.setActions(actions: actions);
+    appBarService.notify();
     super.initState();
   }
 
@@ -49,38 +47,22 @@ class _PeopleScreenState extends State<PeopleScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SearchBoxWidget(
-          onChanged: (String text) => contactService.searchAll(searchText: text),
+          onChanged: (String text) => contactService.searchAll(
+            searchText: text,
+          ),
         ),
         TagsWidget(),
         Expanded(
-          child: StreamBuilder(
-            stream: contactService.stream,
-            builder: (context, snapshot) {
-              List<ContactListWidget> widgets = [];
-              if (!snapshot.hasData) {
-                contactService.refreshAll();
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (snapshot.hasError) {
-                print(snapshot.error);
-              }
-              for (var contact in snapshot.data) {
-                widgets.add(
-                  ContactListWidget(contact: contact),
-                );
-              }
-              return RefreshIndicator(
-                child: ListView(
-                  padding: const EdgeInsets.all(8),
-                  children: widgets,
-                ),
-                onRefresh: (() async {
-                  await contactService.refreshAll();
+          child: RefreshIndicator(
+            onRefresh: (() async {
+              await contactService.refreshAll();
+            }),
+            child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: contactService.visibleContacts.length,
+                itemBuilder: (context, index) {
+                  return ContactListWidget(contact: contactService.visibleContacts[index]);
                 }),
-              );
-            },
           ),
         ),
       ],
@@ -88,12 +70,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
   }
 }
 
-class TagsWidget extends StatefulWidget {
-  @override
-  _TagsWidgetState createState() => _TagsWidgetState();
-}
-
-class _TagsWidgetState extends State<TagsWidget> {
+class TagsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
@@ -137,7 +114,7 @@ class TagWidget extends StatelessWidget {
       ),
       selected: contactService.hasTag(tag: tag),
       onSelected: (bool selected) {
-        contactService.toggleTag(selected: selected, tag: tag);
+        contactService.toggleTag(tag: tag);
       },
       selectedColor: Theme.of(context).primaryColor,
       checkmarkColor: Colors.grey[100],

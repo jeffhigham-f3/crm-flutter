@@ -16,9 +16,7 @@ class _CrmWidgetState extends State<CrmWidget> with SingleTickerProviderStateMix
   @override
   void initState() {
     widget.crm.features.forEach((feature) {
-      features.add(
-        CrmFeatureWidget(feature: feature),
-      );
+      features.add(CrmFeatureWidget(feature: feature));
     });
     super.initState();
   }
@@ -111,19 +109,6 @@ class _CrmWidgetState extends State<CrmWidget> with SingleTickerProviderStateMix
                   ),
                 ],
               ),
-              // widget.crm.enabled
-              //     ? SizedBox.shrink()
-              //     : Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         crossAxisAlignment: CrossAxisAlignment.center,
-              //         children: [
-              //           Icon(
-              //             Icons.expand_more,
-              //             color: Colors.grey[400],
-              //             size: 36,
-              //           ),
-              //         ],
-              //       )
             ])),
       ),
     );

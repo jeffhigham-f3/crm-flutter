@@ -3,15 +3,10 @@ import 'package:verb_crm_flutter/screens/contact_detail_screen.dart';
 import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 
-class ContactListWidget extends StatefulWidget {
+class ContactListWidget extends StatelessWidget {
   final Contact contact;
   const ContactListWidget({Key key, this.contact}) : super(key: key);
 
-  @override
-  _ContactListWidgetState createState() => _ContactListWidgetState();
-}
-
-class _ContactListWidgetState extends State<ContactListWidget> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -27,7 +22,7 @@ class _ContactListWidgetState extends State<ContactListWidget> {
               context,
               MaterialPageRoute(
                 builder: (context) => PersonDetailScreen(
-                  contact: widget.contact,
+                  contact: contact,
                 ),
                 fullscreenDialog: true,
               ),
@@ -49,19 +44,19 @@ class _ContactListWidgetState extends State<ContactListWidget> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Hero(
-                            tag: 'profile-${widget.contact.id}',
+                            tag: 'profile-${contact.id}',
                             child: ProfileAvatar(
-                              imageUrl: widget.contact.photoUrl,
+                              imageUrl: contact.photoUrl,
                               radius: 25.0,
-                              backgroundColor: widget.contact.accentColor,
+                              backgroundColor: contact.accentColor,
                               borderColor: Colors.white,
                               hasBorder: true,
-                              isActive: widget.contact.online,
-                              initials: widget.contact.initials,
+                              isActive: contact.online,
+                              initials: contact.initials,
                             ),
                           ),
                           SizedBox(width: 20),
-                          Text('${widget.contact.firstName} ${widget.contact.lastName}'),
+                          Text('${contact.firstName} ${contact.lastName}'),
                         ],
                       ),
                     )

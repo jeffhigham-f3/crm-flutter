@@ -1,32 +1,44 @@
+import 'package:verb_crm_flutter/config/constants.dart';
 import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:async';
-import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
 
-abstract class ContactServiceAbstract with ChangeNotifier {
+abstract class _ContactServiceAbstract with ChangeNotifier {
   List<Contact> get contacts;
+  List<Contact> get visibleContacts;
+  List<Contact> get followUpContacts;
+  List<String> get tags;
   bool get hasContacts;
   bool get tagActive;
-  List<String> get tags;
-  Stream get stream;
   Comparator<Contact> lastNameComparator;
-  Future<List<Contact>> getAll({@required String triggerUrl});
-  Future<List<Contact>> searchAll({@required String searchText});
-  Future<List<Contact>> refreshAll();
-  Future<void> primeContacts();
+  Future<void> searchAll({@required String searchText});
+  Future<void> refreshAll();
   void toggleTagActive();
+  void addTag({String tag});
+  void removeTag({String tag});
+  bool hasTag({String tag});
 }
 
-class ContactService extends ContactServiceAbstract {
-  final _controller = StreamController.broadcast();
+class ContactService extends _ContactServiceAbstract {
   final List<Contact> _contacts = [];
+  List<Contact> _visibleContacts = [];
+  List<Contact> _followUpContacts = [];
   final List<String> _tags = [];
   bool _tagActive = false;
   String _cachedSearchText = '';
 
+  ContactService() {
+    refreshAll();
+  }
+
   @override
   List<Contact> get contacts => _contacts;
+
+  @override
+  List<Contact> get visibleContacts => _visibleContacts;
+
+  @override
+  List<Contact> get followUpContacts => _followUpContacts;
 
   @override
   bool get hasContacts => contacts.length > 0;
@@ -38,41 +50,10 @@ class ContactService extends ContactServiceAbstract {
   List<String> get tags => _tags;
 
   @override
-  Stream get stream => _controller.stream;
-
-  @override
   Comparator<Contact> lastNameComparator = (c1, c2) => c1.lastName.compareTo(c2.lastName);
 
   @override
-  Future<List<Contact>> getAll({@required String triggerUrl}) async {
-    if (triggerUrl == null) {
-      _controller.sink.add([]);
-      return [];
-    }
-    var response = await http.get(triggerUrl);
-    _contacts.removeRange(0, _contacts.length);
-    switch (response.statusCode) {
-      case 200:
-        {
-          var jsonResponse = convert.jsonDecode(response.body);
-          for (var c in jsonResponse) {
-            _contacts.add(Contact.fromJson(c));
-          }
-          _contacts.sort(lastNameComparator);
-          _controller.sink.add(_contacts);
-          return _contacts;
-        }
-        break;
-
-      default:
-        _controller.sink.add([]);
-        return [];
-        break;
-    }
-  }
-
-  @override
-  Future<List<Contact>> searchAll({@required String searchText}) async {
+  Future<void> searchAll({@required String searchText}) async {
     _cachedSearchText = searchText;
     final List<Contact> contactsWithTags = [];
     for (var c in _contacts) {
@@ -91,31 +72,22 @@ class ContactService extends ContactServiceAbstract {
       });
       if (!contactsWithTags.contains(c) && matchTags) contactsWithTags.add(c);
     }
-
     contactsWithTags.sort(lastNameComparator);
-    _controller.sink.add(contactsWithTags);
-    return contactsWithTags;
-  }
-
-  @override
-  Future<List<Contact>> refreshAll() async {
-    await Future.delayed(const Duration(milliseconds: 10));
-    if (_contacts.isEmpty) {
-      await primeContacts();
-      return null;
-    }
-    _controller.sink.add(_contacts);
+    _visibleContacts = contactsWithTags;
     notifyListeners();
-    return _contacts;
   }
 
   @override
-  Future<void> primeContacts() async {
-    Iterable<int>.generate(25).toList().forEach(
-      (_) {
+  Future<void> refreshAll() async {
+    if (_contacts.isEmpty) {
+      Iterable<int>.generate(25).toList().forEach((_) {
         _contacts.add(Contact.generate());
-      },
-    );
+      });
+    }
+    _visibleContacts = _contacts;
+    _followUpContacts = _contacts.where((contact) {
+      return (contact.tags.contains(kSlugOnline) && contact.tags.contains(kSlugFollowUp));
+    }).toList();
     notifyListeners();
   }
 
@@ -125,27 +97,31 @@ class ContactService extends ContactServiceAbstract {
     notifyListeners();
   }
 
+  @override
   void addTag({String tag}) {
     _tags.add(tag);
     notifyListeners();
   }
 
-  Future<void> removeTag({String tag}) async {
+  @override
+  void removeTag({String tag}) {
     _tags.remove(tag);
     notifyListeners();
   }
 
+  @override
   bool hasTag({String tag}) {
     return _tags.contains(tag);
   }
 
-  Future<void> toggleTag({bool selected, String tag}) async {
-    if (selected != null && selected) {
-      addTag(tag: tag);
-    } else {
+  @override
+  Future<void> toggleTag({String tag}) async {
+    if (hasTag(tag: tag)) {
       removeTag(tag: tag);
+    } else {
+      addTag(tag: tag);
     }
     if (_tags.length == 0) toggleTagActive();
-    searchAll(searchText: _cachedSearchText);
+    await searchAll(searchText: _cachedSearchText);
   }
 }

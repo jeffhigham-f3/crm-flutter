@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/service/authentication/auth_service.dart';
+import 'package:verb_crm_flutter/service/auth/import.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 import 'package:verb_crm_flutter/config/palette.dart';
