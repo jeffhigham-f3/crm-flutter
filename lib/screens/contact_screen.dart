@@ -42,30 +42,37 @@ class _PeopleScreenState extends State<PeopleScreen> {
   @override
   Widget build(BuildContext context) {
     final contactService = context.watch<ContactService>();
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SearchBoxWidget(
-          onChanged: (String text) => contactService.searchAll(
-            searchText: text,
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => print('Add contact'),
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SearchBoxWidget(
+            onChanged: (String text) => contactService.searchAll(
+              searchText: text,
+            ),
           ),
-        ),
-        TagsWidget(),
-        Expanded(
-          child: RefreshIndicator(
-            onRefresh: (() async {
-              await contactService.refreshAll();
-            }),
-            child: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: contactService.visibleContacts.length,
-                itemBuilder: (context, index) {
-                  return ContactListWidget(contact: contactService.visibleContacts[index]);
-                }),
+          TagsWidget(),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: (() async {
+                await contactService.refreshAll();
+              }),
+              child: ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: contactService.visibleContacts.length,
+                  itemBuilder: (context, index) {
+                    return ContactListWidget(contact: contactService.visibleContacts[index]);
+                  }),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
