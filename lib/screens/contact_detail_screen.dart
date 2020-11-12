@@ -124,6 +124,7 @@ class _ContactNavAvatar extends StatelessWidget {
             tag: 'profile-${contact.id}',
             child: ProfileAvatar(
               imageUrl: contact.photoUrl,
+              imageAsset: contact.photoAsset,
               radius: 60.0,
               backgroundColor: contact.accentColor,
               borderColor: Colors.white,

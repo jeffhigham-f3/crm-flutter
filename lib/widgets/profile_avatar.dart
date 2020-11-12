@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:verb_crm_flutter/config/palette.dart';
 import 'package:animate_do/animate_do.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final String imageUrl;
+  final String imageAsset;
   final bool isActive;
   final bool hasBorder;
   final double radius; // 20.0
@@ -15,7 +15,8 @@ class ProfileAvatar extends StatelessWidget {
 
   const ProfileAvatar({
     Key key,
-    @required this.imageUrl,
+    this.imageUrl,
+    this.imageAsset,
     @required this.radius,
     @required this.backgroundColor,
     @required this.borderColor,
@@ -39,13 +40,19 @@ class ProfileAvatar extends StatelessWidget {
           child: CircleAvatar(
             radius: borderThickness,
             backgroundColor: backgroundColor,
-            backgroundImage: imageUrl == null ? null : CachedNetworkImageProvider(imageUrl),
-            child: imageUrl == null
+            backgroundImage: imageUrl != null ? CachedNetworkImageProvider(imageUrl) : null,
+            child: (imageUrl == null && imageAsset == null)
                 ? Text(
-                    (initials == null) ? '' : initials,
+                    initials == null ? '' : initials,
                     style: TextStyle(color: borderColor, fontSize: radius * .75),
                   )
-                : null,
+                : imageAsset != null
+                    ? Container(
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        clipBehavior: Clip.hardEdge,
+                        child: Image.asset(imageAsset),
+                      )
+                    : null,
           ),
         ),
         isActive

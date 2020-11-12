@@ -97,6 +97,7 @@ class _ContactContainer extends StatelessWidget {
                     tag: 'profile-${contact.id}',
                     child: ProfileAvatar(
                       imageUrl: contact.photoUrl,
+                      imageAsset: contact.photoAsset,
                       radius: 30.0,
                       backgroundColor: contact.accentColor,
                       borderColor: Colors.white,

@@ -11,6 +11,7 @@ class Contact {
   final String email;
   String phone;
   String photoUrl;
+  String photoAsset;
   String locale;
   Color accentColor;
   List<String> tags;
@@ -23,6 +24,7 @@ class Contact {
     this.email,
     this.phone,
     this.photoUrl,
+    this.photoAsset,
     this.locale,
     this.accentColor,
     this.tags,
@@ -56,8 +58,7 @@ class Contact {
       name: '$firstName $lastName',
       email: faker.internet.email(),
       phone: phone,
-      // photoUrl: 'https://i.pravatar.cc/300?u=$uuid',
-      photoUrl: null,
+      photoAsset: 'assets/avatar/$uuid.png',
       firstName: firstName,
       lastName: lastName,
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
@@ -70,7 +71,6 @@ class Contact {
     if (faker.randomGenerator.boolean() && !contact.lead) contact.tags.add(kSlugCustomer);
     if (faker.randomGenerator.boolean()) contact.tags.add(kSlugFollowUp);
     if (faker.randomGenerator.boolean()) contact.tags.add(kSlugOnline);
-
     return contact;
   }
 
@@ -85,7 +85,7 @@ class Contact {
 
   @override
   String toString() =>
-      'id: $id, firstName: $firstName, lastName: $lastName, initials $initials, email: $email, phone: $phone';
+      'id: $id, firstName: $firstName, lastName: $lastName, initials $initials, email: $email, phone: $phone, photoAsset: $photoAsset';
 }
 
 enum FollowUp { today, tomorrow, later }
