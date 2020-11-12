@@ -44,20 +44,20 @@ class Contact {
     return contact;
   }
 
-  factory Contact.generate() {
+  factory Contact.generate({String uuid}) {
     final RandomColor _randomColor = RandomColor();
     final firstName = faker.person.firstName();
     final lastName = faker.person.lastName();
     final numbers = faker.randomGenerator.numbers(9, 10);
     final phone =
         '(${numbers[0]}${numbers[1]}${numbers[2]}) ${numbers[3]}${numbers[4]}${numbers[5]}-${numbers[6]}${numbers[7]}${numbers[8]}${numbers[8]}';
-    final uuid = faker.guid.guid();
     final contact = Contact(
       id: uuid,
       name: '$firstName $lastName',
       email: faker.internet.email(),
       phone: phone,
-      photoUrl: 'https://i.pravatar.cc/300?u=$uuid',
+      // photoUrl: 'https://i.pravatar.cc/300?u=$uuid',
+      photoUrl: null,
       firstName: firstName,
       lastName: lastName,
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),

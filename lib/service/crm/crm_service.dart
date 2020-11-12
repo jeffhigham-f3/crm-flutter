@@ -1,17 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:verb_crm_flutter/models/crm/import.dart';
-import 'dart:async';
 
 final _firestore = FirebaseFirestore.instance;
 final _firebaseController = _firestore.collection('crms');
 
 abstract class CrmServiceAbstract with ChangeNotifier {
-  Stream get stream;
+  List<Crm> get crms;
+  void toggleState({Crm crm});
 }
 
 class CrmService extends CrmServiceAbstract {
-  final _controller = StreamController.broadcast();
   final _firebaseStream = _firebaseController.snapshots();
   final List<Crm> _crms = [];
 
@@ -22,37 +21,22 @@ class CrmService extends CrmServiceAbstract {
       _crms.removeRange(0, _crms.length);
       for (var crm in crmData) {
         _crms.add(
-          Crm.fromJson(
-            crm.data(),
-          ),
+          Crm.fromJson(crm.data()),
         );
       }
       _crms.sort(_byName);
-      _controller.sink.add(_crms);
       notifyListeners();
-      return _crms;
     }, onError: (err) {
       print(err);
     });
   }
 
   @override
-  Stream get stream => _controller.stream;
+  List<Crm> get crms => _crms;
 
-  Future<List<Crm>> refreshAll() async {
-    if (_crms.isEmpty) {
-      return null;
-    }
-    await Future.delayed(const Duration(milliseconds: 100));
-    print(_crms);
-    _controller.sink.add(_crms);
-    notifyListeners();
-    return _crms;
-  }
-
-  Future<void> toggleState({@required Crm crm}) {
+  @override
+  void toggleState({Crm crm}) {
     crm.enabled = !crm.enabled;
-    refreshAll();
-    return null;
+    notifyListeners();
   }
 }

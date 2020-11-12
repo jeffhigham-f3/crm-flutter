@@ -79,11 +79,14 @@ class ContactService extends _ContactServiceAbstract {
 
   @override
   Future<void> refreshAll() async {
-    if (_contacts.isEmpty) {
-      Iterable<int>.generate(25).toList().forEach((_) {
-        _contacts.add(Contact.generate());
-      });
-    }
+    await Future.delayed(Duration(seconds: 1));
+    _tags.removeRange(0, tags.length);
+    _tagActive = false;
+    _contacts.removeRange(0, _contacts.length);
+    kContactUUIDs.forEach((uuid) {
+      _contacts.add(Contact.generate(uuid: uuid));
+    });
+    _contacts.sort(lastNameComparator);
     _visibleContacts = _contacts;
     _followUpContacts = _contacts.where((contact) {
       return (contact.tags.contains(kSlugOnline) && contact.tags.contains(kSlugFollowUp));

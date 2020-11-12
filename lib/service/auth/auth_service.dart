@@ -27,18 +27,12 @@ class AuthService extends AuthServiceAbstract {
   bool get isSignedIn => _currentUser != null;
 
   Future<User> loadCurrentUser() async {
+    _currentUser = null;
     final auth.User firebaseUser = _firebaseAuth.currentUser;
-    final Object auth0User = await _auth0.currentUser();
-    if (firebaseUser != null) {
-      print("User is from Firebase");
-      _currentUser = User.fromFirebase(firebaseUser);
-    } else if (auth0User != null) {
-      print("User is from Auth0");
-      _currentUser = User.fromAuth0(auth0User);
-    } else {
-      return null;
-    }
-    print(_currentUser);
+    if (firebaseUser != null) _currentUser = User.fromFirebase(firebaseUser);
+    // final Object auth0User = await _auth0.currentUser();
+    // if (auth0User != null) _currentUser = User.fromAuth0(auth0User);
+    notifyListeners();
     return _currentUser;
   }
 
@@ -57,8 +51,6 @@ class AuthService extends AuthServiceAbstract {
     final auth.UserCredential result =
         await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     if (result?.user != null) {
-      print("Firebase User");
-      print(result.user);
       _currentUser = User.fromFirebase(result.user);
       notifyListeners();
     }
