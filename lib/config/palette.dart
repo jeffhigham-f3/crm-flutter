@@ -21,39 +21,5 @@ class Palette {
   static const List<Color> theme1 = [purpleBlueAccent, purpleBlueAccent, blueAccent];
   static const List<Color> theme2 = [turquoiseAccent, turquoisBlueAccent, turquoisBlue];
   static const List<Color> theme3 = [redAccent, redPurpleAccent, redPurple];
-
-  // Theme Gradient Config
-  static final theme = theme1;
-  static final gradientColor1 = theme[0];
-  static final gradientColor2 = theme[1];
-  static final gradientColor3 = theme[2];
-  static final online = theme[2];
-
-  // AppBar Gradient
-  static final LinearGradient appBarGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [gradientColor1, gradientColor3],
-    stops: [0.40, 1.0],
-  );
-  static final BoxDecoration appBarGradientDecoration = BoxDecoration(
-    gradient: appBarGradient,
-  );
-  static final Container flexSpaceNavGradient = Container(
-    decoration: appBarGradientDecoration,
-  );
-
-  // Login Screen Gradient
-  static final LinearGradient loginGradient = LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: [gradientColor1, gradientColor2, gradientColor3],
-    tileMode: TileMode.clamp,
-  );
-  static final BoxDecoration loginGradientDecoration = BoxDecoration(
-    gradient: loginGradient,
-  );
-  static final Container loginvGradientContainer = Container(
-    decoration: loginGradientDecoration,
-  );
+  static const List<Color> defaultTheme = theme3;
 }

@@ -1,14 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:verb_crm_flutter/config/import.dart';
 import 'package:verb_crm_flutter/service/auth/import.dart';
 import 'package:verb_crm_flutter/screens/login_screen.dart';
+import 'package:verb_crm_flutter/service/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
-import 'package:verb_crm_flutter/config/palette.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
+    final themeService = context.watch<ThemeService>();
 
     return (authService.isSignedIn)
         ? Scaffold(
@@ -19,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
                   collapsedHeight: 200,
                   expandedHeight: 200,
                   flexibleSpace: Container(
-                    decoration: Palette.appBarGradientDecoration,
+                    decoration: themeService.appBarGradientDecoration,
                     child: _ProfileNavAvatar(),
                   ),
                 ),
@@ -72,6 +75,85 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 22.0, 8.0, 22.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () => themeService.setTheme(theme: Palette.theme1),
+                          child: Container(
+                            width: 75,
+                            height: 75,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: Palette.theme1,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Blue",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => themeService.setTheme(theme: Palette.theme2),
+                          child: Container(
+                            width: 75,
+                            height: 75,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: Palette.theme2,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Green",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  // fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => themeService.setTheme(theme: Palette.theme3),
+                          child: Container(
+                            width: 75,
+                            height: 75,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: Palette.theme3,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Orange",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  // fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(

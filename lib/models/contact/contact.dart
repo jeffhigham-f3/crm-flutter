@@ -65,8 +65,6 @@ class Contact {
       tags: [],
     );
 
-    // TODO: Refactor slugs into another class.
-
     if (faker.randomGenerator.boolean()) contact.tags.add(kSlugLead);
     if (faker.randomGenerator.boolean() && !contact.lead) contact.tags.add(kSlugCustomer);
     if (faker.randomGenerator.boolean()) contact.tags.add(kSlugFollowUp);
@@ -85,7 +83,7 @@ class Contact {
 
   @override
   String toString() =>
-      'id: $id, firstName: $firstName, lastName: $lastName, initials $initials, email: $email, phone: $phone, photoAsset: $photoAsset';
+      'id: $id, firstName: $firstName, lastName: $lastName, initials $initials, email: $email, phone: $phone, photoUrl: $photoUrl, photoAsset: $photoAsset';
 }
 
 enum FollowUp { today, tomorrow, later }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/crm/import.dart';
+import 'package:verb_crm_flutter/service/import.dart';
 
 class CrmConfigureScreen extends StatelessWidget {
   final Crm crm;
@@ -7,6 +8,8 @@ class CrmConfigureScreen extends StatelessWidget {
   const CrmConfigureScreen({Key key, this.crm}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final themeService = context.watch<ThemeService>();
+
     return Scaffold(
       body: CustomScrollView(
         scrollDirection: Axis.vertical,
@@ -15,7 +18,7 @@ class CrmConfigureScreen extends StatelessWidget {
             collapsedHeight: 150,
             expandedHeight: 150,
             flexibleSpace: Container(
-                decoration: Palette.appBarGradientDecoration,
+                decoration: themeService.appBarGradientDecoration,
                 child: Column(children: [
                   Container(
                     padding: EdgeInsets.all(0),

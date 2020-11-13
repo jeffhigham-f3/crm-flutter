@@ -31,7 +31,7 @@ class _AppHomeState extends State<AppHome> {
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
     final appBarService = context.watch<AppBarService>();
-
+    final themeService = context.watch<ThemeService>();
     return Scaffold(
       appBar: AppBar(
         title: appBarService.title,
@@ -64,7 +64,7 @@ class _AppHomeState extends State<AppHome> {
           ),
         ),
         actions: appBarService.actions,
-        flexibleSpace: Palette.flexSpaceNavGradient,
+        flexibleSpace: themeService.flexSpaceNavGradient,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

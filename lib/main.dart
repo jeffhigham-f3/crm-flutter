@@ -12,6 +12,9 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (_) => ThemeService(theme: Palette.defaultTheme),
+        ),
+        ChangeNotifierProvider(
           create: (_) => ContactService(),
         ),
         ChangeNotifierProvider(
@@ -32,44 +35,9 @@ void main() async {
 class _MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeService = Provider.of<ThemeService>(context);
     return MaterialApp(
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primaryColor: Palette.theme[0],
-        accentColor: Palette.theme[2],
-        canvasColor: Palette.scaffold,
-        textTheme: TextTheme(
-          bodyText1: const TextStyle(),
-          bodyText2: const TextStyle(),
-          button: const TextStyle(),
-          caption: const TextStyle(),
-          headline1: const TextStyle(),
-          headline2: const TextStyle(),
-          headline3: const TextStyle(),
-          headline4: const TextStyle(),
-          headline5: const TextStyle(),
-          headline6: const TextStyle(),
-          subtitle1: const TextStyle(),
-          subtitle2: const TextStyle(),
-        ),
-        buttonTheme: ButtonThemeData(
-          textTheme: ButtonTextTheme.accent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-          ),
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: const TextStyle(),
-          hintStyle: const TextStyle(),
-          errorStyle: const TextStyle(),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: const BorderSide(),
-          ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: const BorderSide(),
-          ),
-        ),
-      ),
+      theme: themeService.getTheme(),
       home: LoginScreen(),
       routes: {
         LoginScreen.id: (context) => LoginScreen(),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/contact/import.dart';
+import 'package:verb_crm_flutter/service/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
-import 'package:verb_crm_flutter/config/palette.dart';
 
 class PersonDetailScreen extends StatelessWidget {
   final Contact contact;
@@ -9,6 +10,7 @@ class PersonDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeService = context.watch<ThemeService>();
     return Scaffold(
       body: CustomScrollView(
         scrollDirection: Axis.vertical,
@@ -17,7 +19,7 @@ class PersonDetailScreen extends StatelessWidget {
             collapsedHeight: 200,
             expandedHeight: 200,
             flexibleSpace: Container(
-              decoration: Palette.appBarGradientDecoration,
+              decoration: themeService.appBarGradientDecoration,
               child: _ContactNavAvatar(contact: contact),
             ),
           ),

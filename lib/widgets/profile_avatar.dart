@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/config/palette.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:verb_crm_flutter/service/import.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final String imageUrl;
@@ -27,6 +29,8 @@ class ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeService = context.watch<ThemeService>();
+
     final borderThickness = hasBorder
         ? radius < 20
             ? 14.5
@@ -67,7 +71,7 @@ class ProfileAvatar extends StatelessWidget {
                       height: radius / 2,
                       width: radius / 2,
                       decoration: BoxDecoration(
-                        color: Palette.online,
+                        color: themeService.online,
                         shape: BoxShape.circle,
                         border: Border.all(
                           width: hasBorder ? 2.0 : 0.0,
