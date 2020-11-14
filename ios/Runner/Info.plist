@@ -49,5 +49,7 @@
       <key>NSAllowsArbitraryLoadsInWebContent</key>
       <true/>
     </dict>
+        <key>NSContactsUsageDescription</key>
+        <string>This is needed to sync contacts.</string>
 </dict>
 </plist>

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 class PeopleScreen extends StatefulWidget {
   static const String id = 'people_screen';
-
   PeopleScreen({Key key}) : super(key: key);
 
   @override
@@ -36,6 +35,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
     ));
     appBarService.setActions(actions: actions);
     appBarService.notify();
+    contactService.loadDeviceContacts();
     super.initState();
   }
 

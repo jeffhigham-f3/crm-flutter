@@ -1,7 +1,11 @@
 import 'package:verb_crm_flutter/config/constants.dart';
 import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:flutter/foundation.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:contacts_service/contacts_service.dart' as device;
 import 'dart:async';
+
+const iOSLocalizedLabels = false;
 
 abstract class _ContactServiceAbstract with ChangeNotifier {
   List<Contact> get contacts;
@@ -13,6 +17,8 @@ abstract class _ContactServiceAbstract with ChangeNotifier {
   Comparator<Contact> lastNameComparator;
   Future<void> searchAll({@required String searchText});
   Future<void> refreshAll();
+  Future<PermissionStatus> requestPermissions();
+  Future<void> loadDeviceContacts();
   void toggleTagActive();
   void addTag({String tag});
   void removeTag({String tag});
@@ -79,6 +85,8 @@ class ContactService extends _ContactServiceAbstract {
 
   @override
   Future<void> refreshAll() async {
+    notifyListeners();
+    return;
     await Future.delayed(Duration(seconds: 1));
     _tags.removeRange(0, tags.length);
     _tagActive = false;
@@ -126,5 +134,29 @@ class ContactService extends _ContactServiceAbstract {
     }
     if (_tags.length == 0) toggleTagActive();
     await searchAll(searchText: _cachedSearchText);
+  }
+
+  @override
+  Future<PermissionStatus> requestPermissions() async {
+    PermissionStatus status = await Permission.contacts.status;
+    if (status.isUndetermined) status = await Permission.contacts.request();
+    if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) ;
+    if (status.isGranted) ;
+    print("Permission.contacts is: ${status.toString()}");
+    notifyListeners();
+    return status;
+  }
+
+  @override
+  Future<void> loadDeviceContacts() async {
+    final status = await requestPermissions();
+    // if (!status.isGranted) openAppSettings();
+    if (status.isGranted) {
+      print("Loading contacts...");
+      var contacts =
+          (await device.ContactsService.getContacts(withThumbnails: true, iOSLocalizedLabels: iOSLocalizedLabels))
+              .toList();
+      print("Found ${contacts.length}");
+    }
   }
 }
