@@ -33,10 +33,6 @@ class ContactService extends _ContactServiceAbstract {
   bool _tagActive = false;
   String _cachedSearchText = '';
 
-  ContactService() {
-    refreshAll();
-  }
-
   @override
   List<Contact> get contacts => _contacts;
 
@@ -85,7 +81,7 @@ class ContactService extends _ContactServiceAbstract {
 
   @override
   Future<void> refreshAll() async {
-    notifyListeners();
+    await loadDeviceContacts();
     return;
     await Future.delayed(Duration(seconds: 1));
     _tags.removeRange(0, tags.length);
@@ -150,13 +146,22 @@ class ContactService extends _ContactServiceAbstract {
   @override
   Future<void> loadDeviceContacts() async {
     final status = await requestPermissions();
-    // if (!status.isGranted) openAppSettings();
     if (status.isGranted) {
-      print("Loading contacts...");
-      var contacts =
+      _tags.removeRange(0, tags.length);
+      _tagActive = false;
+      _cachedSearchText = '';
+      _contacts.removeRange(0, _contacts.length);
+      var deviceContacts =
           (await device.ContactsService.getContacts(withThumbnails: true, iOSLocalizedLabels: iOSLocalizedLabels))
               .toList();
-      print("Found ${contacts.length}");
+      deviceContacts.forEach(
+        (c) {
+          print(c.toString());
+          _contacts.add(Contact.fromDevice(c));
+        },
+      );
+      print("Found ${_contacts.length} contacts!");
     }
+    notifyListeners();
   }
 }

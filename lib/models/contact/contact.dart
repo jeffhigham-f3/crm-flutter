@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 import 'package:verb_crm_flutter/config/import.dart';
+import 'package:verb_crm_flutter/models/contact/import.dart';
 import 'package:faker/faker.dart';
+import 'package:contacts_service/contacts_service.dart' as device;
 
+enum ContactSource { Generated, Device, External }
+
+// TODO: - refactor email, phone, address, into lists.
+// TODO: - Update UI to support multiple phones, emails, addresses
 class Contact {
   final String id;
   String name;
-  final String firstName;
-  final String lastName;
-  final String email;
+  String firstName;
+  String lastName;
+  String email;
   String phone;
+  Iterable<Item> emails = [];
+  Iterable<Item> phones = [];
+  Iterable<PostalAddress> postalAddresses = [];
   String photoUrl;
   String photoAsset;
   String locale;
-  Color accentColor;
   List<String> tags;
+  Color accentColor;
+  ContactSource source;
 
   Contact({
     this.id,
@@ -23,16 +33,19 @@ class Contact {
     this.lastName,
     this.email,
     this.phone,
+    this.emails,
+    this.phones,
+    this.postalAddresses,
     this.photoUrl,
     this.photoAsset,
     this.locale,
     this.accentColor,
+    this.source,
     this.tags,
   });
 
   factory Contact.fromJson(Map<String, dynamic> json) {
     final RandomColor _randomColor = RandomColor();
-
     final contact = Contact(
       id: json['AccountId'] ??= '',
       name: '${json['FirstName']} ${json['LastName']}',
@@ -41,8 +54,29 @@ class Contact {
       firstName: json['FirstName'] ??= '',
       lastName: json['LastName'] ??= '',
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
+      source: ContactSource.External,
       tags: [],
     );
+    return contact;
+  }
+
+  factory Contact.fromDevice(device.Contact c) {
+    final RandomColor _randomColor = RandomColor();
+    final contact = Contact(
+      id: c.identifier,
+      name: '${c.givenName} ${c.familyName}',
+      email: c.emails.length > 0 ? c.emails.first.value : '',
+      phone: c.phones.length > 0 ? c.phones.first.value : '',
+      firstName: c.givenName,
+      lastName: c.familyName,
+      accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
+      source: ContactSource.Device,
+      tags: [],
+    );
+    if (faker.randomGenerator.boolean()) contact.tags.add(kSlugLead);
+    if (faker.randomGenerator.boolean() && !contact.lead) contact.tags.add(kSlugCustomer);
+    if (faker.randomGenerator.boolean()) contact.tags.add(kSlugFollowUp);
+    if (faker.randomGenerator.boolean()) contact.tags.add(kSlugOnline);
     return contact;
   }
 
@@ -62,6 +96,7 @@ class Contact {
       firstName: firstName,
       lastName: lastName,
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
+      source: ContactSource.Generated,
       tags: [],
     );
 
@@ -85,5 +120,3 @@ class Contact {
   String toString() =>
       'id: $id, firstName: $firstName, lastName: $lastName, initials $initials, email: $email, phone: $phone, photoUrl: $photoUrl, photoAsset: $photoAsset';
 }
-
-enum FollowUp { today, tomorrow, later }
