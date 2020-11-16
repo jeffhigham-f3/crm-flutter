@@ -81,12 +81,12 @@ class ContactService extends _ContactServiceAbstract {
 
   @override
   Future<void> refreshAll() async {
-    await loadDeviceContacts();
-    return;
-    await Future.delayed(Duration(seconds: 1));
+    _contacts.removeRange(0, _contacts.length);
     _tags.removeRange(0, tags.length);
     _tagActive = false;
-    _contacts.removeRange(0, _contacts.length);
+    notifyListeners();
+    await Future.delayed(Duration(seconds: 1));
+    await loadDeviceContacts();
     kContactUUIDs.forEach((uuid) {
       _contacts.add(Contact.generate(uuid: uuid));
     });
@@ -147,10 +147,6 @@ class ContactService extends _ContactServiceAbstract {
   Future<void> loadDeviceContacts() async {
     final status = await requestPermissions();
     if (status.isGranted) {
-      _tags.removeRange(0, tags.length);
-      _tagActive = false;
-      _cachedSearchText = '';
-      _contacts.removeRange(0, _contacts.length);
       var deviceContacts =
           (await device.ContactsService.getContacts(withThumbnails: true, iOSLocalizedLabels: iOSLocalizedLabels))
               .toList();

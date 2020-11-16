@@ -35,18 +35,24 @@ class PersonDetailScreen extends StatelessWidget {
                   SizedBox(height: 22),
                   ContactTags(tags: contact.tags),
                   SizedBox(height: 20),
-                  ContactPropertyWidget(
-                    title: 'Account',
-                    content: Text(contact.id),
-                  ),
-                  ContactPropertyWidget(
-                    title: 'Email',
-                    content: Text(contact.email),
-                  ),
-                  ContactPropertyWidget(
-                    title: 'Phone',
-                    content: Text(contact.phone),
-                  ),
+                  contact.id != null
+                      ? ContactPropertyWidget(
+                          title: 'Account',
+                          content: Text(contact.id),
+                        )
+                      : SizedBox.shrink(),
+                  contact.email != null
+                      ? ContactPropertyWidget(
+                          title: 'Email',
+                          content: Text(contact.email.value),
+                        )
+                      : SizedBox.shrink(),
+                  contact.email != null
+                      ? ContactPropertyWidget(
+                          title: 'Phone',
+                          content: Text(contact.phone.value),
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
             ),

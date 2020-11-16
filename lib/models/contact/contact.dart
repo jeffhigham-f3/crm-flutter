@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 import 'package:verb_crm_flutter/config/import.dart';
-import 'package:verb_crm_flutter/models/contact/import.dart';
 import 'package:faker/faker.dart';
 import 'package:contacts_service/contacts_service.dart' as device;
 
@@ -14,25 +13,24 @@ class Contact {
   String name;
   String firstName;
   String lastName;
-  String email;
-  String phone;
-  Iterable<Item> emails = [];
-  Iterable<Item> phones = [];
-  Iterable<PostalAddress> postalAddresses = [];
+  Iterable<device.Item> emails = [];
+  Iterable<device.Item> phones = [];
+  Iterable<device.PostalAddress> postalAddresses = [];
   String photoUrl;
   String photoAsset;
   String locale;
   List<String> tags;
   Color accentColor;
   ContactSource source;
+  device.Item get email => emails.length > 0 ? emails.first : null;
+  device.Item get phone => phones.length > 0 ? phones.first : null;
+  device.PostalAddress get postalAddress => postalAddresses.length > 0 ? postalAddresses.first : null;
 
   Contact({
     this.id,
     this.name,
     this.firstName,
     this.lastName,
-    this.email,
-    this.phone,
     this.emails,
     this.phones,
     this.postalAddresses,
@@ -49,14 +47,22 @@ class Contact {
     final contact = Contact(
       id: json['AccountId'] ??= '',
       name: '${json['FirstName']} ${json['LastName']}',
-      email: json['Email'] ??= '',
-      phone: json['MobilePhone'] ??= '',
       firstName: json['FirstName'] ??= '',
       lastName: json['LastName'] ??= '',
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
       source: ContactSource.External,
       tags: [],
     );
+    contact.emails = [
+      device.Item.fromMap(
+        {'label': 'email', 'value': json['Email']},
+      )
+    ];
+    contact.phones = [
+      device.Item.fromMap(
+        {'label': 'phone', 'value': json['MobilePhone']},
+      )
+    ];
     return contact;
   }
 
@@ -65,14 +71,16 @@ class Contact {
     final contact = Contact(
       id: c.identifier,
       name: '${c.givenName} ${c.familyName}',
-      email: c.emails.length > 0 ? c.emails.first.value : '',
-      phone: c.phones.length > 0 ? c.phones.first.value : '',
       firstName: c.givenName,
       lastName: c.familyName,
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
+      emails: c.emails,
+      phones: c.phones,
+      postalAddresses: c.postalAddresses,
       source: ContactSource.Device,
       tags: [],
     );
+
     if (faker.randomGenerator.boolean()) contact.tags.add(kSlugLead);
     if (faker.randomGenerator.boolean() && !contact.lead) contact.tags.add(kSlugCustomer);
     if (faker.randomGenerator.boolean()) contact.tags.add(kSlugFollowUp);
@@ -87,11 +95,10 @@ class Contact {
     final numbers = faker.randomGenerator.numbers(9, 10);
     final phone =
         '(${numbers[0]}${numbers[1]}${numbers[2]}) ${numbers[3]}${numbers[4]}${numbers[5]}-${numbers[6]}${numbers[7]}${numbers[8]}${numbers[8]}';
+
     final contact = Contact(
       id: uuid,
       name: '$firstName $lastName',
-      email: faker.internet.email(),
-      phone: phone,
       photoAsset: 'assets/avatar/$uuid.png',
       firstName: firstName,
       lastName: lastName,
@@ -99,6 +106,16 @@ class Contact {
       source: ContactSource.Generated,
       tags: [],
     );
+    contact.emails = [
+      device.Item.fromMap(
+        {'label': 'email', 'value': faker.internet.email()},
+      ),
+    ];
+    contact.phones = [
+      device.Item.fromMap(
+        {'label': 'phone', 'value': phone},
+      ),
+    ];
 
     if (faker.randomGenerator.boolean()) contact.tags.add(kSlugLead);
     if (faker.randomGenerator.boolean() && !contact.lead) contact.tags.add(kSlugCustomer);
