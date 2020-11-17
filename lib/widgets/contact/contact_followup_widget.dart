@@ -91,19 +91,20 @@ class _ContactContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 45,
+                  height: 55,
                   margin: EdgeInsets.only(right: 10.0),
                   child: Hero(
                     tag: 'profile-${contact.id}',
                     child: ProfileAvatar(
                       imageUrl: contact.photoUrl,
                       imageAsset: contact.photoAsset,
-                      radius: 30.0,
+                      radius: 32.0,
                       backgroundColor: contact.accentColor,
                       borderColor: Colors.white,
                       isActive: contact.online,
                       initials: contact.initials,
                       hasBorder: true,
+                      // sourceIcon: contact.sourceIcon,
                     ),
                   ),
                 ),

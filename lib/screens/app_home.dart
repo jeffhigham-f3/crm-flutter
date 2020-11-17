@@ -4,6 +4,7 @@ import 'package:verb_crm_flutter/service/import.dart';
 import 'package:verb_crm_flutter/screens/import.dart';
 import 'package:verb_crm_flutter/widgets/profile_avatar.dart';
 import 'package:verb_crm_flutter/config/palette.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppHome extends StatefulWidget {
   static const String id = 'crm_app_home';
@@ -80,15 +81,15 @@ class _AppHomeState extends State<AppHome> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.dynamic_feed),
+            icon: FaIcon(FontAwesomeIcons.stream),
             label: 'Verb',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.contacts),
+            icon: FaIcon(FontAwesomeIcons.addressBook),
             label: 'People',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.apps),
+            icon: FaIcon(FontAwesomeIcons.th),
             label: 'Apps',
           ),
         ],

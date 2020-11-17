@@ -49,8 +49,7 @@ dependencies:
   cloud_firestore: ^0.14.2
   contacts_service: ^0.4.6
   permission_handler: ^5.0.1+1
-
-
+  font_awesome_flutter: ^8.10.0
 
 dev_dependencies:
   flutter_test:

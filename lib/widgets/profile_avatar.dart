@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/config/palette.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:verb_crm_flutter/service/import.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final String imageUrl;
@@ -95,7 +95,7 @@ class ProfileAvatar extends StatelessWidget {
                     color: Colors.white,
                   ),
                   padding: EdgeInsets.all(2.0),
-                  child: Icon(
+                  child: FaIcon(
                     sourceIcon,
                     color: Colors.grey[500],
                     size: radius * .45,

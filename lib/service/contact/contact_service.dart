@@ -134,6 +134,7 @@ class ContactService extends _ContactServiceAbstract {
     if (status.isUndetermined) status = await Permission.contacts.request();
     if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) ;
     if (status.isGranted) ;
+
     print("Permission.contacts is: ${status.toString()}");
     notifyListeners();
     return status;

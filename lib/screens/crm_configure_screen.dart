@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/crm/import.dart';
 import 'package:verb_crm_flutter/service/import.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CrmConfigureScreen extends StatelessWidget {
   final Crm crm;
@@ -65,15 +66,7 @@ class CrmConfigureScreen extends StatelessWidget {
                   ),
                   _CrmConfigOption(
                     title: 'People',
-                    icon: Icons.contacts,
-                  ),
-                  _CrmConfigOption(
-                    title: 'Media',
-                    icon: Icons.movie,
-                  ),
-                  _CrmConfigOption(
-                    title: 'Verb AI',
-                    icon: Icons.dynamic_feed,
+                    icon: FontAwesomeIcons.addressBook,
                   ),
                 ],
               ),
@@ -111,7 +104,7 @@ class __CrmConfigOptionState extends State<_CrmConfigOption> {
             _enabled = value;
           });
         },
-        secondary: Icon(widget.icon),
+        secondary: FaIcon(widget.icon),
       ),
     );
   }

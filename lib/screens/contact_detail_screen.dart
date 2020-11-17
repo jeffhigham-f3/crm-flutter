@@ -28,8 +28,8 @@ class PersonDetailScreen extends StatelessWidget {
               content: Text(item.value),
               icon:
                   (item.label == 'mobile' || item.label == 'iPhone' || item.label == 'cell' || item.label == 'android')
-                      ? Icons.smartphone
-                      : Icons.phone),
+                      ? FontAwesomeIcons.mobileAlt
+                      : FontAwesomeIcons.phoneAlt),
         );
       });
 
@@ -38,7 +38,7 @@ class PersonDetailScreen extends StatelessWidget {
         contactAttributes.add(_ContactPropertyWidget(
           title: item.label,
           content: Text(item.value),
-          icon: Icons.mail,
+          icon: FontAwesomeIcons.envelope,
         ));
       });
 
@@ -47,7 +47,7 @@ class PersonDetailScreen extends StatelessWidget {
         contactAttributes.add(_ContactPropertyWidget(
           title: postalAddress.label,
           content: Text(postalAddress.toString()),
-          icon: (postalAddress.label == 'home') ? Icons.house : Icons.business,
+          icon: (postalAddress.label == 'home') ? FontAwesomeIcons.home : FontAwesomeIcons.building,
         ));
       });
 
@@ -117,10 +117,10 @@ class ContactActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ContactActionWidget(title: 'message', icon: Icons.message),
-        ContactActionWidget(title: 'phone', icon: Icons.phone),
-        ContactActionWidget(title: 'live', icon: Icons.video_call),
-        ContactActionWidget(title: 'mail', icon: Icons.mail),
+        ContactActionWidget(title: 'message', icon: FontAwesomeIcons.commentDots),
+        ContactActionWidget(title: 'phone', icon: FontAwesomeIcons.phoneAlt),
+        ContactActionWidget(title: 'live', icon: FontAwesomeIcons.video),
+        ContactActionWidget(title: 'mail', icon: FontAwesomeIcons.envelope),
       ],
     );
   }
@@ -136,36 +136,50 @@ class _ContactNavAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        Container(
-          margin: EdgeInsets.only(
-            top: 40,
-          ),
-          child: Hero(
-            tag: 'profile-${contact.id}',
-            child: ProfileAvatar(
-              imageUrl: contact.photoUrl,
-              imageAsset: contact.photoAsset,
-              radius: 60.0,
-              backgroundColor: contact.accentColor,
-              borderColor: Colors.white,
-              hasBorder: true,
-              isActive: contact.online,
-              initials: contact.initials,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(
+                top: 40,
+              ),
+              child: Hero(
+                tag: 'profile-${contact.id}',
+                child: ProfileAvatar(
+                  imageUrl: contact.photoUrl,
+                  imageAsset: contact.photoAsset,
+                  radius: 60.0,
+                  backgroundColor: contact.accentColor,
+                  borderColor: Colors.white,
+                  hasBorder: true,
+                  isActive: contact.online,
+                  initials: contact.initials,
+                ),
+              ),
             ),
-          ),
+            Text(
+              '${contact.firstName} ${contact.lastName}',
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                fontWeight: Theme.of(context).textTheme.headline6.fontWeight,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
-        Text(
-          '${contact.firstName} ${contact.lastName}',
-          style: TextStyle(
-            fontSize: Theme.of(context).textTheme.headline6.fontSize,
-            fontWeight: Theme.of(context).textTheme.headline6.fontWeight,
-            color: Colors.white,
+        Positioned(
+          left: 20.0,
+          bottom: 20.0,
+          child: FaIcon(
+            contact.sourceIcon,
+            size: 32,
+            color: Colors.white.withOpacity(0.2),
           ),
-        ),
+        )
       ],
     );
   }
@@ -194,7 +208,7 @@ class ContactActionWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
+                FaIcon(
                   icon,
                   color: Theme.of(context).accentColor,
                 ),
@@ -236,7 +250,7 @@ class _ContactPropertyWidget extends StatelessWidget {
           leading: icon != null
               ? Padding(
                   padding: const EdgeInsets.only(top: 6.0),
-                  child: Icon(icon, size: 32),
+                  child: FaIcon(icon, size: 28),
                 )
               : null,
           title: title != null ? Text(title.replaceAll(new RegExp('[\$_!<>]'), '').toLowerCase()) : content,

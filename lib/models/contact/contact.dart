@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:random_color/random_color.dart';
 import 'package:verb_crm_flutter/config/import.dart';
 import 'package:faker/faker.dart';
+import 'dart:math';
 import 'package:contacts_service/contacts_service.dart' as device;
 
-enum ContactSource { Generated, Device, External }
+enum ContactSource {
+  Generated,
+  Device,
+  SalesForce,
+  HubSpot,
+  Google,
+  Facebook,
+  Verb,
+  External,
+  Apple,
+  Whatsapp,
+  Linkedin,
+  Slack,
+  Microsoft
+}
 
 // TODO: - refactor email, phone, address, into lists.
 // TODO: - Update UI to support multiple phones, emails, addresses
@@ -89,9 +105,6 @@ class Contact {
     final RandomColor _randomColor = RandomColor();
     final firstName = faker.person.firstName();
     final lastName = faker.person.lastName();
-    final numbers = faker.randomGenerator.numbers(9, 10);
-    final phone =
-        '(${numbers[0]}${numbers[1]}${numbers[2]}) ${numbers[3]}${numbers[4]}${numbers[5]}-${numbers[6]}${numbers[7]}${numbers[8]}${numbers[8]}';
 
     final contact = Contact(
       id: uuid,
@@ -100,17 +113,26 @@ class Contact {
       firstName: firstName,
       lastName: lastName,
       accentColor: _randomColor.randomColor(colorHue: ColorHue.blue),
-      source: ContactSource.Generated,
+      source: Contact.randomSource(),
       tags: [],
     );
     contact.emails = [
       device.Item.fromMap(
-        {'label': 'email', 'value': faker.internet.email()},
+        {'label': 'home', 'value': faker.internet.email()},
+      ),
+      device.Item.fromMap(
+        {'label': 'work', 'value': faker.internet.email()},
       ),
     ];
     contact.phones = [
       device.Item.fromMap(
-        {'label': 'phone', 'value': phone},
+        {'label': 'mobile', 'value': Contact.generatePhoneNumber()},
+      ),
+      device.Item.fromMap(
+        {'label': 'work', 'value': Contact.generatePhoneNumber()},
+      ),
+      device.Item.fromMap(
+        {'label': 'home', 'value': Contact.generatePhoneNumber()},
       ),
     ];
 
@@ -121,25 +143,80 @@ class Contact {
     return contact;
   }
 
-  // TODO: - Swap out for FontAwesome https://pub.dev/packages/font_awesome_flutter
-
   IconData getIconSource() {
     switch (source) {
       case ContactSource.Device:
-        return Icons.smartphone;
+        return FontAwesomeIcons.mobileAlt;
         break;
 
       case ContactSource.Generated:
-        return Icons.code;
+        return FontAwesomeIcons.code;
         break;
 
       case ContactSource.External:
-        return Icons.cloud;
+        return FontAwesomeIcons.cloud;
+        break;
+
+      case ContactSource.Facebook:
+        return FontAwesomeIcons.facebookF;
+        break;
+
+      case ContactSource.SalesForce:
+        return FontAwesomeIcons.salesforce;
+        break;
+
+      case ContactSource.HubSpot:
+        return FontAwesomeIcons.hubspot;
+        break;
+
+      case ContactSource.Google:
+        return FontAwesomeIcons.google;
+        break;
+
+      case ContactSource.Apple:
+        return FontAwesomeIcons.apple;
+        break;
+
+      case ContactSource.Whatsapp:
+        return FontAwesomeIcons.whatsapp;
+        break;
+
+      case ContactSource.Linkedin:
+        return FontAwesomeIcons.linkedinIn;
+        break;
+
+      case ContactSource.Slack:
+        return FontAwesomeIcons.slack;
+        break;
+
+      case ContactSource.Microsoft:
+        return FontAwesomeIcons.microsoft;
         break;
 
       default:
-        return Icons.report_problem;
+        return FontAwesomeIcons.exclamation;
     }
+  }
+
+  static String generatePhoneNumber() {
+    final numbers = faker.randomGenerator.numbers(9, 10);
+    return '(${numbers[0]}${numbers[1]}${numbers[2]}) ${numbers[3]}${numbers[4]}${numbers[5]}-${numbers[6]}${numbers[7]}${numbers[8]}${numbers[8]}';
+  }
+
+  static ContactSource randomSource() {
+    final sources = [
+      ContactSource.SalesForce,
+      ContactSource.HubSpot,
+      ContactSource.Facebook,
+      ContactSource.Google,
+      ContactSource.Apple,
+      ContactSource.Whatsapp,
+      ContactSource.Linkedin,
+      ContactSource.Slack,
+      ContactSource.Microsoft
+    ];
+    int index = Random().nextInt(sources.length);
+    return sources.elementAt(index);
   }
 
   device.Item get email => emails.length > 0 ? emails.first : null;
