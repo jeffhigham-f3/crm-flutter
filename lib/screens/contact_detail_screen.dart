@@ -250,7 +250,10 @@ class _ContactPropertyWidget extends StatelessWidget {
           leading: icon != null
               ? Padding(
                   padding: const EdgeInsets.only(top: 6.0),
-                  child: FaIcon(icon, size: 28),
+                  child: FaIcon(
+                    icon,
+                    size: 28,
+                  ),
                 )
               : null,
           title: title != null ? Text(title.replaceAll(new RegExp('[\$_!<>]'), '').toLowerCase()) : content,

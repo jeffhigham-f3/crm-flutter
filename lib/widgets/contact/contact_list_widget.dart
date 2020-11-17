@@ -60,22 +60,6 @@ class ContactListWidget extends StatelessWidget {
                                   sourceIcon: contact.sourceIcon,
                                 ),
                               ),
-                              // Positioned(
-                              //   left: 0.0,
-                              //   bottom: 0.0,
-                              //   child: Container(
-                              //     decoration: BoxDecoration(
-                              //       shape: BoxShape.circle,
-                              //       color: Colors.white,
-                              //     ),
-                              //     padding: EdgeInsets.all(2.0),
-                              //     child: Icon(
-                              //       contact.sourceIcon,
-                              //       color: Colors.grey[500],
-                              //       size: 12.0,
-                              //     ),
-                              //   ),
-                              // )
                             ],
                           ),
                           SizedBox(width: 20),

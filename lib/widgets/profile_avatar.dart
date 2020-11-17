@@ -94,11 +94,11 @@ class ProfileAvatar extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.white,
                   ),
-                  padding: EdgeInsets.all(2.0),
+                  padding: EdgeInsets.all(3.0),
                   child: FaIcon(
                     sourceIcon,
-                    color: Colors.grey[500],
-                    size: radius * .45,
+                    color: Colors.black.withOpacity(0.2),
+                    size: radius * .50,
                   ),
                 ),
               )
