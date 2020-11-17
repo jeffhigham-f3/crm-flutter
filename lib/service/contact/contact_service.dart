@@ -5,8 +5,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:contacts_service/contacts_service.dart' as device;
 import 'dart:async';
 
-const iOSLocalizedLabels = false;
-
 abstract class _ContactServiceAbstract with ChangeNotifier {
   List<Contact> get contacts;
   List<Contact> get visibleContacts;
@@ -68,7 +66,6 @@ class ContactService extends _ContactServiceAbstract {
         contactsWithTags.add(c);
         continue;
       }
-
       tags.forEach((tag) {
         if (!c.tags.contains(tag)) matchTags = false;
       });
@@ -84,7 +81,6 @@ class ContactService extends _ContactServiceAbstract {
     _contacts.removeRange(0, _contacts.length);
     _tags.removeRange(0, tags.length);
     _tagActive = false;
-    notifyListeners();
     await Future.delayed(Duration(seconds: 1));
     await loadDeviceContacts();
     kContactUUIDs.forEach((uuid) {
@@ -148,7 +144,7 @@ class ContactService extends _ContactServiceAbstract {
     final status = await requestPermissions();
     if (status.isGranted) {
       var deviceContacts =
-          (await device.ContactsService.getContacts(withThumbnails: true, iOSLocalizedLabels: iOSLocalizedLabels))
+          (await device.ContactsService.getContacts(withThumbnails: true, iOSLocalizedLabels: kiOSLocalizedLabels))
               .toList();
       deviceContacts.forEach(
         (c) {

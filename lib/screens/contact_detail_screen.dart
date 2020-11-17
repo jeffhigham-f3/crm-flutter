@@ -11,6 +11,46 @@ class PersonDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeService = context.watch<ThemeService>();
+
+    List<Widget> contactAttributes = [
+      SizedBox(height: 22),
+      ContactActions(),
+      SizedBox(height: 22),
+      ContactTags(tags: contact.tags),
+      SizedBox(height: 20)
+    ];
+
+    if (contact.phones != null)
+      contact.phones.forEach((item) {
+        contactAttributes.add(
+          _ContactPropertyWidget(
+              title: item.label,
+              content: Text(item.value),
+              icon:
+                  (item.label == 'mobile' || item.label == 'iPhone' || item.label == 'cell' || item.label == 'android')
+                      ? Icons.smartphone
+                      : Icons.phone),
+        );
+      });
+
+    if (contact.emails != null)
+      contact.emails.forEach((item) {
+        contactAttributes.add(_ContactPropertyWidget(
+          title: item.label,
+          content: Text(item.value),
+          icon: Icons.mail,
+        ));
+      });
+
+    if (contact.postalAddresses != null)
+      contact.postalAddresses.forEach((postalAddress) {
+        contactAttributes.add(_ContactPropertyWidget(
+          title: postalAddress.label,
+          content: Text(postalAddress.toString()),
+          icon: (postalAddress.label == 'home') ? Icons.house : Icons.business,
+        ));
+      });
+
     return Scaffold(
       body: CustomScrollView(
         scrollDirection: Axis.vertical,
@@ -29,31 +69,7 @@ class PersonDetailScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 22),
-                  ContactActions(),
-                  SizedBox(height: 22),
-                  ContactTags(tags: contact.tags),
-                  SizedBox(height: 20),
-                  contact.id != null
-                      ? ContactPropertyWidget(
-                          title: 'Account',
-                          content: Text(contact.id),
-                        )
-                      : SizedBox.shrink(),
-                  contact.email != null
-                      ? ContactPropertyWidget(
-                          title: 'Email',
-                          content: Text(contact.email.value),
-                        )
-                      : SizedBox.shrink(),
-                  contact.email != null
-                      ? ContactPropertyWidget(
-                          title: 'Phone',
-                          content: Text(contact.phone.value),
-                        )
-                      : SizedBox.shrink(),
-                ],
+                children: contactAttributes,
               ),
             ),
           ),
@@ -200,15 +216,14 @@ class ContactActionWidget extends StatelessWidget {
   }
 }
 
-class ContactPropertyWidget extends StatelessWidget {
+class _ContactPropertyWidget extends StatelessWidget {
   final String title;
   final Widget content;
+  final IconData icon;
+  final bool isThreeLine;
 
-  const ContactPropertyWidget({
-    Key key,
-    @required this.title,
-    @required this.content,
-  }) : super(key: key);
+  const _ContactPropertyWidget({Key key, this.title, @required this.content, this.icon, this.isThreeLine})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -217,19 +232,16 @@ class ContactPropertyWidget extends StatelessWidget {
         onTap: () => print(title),
         splashColor: Theme.of(context).accentColor.withOpacity(0.1),
         highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              content,
-            ],
-          ),
+        child: ListTile(
+          leading: icon != null
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 6.0),
+                  child: Icon(icon, size: 32),
+                )
+              : null,
+          title: title != null ? Text(title.replaceAll(new RegExp('[\$_!<>]'), '').toLowerCase()) : content,
+          subtitle: title != null ? content : null,
+          isThreeLine: isThreeLine ?? false,
         ),
       ),
     );

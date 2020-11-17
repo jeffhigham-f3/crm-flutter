@@ -63,15 +63,15 @@ class CrmConfigureScreen extends StatelessWidget {
                       SizedBox(height: 20),
                     ],
                   ),
-                  CrmConfigOption(
+                  _CrmConfigOption(
                     title: 'People',
                     icon: Icons.contacts,
                   ),
-                  CrmConfigOption(
+                  _CrmConfigOption(
                     title: 'Media',
                     icon: Icons.movie,
                   ),
-                  CrmConfigOption(
+                  _CrmConfigOption(
                     title: 'Verb AI',
                     icon: Icons.dynamic_feed,
                   ),
@@ -85,17 +85,17 @@ class CrmConfigureScreen extends StatelessWidget {
   }
 }
 
-class CrmConfigOption extends StatefulWidget {
+class _CrmConfigOption extends StatefulWidget {
   final String title;
   final IconData icon;
 
-  const CrmConfigOption({Key key, this.title, this.icon}) : super(key: key);
+  const _CrmConfigOption({Key key, this.title, this.icon}) : super(key: key);
 
   @override
-  _CrmConfigOptionState createState() => _CrmConfigOptionState();
+  __CrmConfigOptionState createState() => __CrmConfigOptionState();
 }
 
-class _CrmConfigOptionState extends State<CrmConfigOption> {
+class __CrmConfigOptionState extends State<_CrmConfigOption> {
   bool _enabled = false;
 
   @override

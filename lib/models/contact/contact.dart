@@ -22,9 +22,6 @@ class Contact {
   List<String> tags;
   Color accentColor;
   ContactSource source;
-  device.Item get email => emails.length > 0 ? emails.first : null;
-  device.Item get phone => phones.length > 0 ? phones.first : null;
-  device.PostalAddress get postalAddress => postalAddresses.length > 0 ? postalAddresses.first : null;
 
   Contact({
     this.id,
@@ -124,10 +121,35 @@ class Contact {
     return contact;
   }
 
-  bool get lead => this.tags.contains(kSlugLead);
-  bool get customer => this.tags.contains(kSlugCustomer);
-  bool get followUp => this.tags.contains(kSlugFollowUp);
-  bool get online => this.tags.contains(kSlugOnline);
+  // TODO: - Swap out for FontAwesome https://pub.dev/packages/font_awesome_flutter
+
+  IconData getIconSource() {
+    switch (source) {
+      case ContactSource.Device:
+        return Icons.smartphone;
+        break;
+
+      case ContactSource.Generated:
+        return Icons.code;
+        break;
+
+      case ContactSource.External:
+        return Icons.cloud;
+        break;
+
+      default:
+        return Icons.report_problem;
+    }
+  }
+
+  device.Item get email => emails.length > 0 ? emails.first : null;
+  device.Item get phone => phones.length > 0 ? phones.first : null;
+  device.PostalAddress get postalAddress => postalAddresses.length > 0 ? postalAddresses.first : null;
+  bool get lead => tags.contains(kSlugLead);
+  bool get customer => tags.contains(kSlugCustomer);
+  bool get followUp => tags.contains(kSlugFollowUp);
+  bool get online => tags.contains(kSlugOnline);
+  IconData get sourceIcon => getIconSource();
 
   String get initials => (firstName?.isNotEmpty == true && lastName?.isNotEmpty == true)
       ? '${firstName.substring(0, 1).toUpperCase()}${lastName.substring(0, 1).toUpperCase()}'

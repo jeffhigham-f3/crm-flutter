@@ -14,6 +14,7 @@ class ProfileAvatar extends StatelessWidget {
   final Color backgroundColor; // Colors.grey[200]
   final Color borderColor; // Colors.white
   final String initials;
+  final IconData sourceIcon;
 
   const ProfileAvatar({
     Key key,
@@ -25,6 +26,7 @@ class ProfileAvatar extends StatelessWidget {
     this.initials = "",
     this.isActive = false,
     this.hasBorder = false,
+    this.sourceIcon,
   }) : super(key: key);
 
   @override
@@ -79,6 +81,24 @@ class ProfileAvatar extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ),
+                ),
+              )
+            : const SizedBox.shrink(),
+        sourceIcon != null
+            ? Positioned(
+                left: 0.0,
+                bottom: 0.0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  padding: EdgeInsets.all(2.0),
+                  child: Icon(
+                    sourceIcon,
+                    color: Colors.grey[500],
+                    size: radius * .45,
                   ),
                 ),
               )
