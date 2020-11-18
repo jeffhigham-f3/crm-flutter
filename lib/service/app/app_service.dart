@@ -45,4 +45,8 @@ class AppService extends AppServiceAbstract {
     app.enabled = !app.enabled;
     notifyListeners();
   }
+
+  void notify() {
+    notifyListeners();
+  }
 }

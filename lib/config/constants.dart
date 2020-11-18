@@ -1,3 +1,6 @@
+import 'package:verb_crm_flutter/app/import.dart';
+import 'package:verb_crm_flutter/contact/import.dart';
+
 const bool kiOSLocalizedLabels = false;
 const String kSlugLead = 'lead';
 const String kSlugCustomer = 'customer';
@@ -316,25 +319,51 @@ const List<Map<String, dynamic>> kAppInstances = [
   {
     'name': 'HubSpot',
     'slug': 'hubspot',
+    'icon': FontAwesomeIcons.hubspot,
     'description': 'Grow traffic, convert leads, close deals, and turn customers into promoters.',
     'enabled': false,
     'id': 'DFEB08D0-4872-4A0E-846E-577061A4829D',
-    'features': []
+    'features': [
+      {
+        'id': 'FC5D0C62-F413-4AE3-9192-56D18B4E03B1',
+        'enabled': false,
+        'featureType': AppFeatureType.Contact,
+      }
+    ]
   },
   {
     'name': 'Salesforce',
     'slug': 'salesforce',
+    'icon': FontAwesomeIcons.salesforce,
     'description': 'Make Insightful Decisions. Accelerate Productivity.',
     'enabled': false,
     'id': 'D64162EA-221C-4E3A-AC46-6DCF8D469032',
-    'features': []
+    'features': [
+      {
+        'id': 'AEF74B60-F93B-4D32-ABC2-D9CDEB83AA5E',
+        'enabled': false,
+        'featureType': AppFeatureType.Contact,
+      }
+    ]
   },
   {
     'name': 'Verb CRM',
     'slug': 'verb-crm',
+    'icon': FontAwesomeIcons.server,
     'description': 'The #1 Sales Enablement Platform',
     'enabled': false,
     'id': 'ECAF5DF1-F4F8-40AC-BF1F-CFFC55F4C036',
-    'features': []
+    'features': [
+      {
+        'id': '40FCA778-57B6-4DD4-AA89-00B396C608E7',
+        'enabled': false,
+        'featureType': AppFeatureType.Contact,
+      },
+      {
+        'id': '8AAE6676-4008-45C1-96BA-901A86A08158',
+        'enabled': false,
+        'featureType': AppFeatureType.Media,
+      }
+    ]
   }
 ];

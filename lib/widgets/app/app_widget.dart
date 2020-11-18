@@ -17,6 +17,7 @@ class _AppWidgetState extends State<AppWidget> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    // TODO: - refactor this to use a ListTile Widget
     return Card(
       child:
           Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -39,13 +40,6 @@ class _AppWidgetState extends State<AppWidget> with SingleTickerProviderStateMix
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 18),
-                    child: Text(
-                      widget.app.name,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  Container(
                     padding: EdgeInsets.only(
                       top: 8,
                       bottom: 0,
@@ -61,7 +55,7 @@ class _AppWidgetState extends State<AppWidget> with SingleTickerProviderStateMix
                         child: OutlineButton(
                           child: Row(children: [
                             Text(
-                              'Configure',
+                              widget.app.enabled ? 'Configure' : 'Enable',
                               style: TextStyle(color: Theme.of(context).primaryColor),
                             )
                           ]),

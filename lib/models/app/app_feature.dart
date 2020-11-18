@@ -1,30 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+enum AppFeatureType { Contact, Media, Unknown }
 
 class AppFeature with ChangeNotifier {
   String id;
-  String name;
-  String description;
-  String slug;
   bool enabled;
+  AppFeatureType featureType;
+  AppFeature({this.id, this.enabled, this.featureType});
 
-  AppFeature({this.id, this.name, this.description, this.enabled, this.slug});
-
-  factory AppFeature.fromJson(Map<String, dynamic> json) {
+  factory AppFeature.fromMap(Map<String, dynamic> m) {
     final feature = AppFeature(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      enabled: json['enabled'],
-      slug: json['slug'],
+      id: m['id'],
+      enabled: m['enabled'],
+      featureType: m['featureType'],
     );
     return feature;
   }
 
-  toggleEnabled() {
+  Future<void> toggleEnabled() {
     this.enabled = !this.enabled;
     this.notifyListeners();
   }
 
+  String get name => _getName();
+  IconData get icon => _getIcon();
+
+  String _getName() {
+    switch (featureType) {
+      case AppFeatureType.Contact:
+        return 'People';
+        break;
+
+      case AppFeatureType.Media:
+        return 'Media';
+        break;
+
+      default:
+        return 'Unknown';
+    }
+  }
+
+  IconData _getIcon() {
+    switch (featureType) {
+      case AppFeatureType.Contact:
+        return FontAwesomeIcons.addressBook;
+        break;
+
+      case AppFeatureType.Media:
+        return FontAwesomeIcons.photoVideo;
+        break;
+
+      default:
+        return FontAwesomeIcons.question;
+    }
+  }
+
   @override
-  String toString() => 'id: $id, name: $name, description: $description, slug: $slug, enabled: $enabled';
+  String toString() => 'id: $id, enabled: $enabled, featureType: $featureType';
 }

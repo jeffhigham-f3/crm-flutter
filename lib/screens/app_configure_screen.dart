@@ -5,11 +5,37 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppConfigureScreen extends StatelessWidget {
   final App app;
+  AppConfigureScreen({Key key, this.app}) : super(key: key);
 
-  const AppConfigureScreen({Key key, this.app}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final themeService = context.watch<ThemeService>();
+    final contactService = context.watch<ContactService>();
+
+    final List<Widget> content = [
+      Text(
+        'Please login to ${app.name} so you can begin configuring this integration!',
+        style: Theme.of(context).textTheme.headline6,
+        textAlign: TextAlign.center,
+      ),
+      SizedBox(height: 20),
+      OutlineButton(
+        child: Text(
+          'Authenticate',
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
+        onPressed: () => {
+          print("authenticating with ${app.name}"),
+        },
+      ),
+      SizedBox(height: 20),
+    ];
+
+    app.features.forEach((feature) {
+      content.add(
+        _AppFeatureOption(feature: feature),
+      );
+    });
 
     return Scaffold(
       body: CustomScrollView(
@@ -45,28 +71,7 @@ class AppConfigureScreen extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Please login to ${app.name} so you can begin configuring this integration!',
-                        style: Theme.of(context).textTheme.headline6,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 20),
-                      OutlineButton(
-                        child: Text(
-                          'Authenticate',
-                          style: TextStyle(color: Theme.of(context).primaryColor),
-                        ),
-                        onPressed: () => {
-                          print("authenticating with ${app.name}"),
-                        },
-                      ),
-                      SizedBox(height: 20),
-                    ],
-                  ),
-                  _AppConfigOption(
-                    title: 'People',
-                    icon: FontAwesomeIcons.addressBook,
+                    children: content,
                   ),
                 ],
               ),
@@ -78,33 +83,24 @@ class AppConfigureScreen extends StatelessWidget {
   }
 }
 
-class _AppConfigOption extends StatefulWidget {
-  final String title;
-  final IconData icon;
-
-  const _AppConfigOption({Key key, this.title, this.icon}) : super(key: key);
-
-  @override
-  __AppConfigOptionState createState() => __AppConfigOptionState();
-}
-
-class __AppConfigOptionState extends State<_AppConfigOption> {
-  bool _enabled = false;
+class _AppFeatureOption extends StatelessWidget {
+  final AppFeature feature;
+  const _AppFeatureOption({Key key, this.feature}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final appService = context.watch<AppService>();
     return Card(
       child: SwitchListTile(
-        title: Text(widget.title),
+        title: Text(feature.name),
         activeColor: Theme.of(context).accentColor,
         inactiveTrackColor: Theme.of(context).primaryColor.withOpacity(0.2),
-        value: _enabled,
-        onChanged: (bool value) {
-          setState(() {
-            _enabled = value;
-          });
+        value: feature.enabled,
+        onChanged: (bool value) async {
+          await feature.toggleEnabled();
+          await appService.notify();
         },
-        secondary: FaIcon(widget.icon),
+        secondary: FaIcon(feature.icon),
       ),
     );
   }
