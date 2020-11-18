@@ -21,7 +21,7 @@ void main() async {
           create: (_) => AuthService(),
         ),
         ChangeNotifierProvider(
-          create: (_) => CrmService(),
+          create: (_) => AppService(),
         ),
         ChangeNotifierProvider(
           create: (_) => AppBarService(),
@@ -42,7 +42,7 @@ class _MainApp extends StatelessWidget {
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         AppHome.id: (context) => AppHome(),
-        CrmScreen.id: (context) => CrmScreen(),
+        AppScreen.id: (context) => AppScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

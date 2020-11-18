@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:verb_crm_flutter/widgets/contact/contact_followup_widget.dart';
-import 'package:verb_crm_flutter/service/app/app_bar_service.dart';
+import 'package:verb_crm_flutter/service/app_bar/app_bar_service.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'hom_screen';

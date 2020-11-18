@@ -21,5 +21,5 @@ class Palette {
   static const List<Color> theme1 = [purpleBlueAccent, purpleBlueAccent, blueAccent];
   static const List<Color> theme2 = [turquoiseAccent, turquoisBlueAccent, turquoisBlue];
   static const List<Color> theme3 = [redAccent, redPurpleAccent, redPurple];
-  static const List<Color> defaultTheme = theme3;
+  static const List<Color> defaultTheme = theme1;
 }

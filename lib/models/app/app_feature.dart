@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CrmFeature with ChangeNotifier {
+class AppFeature with ChangeNotifier {
   String id;
   String name;
   String description;
   String slug;
   bool enabled;
 
-  CrmFeature({this.id, this.name, this.description, this.enabled, this.slug});
+  AppFeature({this.id, this.name, this.description, this.enabled, this.slug});
 
-  factory CrmFeature.fromJson(Map<String, dynamic> json) {
-    final feature = CrmFeature(
+  factory AppFeature.fromJson(Map<String, dynamic> json) {
+    final feature = AppFeature(
       id: json['id'],
       name: json['name'],
       description: json['description'],

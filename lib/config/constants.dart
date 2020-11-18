@@ -311,3 +311,30 @@ const List<String> kContactUUIDs = [
   'FDA43F3A-5DFB-4756-BF2A-EDD2EDD96E52',
   'FFB5A4CE-4192-4D2B-A907-8919A7DE8063'
 ];
+
+const List<Map<String, dynamic>> kAppInstances = [
+  {
+    'name': 'HubSpot',
+    'slug': 'hubspot',
+    'description': 'Grow traffic, convert leads, close deals, and turn customers into promoters.',
+    'enabled': false,
+    'id': 'DFEB08D0-4872-4A0E-846E-577061A4829D',
+    'features': []
+  },
+  {
+    'name': 'Salesforce',
+    'slug': 'salesforce',
+    'description': 'Make Insightful Decisions. Accelerate Productivity.',
+    'enabled': false,
+    'id': 'D64162EA-221C-4E3A-AC46-6DCF8D469032',
+    'features': []
+  },
+  {
+    'name': 'Verb CRM',
+    'slug': 'verb-crm',
+    'description': 'The #1 Sales Enablement Platform',
+    'enabled': false,
+    'id': 'ECAF5DF1-F4F8-40AC-BF1F-CFFC55F4C036',
+    'features': []
+  }
+];

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/crm/import.dart';
+import 'package:verb_crm_flutter/app/import.dart';
 import 'package:verb_crm_flutter/service/import.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CrmConfigureScreen extends StatelessWidget {
-  final Crm crm;
+class AppConfigureScreen extends StatelessWidget {
+  final App app;
 
-  const CrmConfigureScreen({Key key, this.crm}) : super(key: key);
+  const AppConfigureScreen({Key key, this.app}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final themeService = context.watch<ThemeService>();
@@ -27,9 +27,9 @@ class CrmConfigureScreen extends StatelessWidget {
                     width: 120,
                     height: 120,
                     child: Hero(
-                      tag: 'crm-${crm.id}',
+                      tag: 'app-${app.id}',
                       child: Image.asset(
-                        'assets/${crm.slug}.png',
+                        'assets/${app.slug}.png',
                       ),
                     ),
                   ),
@@ -47,7 +47,7 @@ class CrmConfigureScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Please login to ${crm.name} so you can begin configuring this integration!',
+                        'Please login to ${app.name} so you can begin configuring this integration!',
                         style: Theme.of(context).textTheme.headline6,
                         textAlign: TextAlign.center,
                       ),
@@ -58,13 +58,13 @@ class CrmConfigureScreen extends StatelessWidget {
                           style: TextStyle(color: Theme.of(context).primaryColor),
                         ),
                         onPressed: () => {
-                          print("authenticating with ${crm.name}"),
+                          print("authenticating with ${app.name}"),
                         },
                       ),
                       SizedBox(height: 20),
                     ],
                   ),
-                  _CrmConfigOption(
+                  _AppConfigOption(
                     title: 'People',
                     icon: FontAwesomeIcons.addressBook,
                   ),
@@ -78,17 +78,17 @@ class CrmConfigureScreen extends StatelessWidget {
   }
 }
 
-class _CrmConfigOption extends StatefulWidget {
+class _AppConfigOption extends StatefulWidget {
   final String title;
   final IconData icon;
 
-  const _CrmConfigOption({Key key, this.title, this.icon}) : super(key: key);
+  const _AppConfigOption({Key key, this.title, this.icon}) : super(key: key);
 
   @override
-  __CrmConfigOptionState createState() => __CrmConfigOptionState();
+  __AppConfigOptionState createState() => __AppConfigOptionState();
 }
 
-class __CrmConfigOptionState extends State<_CrmConfigOption> {
+class __AppConfigOptionState extends State<_AppConfigOption> {
   bool _enabled = false;
 
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:verb_crm_flutter/models/crm/import.dart';
+import 'package:verb_crm_flutter/models/app/import.dart';
 
-class CrmFeatureWidget extends StatelessWidget {
-  final CrmFeature feature;
-  CrmFeatureWidget({Key key, this.feature}) : super(key: key);
+class AppFeatureWidget extends StatelessWidget {
+  final AppFeature feature;
+  AppFeatureWidget({Key key, this.feature}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

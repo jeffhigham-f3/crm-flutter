@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
 
-class Crm with ChangeNotifier {
+class App with ChangeNotifier {
   String id;
   String name;
   String description;
   String slug;
   bool enabled;
 
-  Crm({this.id, this.name, this.description, this.enabled, this.slug});
+  App({this.id, this.name, this.description, this.enabled, this.slug});
 
-  factory Crm.fromJson(Map<String, dynamic> json) {
-    final crm = Crm(
+  factory App.fromFirestore(Map<String, dynamic> json) {
+    final app = App(
         id: json['id'],
         name: json['name'],
         description: json['description'],
         enabled: json['enabled'],
         slug: json['slug']);
-    return crm;
+    return app;
+  }
+
+  factory App.fromConfig(Map<String, dynamic> json) {
+    final app = App(
+        id: json['id'],
+        name: json['name'],
+        description: json['description'],
+        enabled: json['enabled'],
+        slug: json['slug']);
+    return app;
   }
 
   toggleEnabled() {

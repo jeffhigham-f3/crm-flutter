@@ -23,7 +23,7 @@ class _AppHomeState extends State<AppHome> {
     PeopleScreen(
       key: PageStorageKey('people-screen'),
     ),
-    CrmScreen(
+    AppScreen(
       key: PageStorageKey('crm-screen'),
     ),
   ];

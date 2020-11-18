@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:verb_crm_flutter/crm/import.dart';
+import 'package:verb_crm_flutter/app/import.dart';
 
-class CrmScreen extends StatelessWidget {
-  static const String id = 'crm_screen';
+class AppScreen extends StatelessWidget {
+  static const String id = 'app_screen';
 
-  CrmScreen({Key key}) : super(key: key);
+  AppScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final crmService = context.watch<CrmService>();
+    final appService = context.watch<AppService>();
     final appBarService = context.watch<AppBarService>();
     const List<Widget> actions = [];
     appBarService.setTitle(
@@ -21,9 +21,9 @@ class CrmScreen extends StatelessWidget {
       body: SafeArea(
         child: ListView.builder(
           padding: const EdgeInsets.all(8),
-          itemCount: crmService.crms.length,
+          itemCount: appService.apps.length,
           itemBuilder: ((context, index) {
-            return CrmWidget(crm: crmService.crms[index]);
+            return AppWidget(app: appService.apps[index]);
           }),
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:verb_crm_flutter/config/constants.dart';
 import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:platform_info/platform_info.dart';
 import 'package:contacts_service/contacts_service.dart' as device;
 import 'dart:async';
 
@@ -18,6 +19,7 @@ abstract class _ContactServiceAbstract with ChangeNotifier {
   Future<PermissionStatus> requestPermissions();
   Future<void> loadDeviceContacts();
   void toggleTagActive();
+  Future<void> toggleTag({String tag});
   void addTag({String tag});
   void removeTag({String tag});
   bool hasTag({String tag});
@@ -132,8 +134,8 @@ class ContactService extends _ContactServiceAbstract {
   Future<PermissionStatus> requestPermissions() async {
     PermissionStatus status = await Permission.contacts.status;
     if (status.isUndetermined) status = await Permission.contacts.request();
-    if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) ;
-    if (status.isGranted) ;
+    // if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) ;
+    // if (status.isGranted) ;
 
     print("Permission.contacts is: ${status.toString()}");
     notifyListeners();
@@ -142,6 +144,8 @@ class ContactService extends _ContactServiceAbstract {
 
   @override
   Future<void> loadDeviceContacts() async {
+    if (Platform.instance.isWeb) return;
+
     final status = await requestPermissions();
     if (status.isGranted) {
       var deviceContacts =
