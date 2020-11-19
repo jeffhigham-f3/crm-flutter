@@ -22,8 +22,6 @@ enum ContactSource {
   Microsoft
 }
 
-// TODO: - refactor email, phone, address, into lists.
-// TODO: - Update UI to support multiple phones, emails, addresses
 class Contact {
   final String id;
   String name;

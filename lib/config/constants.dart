@@ -347,6 +347,46 @@ const List<Map<String, dynamic>> kAppInstances = [
     ]
   },
   {
+    'name': 'Google',
+    'slug': 'google',
+    'icon': FontAwesomeIcons.google,
+    'description': 'The Google tools you love for work, all in one place. Innovative Tools. Grows with your business.',
+    'enabled': false,
+    'id': '2BBC6B22-9F46-45A5-8ED1-7921C04F25A5',
+    'features': [
+      {
+        'id': '978D7B56-5918-409D-A029-19CCF59026CE',
+        'enabled': false,
+        'featureType': AppFeatureType.Contact,
+      },
+      {
+        'id': '497951A0-3CD0-4704-8233-1235953E21EF',
+        'enabled': false,
+        'featureType': AppFeatureType.Media,
+      }
+    ]
+  },
+  {
+    'name': 'Mobile Device',
+    'slug': 'device',
+    'icon': FontAwesomeIcons.mobileAlt,
+    'description': 'Access contacts, photos, and media on your phone.',
+    'enabled': false,
+    'id': '435C7D0D-FA94-499B-84FC-150340637F9C',
+    'features': [
+      {
+        'id': 'C6B2B4AF-EC57-4AF7-8C08-DEC790D27F9B',
+        'enabled': false,
+        'featureType': AppFeatureType.Contact,
+      },
+      {
+        'id': '017B9EEE-5CA6-4D11-B870-A683B60BAF20',
+        'enabled': false,
+        'featureType': AppFeatureType.Media,
+      }
+    ]
+  },
+  {
     'name': 'Verb CRM',
     'slug': 'verb-crm',
     'icon': FontAwesomeIcons.server,

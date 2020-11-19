@@ -13,7 +13,10 @@ class AppScreen extends StatelessWidget {
     final appBarService = context.watch<AppBarService>();
     const List<Widget> actions = [];
     appBarService.setTitle(
-      title: const Text('Apps', style: const TextStyle(color: Colors.white)),
+      title: const Text('Apps',
+          style: const TextStyle(
+            color: Colors.white,
+          )),
     );
     appBarService.setActions(actions: actions);
     appBarService.notify();

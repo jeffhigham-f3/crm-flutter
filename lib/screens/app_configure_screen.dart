@@ -10,7 +10,7 @@ class AppConfigureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeService = context.watch<ThemeService>();
-    final contactService = context.watch<ContactService>();
+    final appService = context.watch<AppService>();
 
     final List<Widget> content = [
       Text(
@@ -21,11 +21,11 @@ class AppConfigureScreen extends StatelessWidget {
       SizedBox(height: 20),
       OutlineButton(
         child: Text(
-          'Authenticate',
+          app.enabled ? 'Disable' : 'Enable',
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
-        onPressed: () => {
-          print("authenticating with ${app.name}"),
+        onPressed: () {
+          appService.toggleState(app: app);
         },
       ),
       SizedBox(height: 20),
@@ -33,7 +33,7 @@ class AppConfigureScreen extends StatelessWidget {
 
     app.features.forEach((feature) {
       content.add(
-        _AppFeatureOption(feature: feature),
+        _AppFeatureOption(app: app, feature: feature),
       );
     });
 
@@ -54,8 +54,10 @@ class AppConfigureScreen extends StatelessWidget {
                     height: 120,
                     child: Hero(
                       tag: 'app-${app.id}',
-                      child: Image.asset(
-                        'assets/${app.slug}.png',
+                      child: FaIcon(
+                        app.icon,
+                        size: 100,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -84,8 +86,9 @@ class AppConfigureScreen extends StatelessWidget {
 }
 
 class _AppFeatureOption extends StatelessWidget {
+  final App app;
   final AppFeature feature;
-  const _AppFeatureOption({Key key, this.feature}) : super(key: key);
+  const _AppFeatureOption({Key key, this.app, this.feature}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +98,12 @@ class _AppFeatureOption extends StatelessWidget {
         title: Text(feature.name),
         activeColor: Theme.of(context).accentColor,
         inactiveTrackColor: Theme.of(context).primaryColor.withOpacity(0.2),
-        value: feature.enabled,
+        value: (app.enabled && feature.enabled),
         onChanged: (bool value) async {
-          await feature.toggleEnabled();
-          await appService.notify();
+          if (app.enabled) {
+            await feature.toggleEnabled();
+            await appService.notify();
+          }
         },
         secondary: FaIcon(feature.icon),
       ),

@@ -136,8 +136,6 @@ class ContactService extends _ContactServiceAbstract {
     if (status.isUndetermined) status = await Permission.contacts.request();
     // if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) ;
     // if (status.isGranted) ;
-
-    print("Permission.contacts is: ${status.toString()}");
     notifyListeners();
     return status;
   }
@@ -153,11 +151,9 @@ class ContactService extends _ContactServiceAbstract {
               .toList();
       deviceContacts.forEach(
         (c) {
-          print(c.toString());
           _contacts.add(Contact.fromDevice(c));
         },
       );
-      print("Found ${_contacts.length} contacts!");
     }
     notifyListeners();
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/app/import.dart';
+import 'package:verb_crm_flutter/contact/import.dart';
+import 'package:verb_crm_flutter/widgets/import.dart';
 
 class AppWidget extends StatefulWidget {
   final App app;
@@ -17,69 +19,48 @@ class _AppWidgetState extends State<AppWidget> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    // TODO: - refactor this to use a ListTile Widget
+    IconData icon;
+    if (widget.app.enabled) {
+      icon = (widget.app.hasActiveFeatures()) ? FontAwesomeIcons.checkCircle : FontAwesomeIcons.exclamation;
+    } else {
+      icon = FontAwesomeIcons.cog;
+    }
     return Card(
-      child:
-          Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.all(8),
-              margin: EdgeInsets.only(left: 8, right: 12),
-              width: MediaQuery.of(context).size.width * .25,
-              child: Hero(
-                tag: 'app-${widget.app.id}',
-                child: Image.asset('assets/${widget.app.slug}.png'),
+      child: InkWell(
+        onTap: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AppConfigureScreen(
+                app: widget.app,
+              ),
+              fullscreenDialog: true,
+            ),
+          )
+        },
+        splashColor: Theme.of(context).accentColor.withOpacity(0.1),
+        highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
+        child: ListTile(
+          leading: Padding(
+            padding: const EdgeInsets.only(top: 5.0),
+            child: Hero(
+              tag: 'app-${widget.app.id}',
+              child: FaIcon(
+                widget.app.icon,
+                size: 36,
               ),
             ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(
-                      top: 8,
-                      bottom: 0,
-                    ),
-                    child: Text(widget.app.description, style: Theme.of(context).textTheme.bodyText1),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: OutlineButton(
-                          child: Row(children: [
-                            Text(
-                              widget.app.enabled ? 'Configure' : 'Enable',
-                              style: TextStyle(color: Theme.of(context).primaryColor),
-                            )
-                          ]),
-                          onPressed: () => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AppConfigureScreen(
-                                  app: widget.app,
-                                ),
-                                fullscreenDialog: true,
-                              ),
-                            )
-                          },
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
+          ),
+          title: Text(widget.app.name),
+          subtitle: Text(widget.app.description),
+          enabled: true,
+          trailing: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: FaIcon(icon, size: 28),
+          ),
+          isThreeLine: true,
         ),
-      ]),
+      ),
     );
   }
 }
