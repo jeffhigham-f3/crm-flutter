@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/app/import.dart';
 import 'package:verb_crm_flutter/contact/import.dart';
-import 'package:verb_crm_flutter/widgets/import.dart';
 
 class AppWidget extends StatefulWidget {
   final App app;

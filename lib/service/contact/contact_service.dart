@@ -4,9 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:platform_info/platform_info.dart';
 import 'package:contacts_service/contacts_service.dart' as device;
+import 'package:verb_crm_flutter/service/import.dart';
 import 'dart:async';
 
 abstract class _ContactServiceAbstract with ChangeNotifier {
+  AppService get appService;
   List<Contact> get contacts;
   List<Contact> get visibleContacts;
   List<Contact> get followUpContacts;
@@ -32,6 +34,11 @@ class ContactService extends _ContactServiceAbstract {
   final List<String> _tags = [];
   bool _tagActive = false;
   String _cachedSearchText = '';
+  AppService _appService;
+
+  ContactService({@required AppService appService}) : _appService = appService;
+
+  AppService get appService => _appService;
 
   @override
   List<Contact> get contacts => _contacts;
@@ -80,6 +87,7 @@ class ContactService extends _ContactServiceAbstract {
 
   @override
   Future<void> refreshAll() async {
+    print('Contact service can see ${_appService.apps.length} apps with ${_appService.enabledApps().length} enabled.');
     _contacts.removeRange(0, _contacts.length);
     _tags.removeRange(0, tags.length);
     _tagActive = false;

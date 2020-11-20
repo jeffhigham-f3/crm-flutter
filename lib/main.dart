@@ -15,13 +15,18 @@ void main() async {
           create: (_) => ThemeService(theme: Palette.defaultTheme),
         ),
         ChangeNotifierProvider(
-          create: (_) => ContactService(),
+          create: (_) => AppService(),
         ),
+        ChangeNotifierProxyProvider<AppService, ContactService>(
+            create: null,
+            update: (
+              BuildContext context,
+              AppService appService,
+              ContactService contactService,
+            ) =>
+                ContactService(appService: appService)),
         ChangeNotifierProvider(
           create: (_) => AuthService(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => AppService(),
         ),
         ChangeNotifierProvider(
           create: (_) => AppBarService(),

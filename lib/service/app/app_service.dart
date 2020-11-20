@@ -28,8 +28,11 @@ class AppService extends AppServiceAbstract {
     notifyListeners();
   }
 
-  // TODO: - this probably the wrong approach and not necessary as we can just call notifyListeners() directly.
-  void notify() {
-    notifyListeners();
+  List<App> enabledApps() {
+    return apps.where((a) => a.enabled).toList();
+  }
+
+  bool hasEnabledApps() {
+    return enabledApps().length > 0;
   }
 }

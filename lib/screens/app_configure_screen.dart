@@ -102,7 +102,7 @@ class _AppFeatureOption extends StatelessWidget {
         onChanged: (bool value) async {
           if (app.enabled) {
             await feature.toggleEnabled();
-            await appService.notify();
+            await appService.notifyListeners();
           }
         },
         secondary: FaIcon(feature.icon),
