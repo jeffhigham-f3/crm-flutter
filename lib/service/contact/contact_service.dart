@@ -87,7 +87,9 @@ class ContactService extends _ContactServiceAbstract {
 
   @override
   Future<void> refreshAll() async {
-    print('Contact service can see ${_appService.apps.length} apps with ${_appService.enabledApps().length} enabled.');
+    // TODO - Load contacts from apps with contacts enabled (app.dart:76)
+    print(
+        'ContactService can see ${_appService.appsContact.length} contact apps with ${_appService.appsContactEnabled.length} enabled.');
     _contacts.removeRange(0, _contacts.length);
     _tags.removeRange(0, tags.length);
     _tagActive = false;
