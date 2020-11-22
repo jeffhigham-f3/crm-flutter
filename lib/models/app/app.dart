@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:verb_crm_flutter/app/import.dart';
 import 'package:verb_crm_flutter/contact/import.dart';
+import 'package:contacts_service/contacts_service.dart' as device;
+import 'package:platform_info/platform_info.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 enum AppType { Device, CRM, Unknown }
+enum AppProduct { HubSpot, Salesforce, Google, Verb, IOS, Android, Web }
 
 class App with ChangeNotifier {
   String id;
@@ -13,6 +17,7 @@ class App with ChangeNotifier {
   IconData icon;
   bool enabled;
   AppType appType;
+  AppProduct appProduct;
 
   App({
     this.id,
@@ -22,6 +27,7 @@ class App with ChangeNotifier {
     this.icon,
     this.slug,
     this.appType,
+    this.appProduct,
   });
 
   factory App.fromFirestore(Map<String, dynamic> m) {
@@ -43,6 +49,8 @@ class App with ChangeNotifier {
       enabled: (m['enabled'] as bool),
       icon: (m['icon'] as IconData),
       slug: m['slug'],
+      appType: m['appType'] as AppType,
+      appProduct: m['appProduct'] as AppProduct,
     );
     app.features = [];
     (m['features'] as List<Map<String, dynamic>>).forEach((f) {
@@ -73,22 +81,49 @@ class App with ChangeNotifier {
     return features.where((f) => f.enabled == true).toList();
   }
 
-  // TODO - Complete contat loading for each AppType
   Future<List<Contact>> get contacts => _loadContacts();
   Future<List<Contact>> _loadContacts() async {
     if (!hasFeaturesContact) return [];
     switch (appType) {
       case AppType.Device:
-        print("Device");
+        return await _loadDeviceContacts();
         break;
 
       case AppType.CRM:
-        print("CRM");
+        return [];
         break;
 
       default:
+        print(appType);
+        return [];
         break;
     }
+  }
+
+  Future<PermissionStatus> _requestPermissions() async {
+    PermissionStatus status = await Permission.contacts.status;
+    if (status.isUndetermined) status = await Permission.contacts.request();
+    // if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) ;
+    // if (status.isGranted) ;
+    return status;
+  }
+
+  Future<List<Contact>> _loadDeviceContacts() async {
+    final List<Contact> contacts = [];
+    if (!hasFeaturesContact || Platform.instance.isWeb) return contacts;
+
+    final status = await _requestPermissions();
+    if (status.isGranted) {
+      var deviceContacts =
+          (await device.ContactsService.getContacts(withThumbnails: true, iOSLocalizedLabels: kiOSLocalizedLabels))
+              .toList();
+      deviceContacts.forEach(
+        (c) {
+          contacts.add(Contact.fromDevice(c));
+        },
+      );
+    }
+    return contacts;
   }
 
   @override

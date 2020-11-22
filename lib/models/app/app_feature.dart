@@ -18,7 +18,7 @@ class AppFeature with ChangeNotifier {
     return feature;
   }
 
-  Future<void> toggleEnabled() {
+  toggleEnabled() {
     this.enabled = !this.enabled;
     this.notifyListeners();
   }

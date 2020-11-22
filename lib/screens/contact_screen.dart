@@ -35,7 +35,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
     ));
     appBarService.setActions(actions: actions);
     appBarService.notify();
-    contactService.loadDeviceContacts();
+    // contactService.refreshAll();
     super.initState();
   }
 

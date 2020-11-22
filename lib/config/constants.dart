@@ -323,6 +323,8 @@ const List<Map<String, dynamic>> kAppInstances = [
     'description': 'Grow traffic, convert leads, close deals, and turn customers into promoters.',
     'enabled': false,
     'id': 'DFEB08D0-4872-4A0E-846E-577061A4829D',
+    'appType': AppType.CRM,
+    'appProduct': AppProduct.HubSpot,
     'features': [
       {
         'id': 'FC5D0C62-F413-4AE3-9192-56D18B4E03B1',
@@ -338,6 +340,7 @@ const List<Map<String, dynamic>> kAppInstances = [
     'description': 'Make Insightful Decisions. Accelerate Productivity.',
     'enabled': false,
     'id': 'D64162EA-221C-4E3A-AC46-6DCF8D469032',
+    'appType': AppType.CRM,
     'features': [
       {
         'id': 'AEF74B60-F93B-4D32-ABC2-D9CDEB83AA5E',
@@ -353,6 +356,8 @@ const List<Map<String, dynamic>> kAppInstances = [
     'description': 'The Google tools you love for work, all in one place. Innovative Tools. Grows with your business.',
     'enabled': false,
     'id': '2BBC6B22-9F46-45A5-8ED1-7921C04F25A5',
+    'appType': AppType.CRM,
+    'appProduct': AppProduct.Google,
     'features': [
       {
         'id': '978D7B56-5918-409D-A029-19CCF59026CE',
@@ -373,6 +378,9 @@ const List<Map<String, dynamic>> kAppInstances = [
     'description': 'Access contacts, photos, and media on your phone.',
     'enabled': false,
     'id': '435C7D0D-FA94-499B-84FC-150340637F9C',
+    'appType': AppType.Device,
+    // TODO: - dynamically assign based on platform.
+    'appProduct': AppProduct.IOS,
     'features': [
       {
         'id': 'C6B2B4AF-EC57-4AF7-8C08-DEC790D27F9B',
@@ -393,6 +401,8 @@ const List<Map<String, dynamic>> kAppInstances = [
     'description': 'The #1 Sales Enablement Platform',
     'enabled': false,
     'id': 'ECAF5DF1-F4F8-40AC-BF1F-CFFC55F4C036',
+    'appType': AppType.CRM,
+    'appProduct': AppProduct.Verb,
     'features': [
       {
         'id': '40FCA778-57B6-4DD4-AA89-00B396C608E7',

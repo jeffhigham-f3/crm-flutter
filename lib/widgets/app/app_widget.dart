@@ -20,7 +20,7 @@ class _AppWidgetState extends State<AppWidget> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     IconData icon;
     if (widget.app.enabled) {
-      icon = (widget.app.hasActiveFeatures()) ? FontAwesomeIcons.checkCircle : FontAwesomeIcons.exclamation;
+      icon = (widget.app.hasEnabledFeatures) ? FontAwesomeIcons.checkCircle : FontAwesomeIcons.exclamation;
     } else {
       icon = FontAwesomeIcons.cog;
     }

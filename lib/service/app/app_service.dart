@@ -28,9 +28,13 @@ class AppService extends AppServiceAbstract {
     notifyListeners();
   }
 
+  void notify() {
+    notifyListeners();
+  }
+
   List<App> get enabledApps => apps.where((a) => a.enabled).toList();
   bool get hasEnabledApps => enabledApps.length > 0;
-  List<App> get appsContact => apps.where((app) => app.hasFeaturesContact);
-  List<App> get appsContactEnabled => apps.where((app) => app.featuresContactEnabled.length > 0);
-  List<App> get appsMedia => apps.where((app) => app.hasFeaturesMedia);
+  List<App> get appsContact => apps.where((app) => app.hasFeaturesContact).toList();
+  List<App> get appsContactEnabled => apps.where((app) => app.featuresContactEnabled.length > 0).toList();
+  List<App> get appsMedia => apps.where((app) => app.hasFeaturesMedia).toList();
 }

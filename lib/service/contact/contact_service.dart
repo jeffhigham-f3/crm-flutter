@@ -1,9 +1,6 @@
 import 'package:verb_crm_flutter/config/constants.dart';
 import 'package:verb_crm_flutter/models/contact/contact.dart';
 import 'package:flutter/foundation.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:platform_info/platform_info.dart';
-import 'package:contacts_service/contacts_service.dart' as device;
 import 'package:verb_crm_flutter/service/import.dart';
 import 'dart:async';
 
@@ -18,8 +15,6 @@ abstract class _ContactServiceAbstract with ChangeNotifier {
   Comparator<Contact> lastNameComparator;
   Future<void> searchAll({@required String searchText});
   Future<void> refreshAll();
-  Future<PermissionStatus> requestPermissions();
-  Future<void> loadDeviceContacts();
   void toggleTagActive();
   Future<void> toggleTag({String tag});
   void addTag({String tag});
@@ -85,18 +80,17 @@ class ContactService extends _ContactServiceAbstract {
     notifyListeners();
   }
 
+  // TODO: -
   @override
   Future<void> refreshAll() async {
-    // TODO - Load contacts from apps with contacts enabled (app.dart:76)
     print(
         'ContactService can see ${_appService.appsContact.length} contact apps with ${_appService.appsContactEnabled.length} enabled.');
     _contacts.removeRange(0, _contacts.length);
     _tags.removeRange(0, tags.length);
     _tagActive = false;
     await Future.delayed(Duration(seconds: 1));
-    await loadDeviceContacts();
-    kContactUUIDs.forEach((uuid) {
-      _contacts.add(Contact.generate(uuid: uuid));
+    _appService.appsContactEnabled.forEach((app) async {
+      _contacts.addAll(await app.contacts);
     });
     _contacts.sort(lastNameComparator);
     _visibleContacts = _contacts;
@@ -138,33 +132,5 @@ class ContactService extends _ContactServiceAbstract {
     }
     if (_tags.length == 0) toggleTagActive();
     await searchAll(searchText: _cachedSearchText);
-  }
-
-  @override
-  Future<PermissionStatus> requestPermissions() async {
-    PermissionStatus status = await Permission.contacts.status;
-    if (status.isUndetermined) status = await Permission.contacts.request();
-    // if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) ;
-    // if (status.isGranted) ;
-    notifyListeners();
-    return status;
-  }
-
-  @override
-  Future<void> loadDeviceContacts() async {
-    if (Platform.instance.isWeb) return;
-
-    final status = await requestPermissions();
-    if (status.isGranted) {
-      var deviceContacts =
-          (await device.ContactsService.getContacts(withThumbnails: true, iOSLocalizedLabels: kiOSLocalizedLabels))
-              .toList();
-      deviceContacts.forEach(
-        (c) {
-          _contacts.add(Contact.fromDevice(c));
-        },
-      );
-    }
-    notifyListeners();
   }
 }
