@@ -79,7 +79,7 @@ class _AppHomeState extends State<AppHome> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Palette.scaffold,
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.stream),
             label: 'Verb',
@@ -89,8 +89,34 @@ class _AppHomeState extends State<AppHome> {
             label: 'People',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.th),
             label: 'Apps',
+            icon: Stack(
+              children: <Widget>[
+                FaIcon(FontAwesomeIcons.th),
+                Positioned(
+                  right: 0,
+                  child: new Container(
+                    padding: EdgeInsets.all(1),
+                    decoration: new BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: new Text(
+                      '5',
+                      style: new TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ],
         currentIndex: _selectedIndex,

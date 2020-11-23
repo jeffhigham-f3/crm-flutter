@@ -3,39 +3,54 @@ import 'package:verb_crm_flutter/app/import.dart';
 import 'package:verb_crm_flutter/service/import.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AppConfigureScreen extends StatelessWidget {
+class AppConfigureScreen extends StatefulWidget {
   final App app;
   AppConfigureScreen({Key key, this.app}) : super(key: key);
+  @override
+  _AppConfigureScreenState createState() => _AppConfigureScreenState();
+}
 
+class _AppConfigureScreenState extends State<AppConfigureScreen> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final themeService = context.watch<ThemeService>();
     final appService = context.watch<AppService>();
 
     final List<Widget> content = [
-      Text(
-        'Please login to ${app.name} so you can begin configuring this integration!',
-        style: Theme.of(context).textTheme.headline6,
-        textAlign: TextAlign.center,
+      Container(
+        width: MediaQuery.of(context).size.width,
+        child: !widget.app.enabled
+            ? Text(
+                'Please login to ${widget.app.name} so you can begin configuring this integration!',
+                style: Theme.of(context).textTheme.headline6,
+                textAlign: TextAlign.center,
+              )
+            : Text(
+                '${widget.app.name} Enabled!',
+                style: Theme.of(context).textTheme.headline6,
+                textAlign: TextAlign.center,
+              ),
       ),
       SizedBox(height: 20),
       OutlineButton(
         child: Text(
-          app.enabled ? 'Disable' : 'Enable',
+          widget.app.enabled ? 'Logout' : 'Login',
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
         onPressed: () {
-          appService.toggleState(app: app);
+          appService.toggleState(app: widget.app);
         },
       ),
       SizedBox(height: 20),
     ];
 
-    app.features.forEach((feature) {
-      content.add(
-        _AppFeatureOption(app: app, feature: feature),
-      );
-    });
+    widget.app.enabled
+        ? widget.app.features.forEach((feature) {
+            content.add(
+              _AppFeatureOption(app: widget.app, feature: feature),
+            );
+          })
+        : SizedBox.shrink();
 
     return Scaffold(
       body: CustomScrollView(
@@ -53,9 +68,9 @@ class AppConfigureScreen extends StatelessWidget {
                     width: 120,
                     height: 120,
                     child: Hero(
-                      tag: 'app-${app.id}',
+                      tag: 'app-${widget.app.id}',
                       child: FaIcon(
-                        app.icon,
+                        widget.app.icon,
                         size: 100,
                         color: Colors.white,
                       ),
@@ -64,18 +79,22 @@ class AppConfigureScreen extends StatelessWidget {
                 ])),
           ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(22.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: content,
-                  ),
-                ],
+            child: AnimatedSize(
+              vsync: this,
+              duration: Duration(milliseconds: 100),
+              child: Padding(
+                padding: const EdgeInsets.all(22.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: content,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -80,7 +80,7 @@ class ContactService extends _ContactServiceAbstract {
     notifyListeners();
   }
 
-  // TODO: -
+  // TODO: - Contacts do not load right away and require pull-to-refresh along with clearing search.
   @override
   Future<void> refreshAll() async {
     print(
